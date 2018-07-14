@@ -12,10 +12,12 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
+import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, FooterComponent
+    HeaderComponent, 
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
     CoreModule,
     SharedModule,
     HomeModule,
-    AuthModule
+    AuthModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
