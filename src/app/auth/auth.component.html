@@ -8,7 +8,7 @@
           <a [routerLink]="['/login']" routerLinkActive="router-link-active" *ngIf="authType == 'register'">Have an account?</a>
           <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
         </p>
-
+        
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
@@ -19,6 +19,7 @@
                 type="text"
                 *ngIf="authType == 'register'" />
             </fieldset>
+            
             <fieldset class="form-group">
               <input
                 formControlName="email"
@@ -26,6 +27,7 @@
                 class="form-control form-control-lg"
                 type="text" />
             </fieldset>
+            
             <fieldset class="form-group">
               <input
                 formControlName="password"
@@ -33,6 +35,8 @@
                 class="form-control form-control-lg"
                 type="password" />
             </fieldset>
+
+            <list-errors *ngIf="authType == 'login'" [errors]="errors"></list-errors>
             <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
               {{ title }}
             </button>

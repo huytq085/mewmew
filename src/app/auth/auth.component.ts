@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Errors } from '../core';
 import { UserService } from '../core';
+import { HttpHeaderResponse } from '@angular/common/http';
 
 
 @Component({
@@ -12,12 +13,15 @@ import { UserService } from '../core';
 })
 export class AuthComponent implements OnInit {
 
+  errorMap: {} = {
+    401: 'Email or password is invalid.'
+  }
+
   isSubmitting: boolean = false;
   title: string = '';
   authType: string = '';
   authForm: FormGroup;
-  errors: Errors = new Errors();
-
+  errors: string = '';
   constructor(
     private router: Router,
     private userService: UserService,
@@ -33,6 +37,7 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
+      console.log(data)
       this.authType = data[data.length - 1].path;
       // Set a title for the page accordingly
       this.title = (this.authType === 'login') ? 'Sign In' : 'Sign Up';
@@ -44,7 +49,6 @@ export class AuthComponent implements OnInit {
   }
 
   submitForm() {
-    this.errors = new Errors();
     this.isSubmitting = true;
     let credentials = this.authForm.value;
 
@@ -53,12 +57,13 @@ export class AuthComponent implements OnInit {
         data => {
           this.router.navigateByUrl('/')
         },
-        err => {
-          this.errors = err;
+        (err: HttpHeaderResponse) => {
+          this.errors = this.errorMap[err.status];
           this.isSubmitting = false;
         }
       );
     console.log(credentials);
   }
+
 
 }
