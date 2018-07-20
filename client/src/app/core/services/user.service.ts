@@ -8,6 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { User } from '../models';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { JwtService } from './jwt.service';
 
 
 @Injectable()
@@ -20,10 +21,12 @@ export class UserService {
 
   constructor(
     private apiService: ApiService,
-    private http: Http
+    private http: Http,
+    private jwtService: JwtService
   ) { }
 
-  setAuth(user: User) {
+  setAuth(user: User, token: string) {
+    this.jwtService.saveToken(token);
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
@@ -35,10 +38,15 @@ export class UserService {
     return this.apiService.post(route, credentials)
       .pipe(
         map(
-          data => {
-            console.log(data);
-            this.setAuth(data.user);
-            return data;
+          res => {
+            console.log(res);
+            if (res && res.token) {
+              let user: User = res.user;
+              // store username and jwt token in local storage to keep user logged in between page refreshes
+              // localStorage.setItem('currentUser', JSON.stringify({ user, token: res.token }));
+              this.setAuth(res.user, res.token);
+            }
+            return res;
           }
         )
       );
@@ -47,5 +55,7 @@ export class UserService {
   getCurrentUser(): User {
     return this.currentUserSubject.value;
   }
+
+  
 
 }

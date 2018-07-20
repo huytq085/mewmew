@@ -1,2 +1,6 @@
 export * from './api.service'
 export * from './user.service'
+export * from './jwt.service'
+export * from './articles.service'
+export * from './comment.service'
+export * from './profiles.service'

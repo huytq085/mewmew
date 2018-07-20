@@ -13,11 +13,16 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpModule } from '@angular/http';
+import { ProfileArticlesComponent } from './profile/profile-articles.component';
+import { FavoriteButtonComponent } from './shared/buttons/favorite-button.component';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileRoutingComponent } from './profile/profile-routing.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent, 
-    FooterComponent
+    HeaderComponent,
+    FooterComponent,
+    ProfileRoutingComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,8 @@ import { HttpModule } from '@angular/http';
     SharedModule,
     HomeModule,
     AuthModule,
-    HttpModule
+    HttpModule,
+    ProfileModule
   ],
   providers: [],
   bootstrap: [AppComponent]

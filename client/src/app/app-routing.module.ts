@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'feed',
     component: HomeComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 
 ];

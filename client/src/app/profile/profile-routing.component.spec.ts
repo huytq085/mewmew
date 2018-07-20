@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArticleCommentComponent } from './article-comment.component';
+import { ProfileRoutingComponent } from './profile-routing.component';
 
-describe('ArticleCommentComponent', () => {
-  let component: ArticleCommentComponent;
-  let fixture: ComponentFixture<ArticleCommentComponent>;
+describe('ProfileRoutingComponent', () => {
+  let component: ProfileRoutingComponent;
+  let fixture: ComponentFixture<ProfileRoutingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArticleCommentComponent ]
+      declarations: [ ProfileRoutingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ArticleCommentComponent);
+    fixture = TestBed.createComponent(ProfileRoutingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
