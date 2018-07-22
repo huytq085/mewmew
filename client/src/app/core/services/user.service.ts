@@ -1,3 +1,4 @@
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
@@ -19,9 +20,11 @@ export class UserService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
+  private USER_URL = '/users/';
+
   constructor(
     private apiService: ApiService,
-    private http: Http,
+    private http: HttpClient,
     private jwtService: JwtService
   ) { }
 
@@ -33,13 +36,39 @@ export class UserService {
     this.isAuthenticatedSubject.next(true);
   }
 
+  purgeAuth() {
+    // Remove JWT from localstorage
+    this.jwtService.destroyToken();
+    // Set current user to an empty object
+    this.currentUserSubject.next({} as User);
+    // Set auth status to false
+    this.isAuthenticatedSubject.next(false);
+  }
+
+  // Update the user on the server (email, pass, etc)
+  update(user): Observable<User> {
+    console.log(JSON.stringify(user))
+    return this.apiService
+      .put('/users', user)
+      .pipe(map(data => {
+        // Update the currentUser observable
+        console.log('update user')
+        console.log(data)
+        this.currentUserSubject.next(data.user);
+        return data.user;
+      }));
+  }
+
   attemptAuth(type, credentials): Observable<User> {
-    let route = (type === 'login') ? '/login' : '';
+    console.log('attempAuth----------------')
+    let route = (type === 'login') ? '/login' : '/register';
     return this.apiService.post(route, credentials)
       .pipe(
         map(
           res => {
+            console.log('return attEM')
             console.log(res);
+            console.log('/return attEM')
             if (res && res.token) {
               let user: User = res.user;
               // store username and jwt token in local storage to keep user logged in between page refreshes
@@ -56,6 +85,10 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  
+  getUser(username: string): Observable<User> {
+    return this.apiService.get(this.USER_URL + username);
+  }
+
+
 
 }

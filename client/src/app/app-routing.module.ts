@@ -15,8 +15,20 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'settings',
+    loadChildren: './settings/settings.module#SettingsModule'
+  },
+  {
     path: 'profile',
-    component: ProfileComponent
+    loadChildren: './profile/profile.module#ProfileModule'
+  },
+  {
+    path: 'editor',
+    loadChildren: './editor/editor.module#EditorModule'
+  },
+  {
+    path: 'article',
+    loadChildren: './article/article.module#ArticleModule'
   }
 
 ];

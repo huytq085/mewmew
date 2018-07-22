@@ -9,6 +9,8 @@ import java.util.List;
 public interface UserService {
     User save(User user);
 
+    User update(User user);
+
     List<User> getAllUser();
 
     User findById(int id);
@@ -19,5 +21,6 @@ public interface UserService {
 
     User findByEmailAndPassword(String email, String password);
 
-    boolean checkLogin(String username, String password);
+    User checkLogin(String username, String password);
+
 }

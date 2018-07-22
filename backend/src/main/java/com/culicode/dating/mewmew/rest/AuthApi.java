@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping({"/api"})
@@ -38,7 +40,7 @@ public class AuthApi {
         String token = "";
         String message = "";
         try {
-            user = userService.findByEmailAndPassword(credentials.getEmail(), credentials.getPassword());
+            user = userService.checkLogin(credentials.getEmail(), credentials.getPassword());
             System.out.println(JsonUtil.encode(user));
             if (user != null) {
                 token = jwtService.generateTokenLogin(user.getUsername());
@@ -46,13 +48,45 @@ public class AuthApi {
                 message = "Login successfully";
             } else {
                 message = "Wrong userId and password";
-                httpStatus = HttpStatus.BAD_REQUEST;
+                httpStatus = HttpStatus.UNAUTHORIZED;
             }
         } catch (Exception ex) {
-            result = "Server Error";
+            message = "Server Error";
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
-        return new ResponseEntity<>(new AuthorizedUser(user, token,message), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthorizedUser(user, token, message), httpStatus);
+    }
+
+    @RequestMapping(
+            value = "/register",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<AuthorizedUser> register(@RequestBody User credentials) {
+        System.out.println(credentials.getUsername());
+        System.out.println(credentials.getEmail());
+        System.out.println(credentials.getPassword());
+        System.out.println(credentials.getGender());
+        User user = null;
+        HttpStatus httpStatus = null;
+        String token = "";
+        String message = "";
+        try {
+            user = userService.save(credentials);
+            System.out.println(JsonUtil.encode(user));
+            if (user != null) {
+                token = jwtService.generateTokenLogin(user.getUsername());
+                httpStatus = HttpStatus.OK;
+                message = "Successful";
+            } else {
+                message = "Username or Email already exist";
+                httpStatus = HttpStatus.CONFLICT;
+            }
+        } catch (Exception ex) {
+            message = "Server Error";
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(new AuthorizedUser(user, token, message), httpStatus);
     }
 }

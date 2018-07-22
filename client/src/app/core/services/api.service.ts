@@ -4,14 +4,14 @@ import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   constructor(
-    private http: Http
+    private http: HttpClient
   ) { }
 
   private setHeaders(): Headers {
@@ -33,7 +33,9 @@ export class ApiService {
   }
 
   put(path: string, body: Object = {}): Observable<any> {
-    return this.http.put(`${environment.api_url}${path}`, JSON.stringify(body), { headers: this.setHeaders() })
+    console.log('put api service')
+    console.log(JSON.stringify(body))
+    return this.http.put(`${environment.api_url}${path}`, JSON.stringify(body))
       .pipe(
         catchError(this.handleError),
         map((res: Response) => res.json())
@@ -41,10 +43,9 @@ export class ApiService {
   }
 
   post(path: string, body: Object = {}): Observable<any> {
-    return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body), { headers: this.setHeaders() })
+    return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body))
       .pipe(
         catchError(this.handleError),
-        map((res: Response) => res.json())
       )
   }
   delete(path): Observable<any> {

@@ -35,6 +35,19 @@
                 class="form-control form-control-lg"
                 type="password" />
             </fieldset>
+            <fieldset class="form-group">
+                <div class="form-group">
+                  <select class="form-control" 
+                  formControlName="password"
+                  placeholder="Gender"
+                  class="form-control form-control"
+                  *ngIf="authType == 'register'">
+                    <option value="">Gender</option>
+                    <option value="Male" selected>Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+            </fieldset>
 
             <list-errors *ngIf="authType == 'login'" [errors]="errors"></list-errors>
             <button class="btn btn-lg btn-primary pull-xs-right" type="submit">

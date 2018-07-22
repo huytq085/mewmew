@@ -1,3 +1,5 @@
+import { SettingsModule } from './settings/settings.module';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,12 +19,13 @@ import { ProfileArticlesComponent } from './profile/profile-articles.component';
 import { FavoriteButtonComponent } from './shared/buttons/favorite-button.component';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
+import { SettingsComponent } from './settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ProfileRoutingComponent
+    ProfileRoutingComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,9 @@ import { ProfileRoutingComponent } from './profile/profile-routing.component';
     HomeModule,
     AuthModule,
     HttpModule,
-    ProfileModule
+    HttpClientModule,
+    ProfileModule,
+    SettingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

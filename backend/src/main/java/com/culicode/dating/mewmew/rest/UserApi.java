@@ -18,6 +18,7 @@ public class UserApi {
 
     private final String BASE_URI = "/users";
     private final String ID_URI = BASE_URI + "/{id}";
+    private final String USERNAME_URI = BASE_URI + "/{username}";
 
     @RequestMapping(
             value = BASE_URI,
@@ -45,7 +46,7 @@ public class UserApi {
     )
     public User update(@RequestBody User user) {
         System.out.println(JsonUtil.encode(user));
-        return userService.save(user);
+        return userService.update(user);
     }
 
     @RequestMapping(
@@ -57,13 +58,20 @@ public class UserApi {
         return null;
     }
 
+//    @RequestMapping(
+//            value = ID_URI,
+//            method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public User get(@PathVariable int id) {
+//        return userService.findById(id);
+//    }
+
     @RequestMapping(
-            value = ID_URI,
+            value = USERNAME_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@PathVariable int id) {
-        return userService.findById(id);
+    public User get(@PathVariable String username) {
+        return userService.findByUsername(username);
     }
-
 
 }

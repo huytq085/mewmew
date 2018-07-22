@@ -37,13 +37,14 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
-      console.log(data)
+      
       this.authType = data[data.length - 1].path;
       // Set a title for the page accordingly
       this.title = (this.authType === 'login') ? 'Sign In' : 'Sign Up';
       // add form control for username if this is the register page
       if (this.authType === 'register') {
         this.authForm.addControl('username', new FormControl('', Validators.required));
+        this.authForm.addControl('gender', new FormControl('', Validators.required));
       }
     });
   }
@@ -51,7 +52,7 @@ export class AuthComponent implements OnInit {
   submitForm() {
     this.isSubmitting = true;
     let credentials = this.authForm.value;
-
+    console.log('submit')
     this.userService.attemptAuth(this.authType, credentials)
       .subscribe(
         data => {
