@@ -52,22 +52,21 @@ export class SettingsComponent implements OnInit {
     this.updateUser(this.settingsForm.value);
 
     this.userService
-    .update(this.user)
-    .subscribe(
-      updatedUser => {
-        console.log('updateUser')
-        console.log(updatedUser)
-        swal({
-          title: "Updated Successfully!",
-          icon: "success",
-        });
-        this.router.navigateByUrl('/profile/' + updatedUser.username)
-      },
-      err => {
-        this.errors = err;
-        this.isSubmitting = false;
-      }
-    );
+      .update(this.user)
+      .subscribe(
+        updatedUser => {
+          swal({
+            title: "Updated Successfully!",
+            icon: "success",
+          });
+          this.isSubmitting = false
+          // this.router.navigateByUrl('/profile/' + updatedUser.username)
+        },
+        err => {
+          this.errors = err;
+          this.isSubmitting = false;
+        }
+      );
   }
 
   updateUser(values: Object) {

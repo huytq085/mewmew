@@ -4,9 +4,11 @@ import com.culicode.dating.mewmew.domain.AppRole;
 import com.culicode.dating.mewmew.domain.ERole;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.domain.UserRole;
+import com.culicode.dating.mewmew.repository.AppRoleRepository;
 import com.culicode.dating.mewmew.repository.UserRepository;
 import com.culicode.dating.mewmew.repository.UserRoleRepository;
 import com.culicode.dating.mewmew.util.EncrytedPasswordUtils;
+import com.culicode.dating.mewmew.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AppRoleRepository appRoleRepository;
 
     @Autowired
     UserRoleRepository userRoleRepository;
@@ -38,7 +43,21 @@ public class UserServiceImpl implements UserService {
         if (!isExist(user)){
 //            user.setPassword(EncrytedPasswordUtils.encrytePassword(user.getPassword()));
             newUser = userRepository.save(user);
-            userRoleRepository.setRole(newUser.getId(), ERole.USER.getId());
+//            userRoleRepository.setRole(newUser.getId(), ERole.USER.getId());
+            System.out.println("User role: " + ERole.USER.getId());
+            AppRole appRole = appRoleRepository.findById(ERole.USER.getId()).orElse(null);
+            System.out.println("-------UserServiceImpl");
+            if (appRole != null) {
+                System.out.println(JsonUtil.encode(appRole));
+                UserRole userRole = new UserRole();
+                userRole.setAppRole(appRole);
+                userRole.setUser(newUser);
+                if (userRoleRepository.save(userRole).getId() != null) {
+                    System.out.println("Set role successful");
+                } else {
+                    System.out.println("Set role failed");
+                }
+            }
 
         }
         return newUser;

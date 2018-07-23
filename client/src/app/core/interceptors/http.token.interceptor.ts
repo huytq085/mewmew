@@ -3,10 +3,16 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 
 import { JwtService } from '../services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
-  constructor(private jwtService: JwtService) { }
+  constructor(
+    private jwtService: JwtService,
+    private _router: Router
+  ) { }
+
+
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const headersConfig = {
@@ -15,10 +21,10 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     };
 
     const token = this.jwtService.getToken();
-    console.log(`Token ${token}`)
+    const authType: string = this._router.url;
+      
 
-
-    if (token) {
+    if (token && !(authType === '/login' || authType === '/register' )) {
       headersConfig['Authorization'] = `${token}`;
     }
 

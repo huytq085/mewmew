@@ -52,8 +52,6 @@ export class UserService {
       .put('/users', user)
       .pipe(map(data => {
         // Update the currentUser observable
-        console.log('update user')
-        console.log(data)
         this.currentUserSubject.next(data.user);
         return data.user;
       }));
@@ -66,9 +64,6 @@ export class UserService {
       .pipe(
         map(
           res => {
-            console.log('return attEM')
-            console.log(res);
-            console.log('/return attEM')
             if (res && res.token) {
               let user: User = res.user;
               // store username and jwt token in local storage to keep user logged in between page refreshes
@@ -87,6 +82,24 @@ export class UserService {
 
   getUser(username: string): Observable<User> {
     return this.apiService.get(this.USER_URL + username);
+  }
+
+  getUserByToken(token: String): Observable<User> {
+    const url = '/auth';
+    return this.apiService.post(url, { token })
+      .pipe(
+        map(
+          res => {
+            if (res && res.token) {
+              let user: User = res.user;
+              // store username and jwt token in local storage to keep user logged in between page refreshes
+              // localStorage.setItem('currentUser', JSON.stringify({ user, token: res.token }));
+              this.setAuth(res.user, res.token);
+            }
+            return res;
+          }
+        )
+      )
   }
 
 

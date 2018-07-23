@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User, UserService } from '../../core';
+import { User, UserService, JwtService } from '../../core';
 
 @Component({
   selector: 'app-layout-header',
@@ -8,18 +8,27 @@ import { User, UserService } from '../../core';
 })
 export class HeaderComponent implements OnInit {
   constructor(
+    private jwtService: JwtService,
     private userService: UserService
   ) {}
 
   currentUser: User;
 
   ngOnInit() {
-    this.userService.currentUser.subscribe(
-      (userData) => {
-        console.log('header')
-        console.log(userData)
-        this.currentUser = userData;
-      }
-    );
+    const token = this.jwtService.getToken();
+    if (token){
+      this.userService.getUserByToken(token).subscribe(
+        data => {
+          this.currentUser = this.userService.getCurrentUser();          
+        }
+      )
+    }
+    // this.userService.currentUser.subscribe(
+    //   (userData) => {
+    //     console.log('header')
+    //     console.log(userData)
+    //     this.currentUser = userData;
+    //   }
+    // );
   }
 }

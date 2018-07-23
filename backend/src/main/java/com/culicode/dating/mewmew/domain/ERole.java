@@ -4,15 +4,15 @@ public enum ERole {
     ADMIN(1, "ADMIN"),
     USER(2, "USER");
 
-    private int id;
+    private long id;
     private String name;
 
-    private ERole(int id, String name) {
+    private ERole(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public static ERole getRoleById(int id) {
+    public static ERole getRoleById(long id) {
         for (ERole role : ERole.values()) {
             if (role.id == id) {
                 return role;
@@ -21,11 +21,11 @@ public enum ERole {
         return null;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

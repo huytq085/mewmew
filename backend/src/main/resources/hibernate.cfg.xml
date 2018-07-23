@@ -9,24 +9,24 @@
   <session-factory>
 
       <!-- Database connection settings -->
-      <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-      <property name="connection.url">jdbc:mysql://localhost:3306/dating_datastore?useSSL=false</property>
-      <property name="connection.username">root</property>
-      <property name="connection.password">tqh</property>
+      <property token="connection.driver_class">com.mysql.jdbc.Driver</property>
+      <property token="connection.url">jdbc:mysql://localhost:3306/dating_datastore?useSSL=false</property>
+      <property token="connection.username">root</property>
+      <property token="connection.password">tqh</property>
 
       <!-- JDBC connection pool (use the built-in) -->
-      <!--<property name="connection.pool_size">1</property>-->
+      <!--<property token="connection.pool_size">1</property>-->
 
       <!-- SQL dialect -->
-      <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+      <property token="dialect">org.hibernate.dialect.MySQLDialect</property>
 
       <!-- Enable Hibernate's automatic session context management -->
-      <property name="current_session_context_class">thread</property>
+      <property token="current_session_context_class">thread</property>
 
       <!-- Disable the second-level cache -->
 
       <!-- Echo all executed SQL to stdout -->
-      <property name="show_sql">true</property>
+      <property token="show_sql">true</property>
 
 
       <mapping class="com.culicode.dating.mewmew.domain.Article" />

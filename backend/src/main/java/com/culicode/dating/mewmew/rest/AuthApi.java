@@ -1,6 +1,7 @@
 package com.culicode.dating.mewmew.rest;
 
 import com.culicode.dating.mewmew.domain.AuthorizedUser;
+import com.culicode.dating.mewmew.domain.Token;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.security.service.JwtService;
 import com.culicode.dating.mewmew.service.UserService;
@@ -10,10 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping({"/api"})
@@ -25,6 +22,28 @@ public class AuthApi {
 
     @Autowired
     private UserService userService;
+
+    @RequestMapping(
+            value = "/auth",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<AuthorizedUser> auth(@RequestBody Token token){
+        System.out.println("Token: " + token.getToken());
+        User user = null;
+        HttpStatus httpStatus = null;
+        String message = "";
+        if (jwtService.validateTokenLogin(token.getToken())) {
+            String username = jwtService.getUsernameFromToken(token.getToken());
+            user = userService.findByUsername(username);
+            message = "Get user successful";
+            httpStatus = HttpStatus.OK;
+        } else {
+            message = "Get user failed";
+            httpStatus = HttpStatus.UNAUTHORIZED;
+        }
+        return new ResponseEntity<>(new AuthorizedUser(user, token.getToken(), message), httpStatus);
+    }
 
     @RequestMapping(
             value = "/login",
@@ -76,6 +95,7 @@ public class AuthApi {
             user = userService.save(credentials);
             System.out.println(JsonUtil.encode(user));
             if (user != null) {
+
                 token = jwtService.generateTokenLogin(user.getUsername());
                 httpStatus = HttpStatus.OK;
                 message = "Successful";
