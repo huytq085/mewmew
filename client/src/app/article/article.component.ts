@@ -21,9 +21,10 @@ export class ArticleComponent implements OnInit {
   canModify: boolean;
   comments: Comment[];
   commentControl = new FormControl();
-  commentFormErrors = {};
+  commentFormErrors = '';
   isSubmitting = false;
   isDeleting = false;
+  hasArticle = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,82 +36,88 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
     // Retreive the prefetched article
-    this.route.data.subscribe(
-      (data: { article: Article }) => {
-        this.article = data.article;
+    // this.route.data.subscribe(
+    //   (data: Article) => {
+    //     this.article = data;
 
-        // Load the comments on this article
-        this.populateComments();
+    //     // Load the comments on this article
+    //     // this.populateComments();
+    //   }
+    // );
+    let articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    this.articlesService.get(articleId).subscribe(
+      data => {
+        this.article = data;
+        // Load the current user's data
+        this.currentUser = this.userService.getCurrentUser();
+        console.log(this.currentUser)
+        console.log(this.article)
+        this.canModify = (this.currentUser.id === this.article.userId);
+        console.log(this.canModify)
       }
-    );
+    )
 
-    // Load the current user's data
-    this.userService.currentUser.subscribe(
-      (userData: User) => {
-        this.currentUser = userData;
 
-        this.canModify = (this.currentUser.username === this.article.author.username);
-      }
-    );
+
   }
 
-  onToggleFavorite(favorited: boolean) {
-    this.article.favorited = favorited;
+  // onToggleFavorite(favorited: boolean) {
+  //   this.article.favorited = favorited;
 
-    if (favorited) {
-      this.article.favoritesCount++;
-    } else {
-      this.article.favoritesCount--;
-    }
-  }
+  //   if (favorited) {
+  //     this.article.favoritesCount++;
+  //   } else {
+  //     this.article.favoritesCount--;
+  //   }
+  // }
 
-  onToggleFollowing(following: boolean) {
-    this.article.author.following = following;
-  }
+  // onToggleFollowing(following: boolean) {
+  //   this.article.author.following = following;
+  // }
 
-  deleteArticle() {
-    this.isDeleting = true;
+  // deleteArticle() {
+  //   this.isDeleting = true;
 
-    this.articlesService.destroy(this.article.slug)
-      .subscribe(
-        success => {
-          this.router.navigateByUrl('/');
-        }
-      );
-  }
+  //   this.articlesService.destroy(this.article.slug)
+  //     .subscribe(
+  //       success => {
+  //         this.router.navigateByUrl('/');
+  //       }
+  //     );
+  // }
 
-  populateComments() {
-    this.commentsService.getAll(this.article.slug)
-      .subscribe(comments => this.comments = comments);
-  }
+  // populateComments() {
+  //   this.commentsService.getAll(this.article.slug)
+  //     .subscribe(comments => this.comments = comments);
+  // }
 
-  addComment() {
-    this.isSubmitting = true;
-    this.commentFormErrors = {};
+  // addComment() {
+  //   this.isSubmitting = true;
+  //   this.commentFormErrors = {};
 
-    const commentBody = this.commentControl.value;
-    this.commentsService
-      .add(this.article.slug, commentBody)
-      .subscribe(
-        comment => {
-          this.comments.unshift(comment);
-          this.commentControl.reset('');
-          this.isSubmitting = false;
-        },
-        errors => {
-          this.isSubmitting = false;
-          this.commentFormErrors = errors;
-        }
-      );
-  }
+  //   const commentBody = this.commentControl.value;
+  //   this.commentsService
+  //     .add(this.article.slug, commentBody)
+  //     .subscribe(
+  //       comment => {
+  //         this.comments.unshift(comment);
+  //         this.commentControl.reset('');
+  //         this.isSubmitting = false;
+  //       },
+  //       errors => {
+  //         this.isSubmitting = false;
+  //         this.commentFormErrors = errors;
+  //       }
+  //     );
+  // }
 
-  onDeleteComment(comment) {
-    this.commentsService.destroy(comment.id, this.article.slug)
-      .subscribe(
-        success => {
-          this.comments = this.comments.filter((item) => item !== comment);
-        }
-      );
-  }
+  // onDeleteComment(comment) {
+  //   this.commentsService.destroy(comment.id, this.article.slug)
+  //     .subscribe(
+  //       success => {
+  //         this.comments = this.comments.filter((item) => item !== comment);
+  //       }
+  //     );
+  // }
 
 }

@@ -1,3 +1,4 @@
+import { EditorModule } from './editor/editor.module';
 import { SettingsModule } from './settings/settings.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +20,8 @@ import { ProfileArticlesComponent } from './profile/profile-articles.component';
 import { FavoriteButtonComponent } from './shared/buttons/favorite-button.component';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ArticleModule } from './article/article.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,8 @@ import { SettingsComponent } from './settings/settings.component';
     HttpModule,
     HttpClientModule,
     ProfileModule,
-    SettingsModule
+    SettingsModule,
+    EditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

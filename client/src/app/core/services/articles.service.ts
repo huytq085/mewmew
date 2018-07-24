@@ -8,29 +8,29 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ArticlesService {
-  constructor (
+  constructor(
     private apiService: ApiService
-  ) {}
+  ) { }
 
-  query(config: ArticleListConfig): Observable<{articles: Article[], articlesCount: number}> {
+  query(config: ArticleListConfig): Observable<Article[]> {
     // Convert any filters over to Angular's URLSearchParams
     const params = {};
 
     Object.keys(config.filters)
-    .forEach((key) => {
-      params[key] = config.filters[key];
-    });
+      .forEach((key) => {
+        params[key] = config.filters[key];
+      });
 
     return this.apiService
-    .get(
-      '/articles' + ((config.type === 'feed') ? '/feed' : ''),
-      new HttpParams({ fromObject: params })
-    );
+      .get(
+        '/articles' + ((config.type === 'feed') ? '/feed' : ''),
+        new HttpParams({ fromObject: params })
+      );
   }
 
-  get(slug): Observable<Article> {
-    return this.apiService.get('/articles/' + slug)
-      .pipe(map(data => data.article));
+  get(id): Observable<Article> {
+    return this.apiService.get('/articles/' + id)
+      .pipe(map(data => data));
   }
 
   destroy(slug) {
@@ -40,13 +40,15 @@ export class ArticlesService {
   save(article): Observable<Article> {
     // If we're updating an existing article
     if (article.slug) {
-      return this.apiService.put('/articles/' + article.slug, {article: article})
+      return this.apiService.put('/articles/' + article.slug, { article: article })
         .pipe(map(data => data.article));
 
-    // Otherwise, create a new article
+      // Otherwise, create a new article
     } else {
-      return this.apiService.post('/articles/', {article: article})
-        .pipe(map(data => data.article));
+      console.log('// Otherwise, create a new article')
+      return this.apiService.post('/articles/', article)
+        .pipe(
+          map(article => article));
     }
   }
 

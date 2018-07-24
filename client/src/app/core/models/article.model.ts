@@ -1,14 +1,18 @@
 import { Profile } from './profile.model';
 
-export interface Article {
+export class Article {
+  id: number;
+  userId: number;
   slug: string;
-  title: string;
+  subject: string;
   description: string;
-  body: string;
+  content: string;
   tagList: string[];
   createdAt: string;
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
   author: Profile;
+  view: number;
+  categoryId: number;
 }
