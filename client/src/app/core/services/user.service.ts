@@ -52,7 +52,7 @@ export class UserService {
       .put('/users', user)
       .pipe(map(data => {
         // Update the currentUser observable
-        this.currentUserSubject.next(data.user);
+        this.currentUserSubject.next(data);
         return data.user;
       }));
   }
@@ -101,6 +101,8 @@ export class UserService {
         )
       )
   }
+
+  
 
 
 

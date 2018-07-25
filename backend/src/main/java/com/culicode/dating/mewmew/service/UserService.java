@@ -23,4 +23,10 @@ public interface UserService {
 
     User checkLogin(String username, String password);
 
+    int follow(int user1, int user2);
+
+    int unFollow(int user1, int user2);
+
+    boolean isFollowing(int user1, int user2);
+
 }

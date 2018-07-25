@@ -34,7 +34,7 @@ export class FollowButtonComponent {
 
         // Follow this profile if we aren't already
         if (!this.profile.following) {
-          return this.profilesService.follow(this.profile.username)
+          return this.profilesService.follow(this.profile.id)
           .pipe(tap(
             data => {
               this.isSubmitting = false;
@@ -45,7 +45,7 @@ export class FollowButtonComponent {
 
         // Otherwise, unfollow this profile
         } else {
-          return this.profilesService.unfollow(this.profile.username)
+          return this.profilesService.unfollow(this.profile.id)
           .pipe(tap(
             data => {
               this.isSubmitting = false;

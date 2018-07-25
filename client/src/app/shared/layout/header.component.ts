@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
         console.log('header')
         console.log(userData)
         this.currentUser = userData;
-        if ((typeof this.currentUser.username == 'undefined') {
+        if (typeof this.currentUser.username == 'undefined') {
           const token = this.jwtService.getToken();
           if (token){
             this.userService.getUserByToken(token).subscribe(

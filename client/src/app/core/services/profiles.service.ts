@@ -1,29 +1,45 @@
-import { Injectable } from '@angular/core';
+import { UserService } from './user.service';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { Profile } from '../models';
+import { Profile, User } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfilesService {
+export class ProfilesService implements OnInit{
+  
+  currentUser: User;
+
   constructor (
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userService: UserService
   ) {}
+
+  ngOnInit(): void {
+    this.currentUser = this.userService.getCurrentUser();
+  }
 
   get(username: string): Observable<Profile> {
     return this.apiService.get('/users/' + username)
       .pipe(map((data: {profile: Profile}) => data.profile));
   }
 
-  follow(username: string): Observable<Profile> {
-    return this.apiService.post('/users/' + username + '/follow');
+  follow(userId: number): Observable<Profile> {
+    console.log('current user');
+    console.log(this.userService.currentUser);
+    return this.apiService.post('/users/' + userId + '/follow', this.userService.getCurrentUser());
   }
 
-  unfollow(username: string): Observable<Profile> {
-    return this.apiService.delete('/users/' + username + '/follow');
+  unfollow(userId: number): Observable<Profile> {
+    return this.apiService.post('/users/' + userId + '/unfollow', this.userService.getCurrentUser());
+  }
+
+  isFollowing(userId: number): Observable<boolean>{
+    let result;
+    return this.apiService.get('/users/' + userId + '/isfollowing/' + this.userService.getCurrentUser().id);
   }
 
 }

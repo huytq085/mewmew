@@ -1,23 +1,26 @@
 package com.culicode.dating.mewmew.service;
 
-import com.culicode.dating.mewmew.domain.AppRole;
-import com.culicode.dating.mewmew.domain.ERole;
-import com.culicode.dating.mewmew.domain.User;
-import com.culicode.dating.mewmew.domain.UserRole;
+import com.culicode.dating.mewmew.domain.*;
 import com.culicode.dating.mewmew.repository.AppRoleRepository;
 import com.culicode.dating.mewmew.repository.UserRepository;
 import com.culicode.dating.mewmew.repository.UserRoleRepository;
 import com.culicode.dating.mewmew.util.EncrytedPasswordUtils;
 import com.culicode.dating.mewmew.util.JsonUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOG = LogManager.getLogger(Article.class);
+
     @Autowired
     UserRepository userRepository;
 
@@ -100,6 +103,24 @@ public class UserServiceImpl implements UserService {
 //            return null;
 //        }
         return userRepository.findByEmailAndPassword(email, password).orElse(null);
+    }
+
+    @Override
+    public int follow(int user1, int user2) {
+        LOG.info("Service is running...");
+        return userRepository.follow(user1, user2);
+    }
+
+    @Override
+    public int unFollow(int user1, int user2) {
+        LOG.info("Service is running...");
+        return userRepository.unFollow(user1, user2);
+    }
+
+    @Override
+    public boolean isFollowing(int user1, int user2) {
+        LOG.info("Service is running...");
+        return 1 == this.userRepository.isFollowing(user1, user2);
     }
 
 
