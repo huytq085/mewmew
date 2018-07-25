@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Procedure(name = "unFollow")
     int unFollow(int user1, int user2);
 
-    @Procedure(name = "follow")
+    @Procedure(name = "isFollowing")
     int isFollowing(int user1, int user2);
 
 }
