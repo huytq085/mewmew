@@ -100,7 +100,6 @@ create table user
   weight      int(3)                    null,
   job         varchar(45) charset utf8  null,
   matrimony   varchar(10)               null,
-  avartar     varchar(255)              null,
   date_added  datetime                  null,
   full_name   varchar(255)              null,
   last_access datetime                  null,
@@ -158,17 +157,19 @@ create index article_tag_tag__fk
 
 create table comment
 (
-  id        int auto_increment
-    primary key,
-  content   longtext charset utf8 not null,
-  dateAdded datetime              not null,
-  `like`    int                   not null,
-  userId    int                   not null,
-  articleId int                   not null,
+  userId    int                                not null,
+  articleId int                                not null,
+  content   longtext                           not null,
+  `like`    int default '0'                    null,
+  dateAdded datetime default CURRENT_TIMESTAMP null,
   constraint fk_comment_user1
-  foreign key (userId) references user (id),
+  foreign key (userId) references user (id)
+    on update cascade
+    on delete cascade,
   constraint fk_comment_article1
   foreign key (articleId) references article (id)
+    on update cascade
+    on delete cascade
 )
   collate = utf8_unicode_ci;
 
@@ -197,11 +198,11 @@ create index friendship_user_id_fks_2
 
 create table likes
 (
-  id         int auto_increment
-    primary key,
-  time       datetime null,
-  user_id    int      not null,
-  article_id int      not null,
+  time       datetime default CURRENT_TIMESTAMP null,
+  user_id    int                                not null,
+  article_id int                                not null,
+  constraint likes_user_id_article_id_pk
+  unique (user_id, article_id),
   constraint fk_like_user1
   foreign key (user_id) references user (id),
   constraint fk_like_article1
@@ -268,6 +269,18 @@ create table user_role
 create index user_role_FK2
   on user_role (role_id);
 
+create procedure comment(IN user int, IN article int, IN `_content` longtext, OUT isSuccess int(1))
+  begin
+    insert into comment (userId, articleId, content) values (user, article, _content);
+    set isSuccess = ROW_COUNT();
+  end;
+
+create procedure doLike(IN user int, IN article int, OUT isSuccess int(1))
+  begin
+    insert into likes (user_id, article_id) values (user, article);
+    set isSuccess = ROW_COUNT();
+  end;
+
 create procedure follow(IN user1 int, IN user2 int, OUT isSuccess int(1))
   begin
     insert into friendship (follower_id, following_id) values (user1, user2);
@@ -284,6 +297,24 @@ create procedure isFollowing(IN user1 int, IN user2 int, OUT isFollowing int(1))
       set isFollowing = 1;
     END IF;
   END;
+
+create procedure isLike(IN user int, IN article int, OUT isLike int(1))
+  begin
+    set isLike = 0;
+    IF EXISTS(select l.user_id
+              from likes l
+              where l.user_id = user and l.article_id = article)
+    THEN
+      set isLike = 1;
+    END IF;
+  end;
+
+create procedure removeComment(IN user int, IN article int, OUT isSuccess int(1))
+  begin
+    delete from comment
+    where userId = user and articleId = article;
+    set isSuccess = ROW_COUNT();
+  end;
 
 create function sequence_nextval()
   returns int
@@ -303,6 +334,13 @@ create procedure unFollow(IN user1 int, IN user2 int, OUT isSuccess int(1))
     delete from friendship
     where follower_id = user1 and following_id = user2
     limit 1;
+    set isSuccess = ROW_COUNT();
+  end;
+
+create procedure unLike(IN user int, IN article int, OUT isSuccess int(1))
+  begin
+    delete from likes
+    where user_id = user and article_id = article;
     set isSuccess = ROW_COUNT();
   end;
 
