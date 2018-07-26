@@ -2,6 +2,7 @@ package com.culicode.dating.mewmew.rest;
 
 
 import com.culicode.dating.mewmew.domain.Article;
+import com.culicode.dating.mewmew.domain.Comment;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.service.ArticleService;
 import com.culicode.dating.mewmew.util.JsonUtil;
@@ -106,4 +107,21 @@ public class ArticleApi {
     boolean isLike(@PathVariable int articleId, @PathVariable int userId){
         return this.articleService.isLike(userId, articleId);
     }
+
+    @RequestMapping(
+            value = COMMENT_URI,
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    int comment(@PathVariable int articleId, @RequestBody Comment comment){
+        return articleService.comment(comment);
+    }
+
+    @RequestMapping(
+            value = REMOVE_COMMENT_URI,
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    int removeComment(@PathVariable int articleId, @RequestBody Comment comment){
+        return articleService.comment(comment);
+    }
+
 }

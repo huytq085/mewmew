@@ -5,7 +5,6 @@
       <h1>{{ article.subject }}</h1>
 
       <app-article-meta [article]="article">
-<!-- FIXME: can modify -->
            <span [hidden]="!canModify">
           <a class="btn btn-sm btn-outline-secondary"
              [routerLink]="['/editor', article.id]">

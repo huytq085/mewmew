@@ -1,6 +1,7 @@
 package com.culicode.dating.mewmew.service;
 
 import com.culicode.dating.mewmew.domain.Article;
+import com.culicode.dating.mewmew.domain.Comment;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.repository.ArticleRepository;
 import org.apache.logging.log4j.LogManager;
@@ -70,14 +71,16 @@ public class ArticleServiceImpl implements ArticleService {
     return articleRepository.unLike(user, article);
   }
 
+
+
   @Override
-  public int comment(int user, int article, String content) {
-    return articleRepository.comment(user, article, content);
+  public int comment(Comment comment) {
+    return articleRepository.comment(comment.getUserId(), comment.getArticleId(), comment.getContent());
   }
 
   @Override
-  public int removeComment(int user, int article) {
-    return articleRepository.removeComment(user, article);
+  public int removeComment(Comment comment) {
+    return articleRepository.removeComment(comment.getUserId(), comment.getArticleId());
   }
 
 

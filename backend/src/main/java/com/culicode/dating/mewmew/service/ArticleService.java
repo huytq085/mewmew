@@ -1,6 +1,7 @@
 package com.culicode.dating.mewmew.service;
 
 import com.culicode.dating.mewmew.domain.Article;
+import com.culicode.dating.mewmew.domain.Comment;
 import com.culicode.dating.mewmew.domain.User;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public interface ArticleService {
 
   int unLike(int user, int article);
 
-  int comment(int user, int article, String content);
+  int comment(Comment comment);
 
-  int removeComment(int user, int article);
+  int removeComment(Comment comment);
 }
