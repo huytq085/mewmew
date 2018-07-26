@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
     if (typeof user != 'undefined'){
       profile.username = user.username;
       profile.bio = user.description;
-      profile.image = user.image;
+      profile.avatar = user.avatar;
       profile.id = user.id;
     }
     return profile;

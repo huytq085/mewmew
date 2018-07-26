@@ -18,13 +18,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByEmailAndPassword(String email, String password);
 
-    @Procedure(name = "follow")
+    @Procedure
     int follow(int user1, int user2);
 
-    @Procedure(name = "unFollow")
+    @Procedure
     int unFollow(int user1, int user2);
 
-    @Procedure(name = "isFollowing")
+    @Procedure
     int isFollowing(int user1, int user2);
 
 }

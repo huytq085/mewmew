@@ -12,11 +12,21 @@ public interface ArticleService {
 
   Article update(Article article);
 
+  void delete(int id);
+
   List<Article> getAllArticlesByUserId(int userId);
 
   List<Article> getAllArticlesByUsername(String username);
 
   Article findById(int id);
 
+  int like(int user, int article);
 
+  boolean isLike(int user, int article);
+
+  int unLike(int user, int article);
+
+  int comment(int user, int article, String content);
+
+  int removeComment(int user, int article);
 }

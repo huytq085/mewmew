@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: ':slug',
+    path: ':id',
     component: EditorComponent,
     canActivate: [AuthGuard],
     resolve: {
@@ -23,6 +23,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class EditorRoutingModule {}

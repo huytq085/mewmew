@@ -33,7 +33,7 @@ export class FavoriteButtonComponent {
 
         // Favorite the article if it isn't favorited yet
         if (!this.article.favorited) {
-          return this.articlesService.favorite(this.article.slug)
+          return this.articlesService.favorite(this.article.id)
           .pipe(tap(
             data => {
               this.isSubmitting = false;
@@ -44,7 +44,7 @@ export class FavoriteButtonComponent {
 
         // Otherwise, unfavorite the article
         } else {
-          return this.articlesService.unfavorite(this.article.slug)
+          return this.articlesService.unfavorite(this.article.id)
           .pipe(tap(
             data => {
               this.isSubmitting = false;

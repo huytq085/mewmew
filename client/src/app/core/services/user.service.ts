@@ -21,6 +21,7 @@ export class UserService {
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   private USER_URL = '/users/';
+  private ID_USER_URL = '/users/id/';
 
   constructor(
     private apiService: ApiService,
@@ -82,6 +83,10 @@ export class UserService {
 
   getUser(username: string): Observable<User> {
     return this.apiService.get(this.USER_URL + username);
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.apiService.get(this.ID_USER_URL + id);
   }
 
   getUserByToken(token: String): Observable<User> {

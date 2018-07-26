@@ -3,7 +3,6 @@ package com.culicode.dating.mewmew.service;
 import com.culicode.dating.mewmew.domain.Article;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.repository.ArticleRepository;
-import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,11 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  public void delete(int id) {
+    articleRepository.deleteById(id);
+  }
+
+  @Override
   public List<Article> getAllArticlesByUserId(int userId) {
     return this.articleRepository.findAllByUserId(userId);
   }
@@ -50,4 +54,31 @@ public class ArticleServiceImpl implements ArticleService {
   public Article findById(int id) {
     return this.articleRepository.findById(id).orElse(null);
   }
+
+  @Override
+  public int like(int user, int article) {
+    return articleRepository.doLike(user, article);
+  }
+
+  @Override
+  public boolean isLike(int user, int article) {
+    return 1 == articleRepository.isLike(user, article);
+  }
+
+  @Override
+  public int unLike(int user, int article) {
+    return articleRepository.unLike(user, article);
+  }
+
+  @Override
+  public int comment(int user, int article, String content) {
+    return articleRepository.comment(user, article, content);
+  }
+
+  @Override
+  public int removeComment(int user, int article) {
+    return articleRepository.removeComment(user, article);
+  }
+
+
 }

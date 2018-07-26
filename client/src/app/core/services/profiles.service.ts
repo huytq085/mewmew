@@ -42,4 +42,15 @@ export class ProfilesService implements OnInit{
     return this.apiService.get('/users/' + userId + '/isfollowing/' + this.userService.getCurrentUser().id);
   }
 
+  user2Profile(user: User): Profile{
+    let profile: Profile = {} as Profile;
+    if (typeof user != 'undefined'){
+      profile.username = user.username;
+      profile.bio = user.description;
+      profile.avatar = user.avatar;
+      profile.id = user.id;
+    }
+    return profile;
+  }
+
 }

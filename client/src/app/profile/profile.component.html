@@ -4,8 +4,8 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-xs-12 col-md-10 offset-md-1">
-          <!-- <img [src]="profile.image" class="user-img" /> -->
+        <div class="col-xs-12 col-md-10 offset-md-1" *ngIf="profile">
+          <img [src]="profile.avatar" class="user-img" />
           <h4>{{ username }}</h4>
           <p>{{ description }}</p>
            <app-follow-button
@@ -13,11 +13,11 @@
             [profile]="profile"
             (toggle)="onToggleFollowing($event)">
           </app-follow-button>
-           <!-- <a [routerLink]="['/settings']"
+           <a [routerLink]="['/settings']"
               [hidden]="!isUser"
               class="btn btn-sm btn-outline-secondary action-btn">
               <i class="ion-gear-a"></i> Edit Profile Settings
-            </a> -->
+            </a>
         </div>
 
       </div>

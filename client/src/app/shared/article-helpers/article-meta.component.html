@@ -1,6 +1,6 @@
-<!-- <div class="article-meta">
+<div class="article-meta" *ngIf="article.author">
   <a [routerLink]="['/profile', article.author.username]">
-    <img [src]="article.author.image" />
+    <img [src]="article.author.avatar" />
   </a>
 
   <div class="info">
@@ -14,4 +14,4 @@
   </div>
 
   <ng-content></ng-content>
-</div> -->
+</div>

@@ -38,10 +38,21 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     // If there's an article prefetched, load it
+    console.log(this.route.snapshot.data)
     this.route.data.subscribe((data: { article: Article }) => {
+      console.log(data)
       if (data.article) {
         this.article = data.article;
         this.articleForm.patchValue(data.article);
+      } else {
+        // TODO: Do not need get article again, bescause it already exists from previous route
+        let articleId = this.route.snapshot.params['id'];
+        this.articlesService.get(articleId).subscribe(
+          data => {
+            this.article = data;
+            this.articleForm.patchValue(data);
+          }
+        )
       }
     });
   }

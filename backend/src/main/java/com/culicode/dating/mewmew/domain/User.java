@@ -2,7 +2,6 @@ package com.culicode.dating.mewmew.domain;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -33,8 +32,8 @@ public class User{
     private String address;
     @Column(name = "city")
     private String city;
-    @Column(name = "avartar")
-    private String avartar;
+    @Column(name = "avatar")
+    private String avatar;
     @Column(name = "rate")
     private int rate;
     @Column(name = "height")
@@ -149,12 +148,12 @@ public class User{
         this.city = city;
     }
 
-    public String getAvartar() {
-        return avartar;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAvartar(String avartar) {
-        this.avartar = avartar;
+    public void setAvatar(String avartar) {
+        this.avatar = avartar;
     }
 
     public int getRate() {

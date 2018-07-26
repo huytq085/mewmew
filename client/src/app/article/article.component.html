@@ -28,7 +28,7 @@
           <app-favorite-button
             [article]="article"
             (toggle)="onToggleFavorite($event)">
-            {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article <span class="counter">({{ article.favoritesCount }})</span>
+            {{ article.favorited ? 'Liked' : 'Like' }} <span class="counter">({{ article.favoritesCount }})</span>
           </app-favorite-button>
         </span> 
 
@@ -80,12 +80,13 @@
           <app-favorite-button
             [article]="article"
             (toggle)="onToggleFavorite($event)">
-            {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article <span class="counter">({{ article.favoritesCount }})</span>
+            {{ article.favorited ? 'Liked' : 'Like' }} <span class="counter">({{ article.favoritesCount }})</span>
           </app-favorite-button>
         </span>
 
       </app-article-meta>
     </div>
+
 
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-md-2">
@@ -101,12 +102,12 @@
                   [formControl]="commentControl"
                 ></textarea>
               </div>
-              <!-- <div class="card-footer">
-                <img [src]="currentUser.image" class="comment-author-img" />
+              <div class="card-footer">
+                <img [src]="currentUser.avatar" class="comment-author-img" />
                 <button class="btn btn-sm btn-primary" type="submit">
                  Post Comment
                 </button>
-              </div> -->
+              </div>
             </fieldset>
           </form>
         </div>

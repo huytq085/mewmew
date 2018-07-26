@@ -1,3 +1,4 @@
+import { ProfilesService } from './../core/services/profiles.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +9,8 @@ import {
   Comment,
   CommentsService,
   User,
-  UserService
+  UserService,
+  Profile
 } from '../core';
 
 @Component({
@@ -32,6 +34,7 @@ export class ArticleComponent implements OnInit {
     private commentsService: CommentsService,
     private router: Router,
     private userService: UserService,
+    private profileService: ProfilesService
   ) { }
 
   ngOnInit() {
@@ -48,12 +51,26 @@ export class ArticleComponent implements OnInit {
     this.articlesService.get(articleId).subscribe(
       data => {
         this.article = data;
+        // TODO: Create likeCount from spring server to load all info of article
+        this.articlesService.isFavorite(this.article.id).subscribe(
+          res => {
+            this.article.favorited = res;
+          }
+        )
+        // TODO: Get number of like from server
+        this.article.favoritesCount = 1;
         // Load the current user's data
         this.currentUser = this.userService.getCurrentUser();
         console.log(this.currentUser)
         console.log(this.article)
         this.canModify = (this.currentUser.id === this.article.userId);
-        console.log(this.canModify)
+        // TODO: Get author from another service
+        this.userService.getUserById(this.article.userId).subscribe(
+          data => {
+            this.article.author = this.profileService.user2Profile(data);
+          }
+        )
+        console.log('can modify: ' + this.canModify)
       }
     )
 
@@ -61,30 +78,30 @@ export class ArticleComponent implements OnInit {
 
   }
 
-  // onToggleFavorite(favorited: boolean) {
-  //   this.article.favorited = favorited;
+  onToggleFavorite(favorited: boolean) {
+    this.article.favorited = favorited;
 
-  //   if (favorited) {
-  //     this.article.favoritesCount++;
-  //   } else {
-  //     this.article.favoritesCount--;
-  //   }
-  // }
+    if (favorited) {
+      this.article.favoritesCount++;
+    } else {
+      this.article.favoritesCount--;
+    }
+  }
 
-  // onToggleFollowing(following: boolean) {
-  //   this.article.author.following = following;
-  // }
+  onToggleFollowing(following: boolean) {
+    this.article.author.following = following;
+  }
 
-  // deleteArticle() {
-  //   this.isDeleting = true;
+  deleteArticle() {
+    this.isDeleting = true;
 
-  //   this.articlesService.destroy(this.article.slug)
-  //     .subscribe(
-  //       success => {
-  //         this.router.navigateByUrl('/');
-  //       }
-  //     );
-  // }
+    this.articlesService.destroy(this.article.id)
+      .subscribe(
+        success => {
+          this.router.navigateByUrl('/');
+        }
+      );
+  }
 
   // populateComments() {
   //   this.commentsService.getAll(this.article.slug)
@@ -119,5 +136,7 @@ export class ArticleComponent implements OnInit {
   //       }
   //     );
   // }
+
+  // TODO: Reuse this method user2Profile
 
 }

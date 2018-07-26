@@ -13,8 +13,8 @@ import java.util.List;
 public interface UserApi {
 
     String BASE_URI = "/users";
-    String ID_URI = BASE_URI + "/{id}";
     String USERNAME_URI = BASE_URI + "/{username}";
+    String ID_URI = BASE_URI + "/id/{id}";
     String FOLLOW_URI = BASE_URI + "/{userId}/follow";
     String UNFOLLOW_URI = BASE_URI + "/{userId}/unfollow";
     String IS_FOLLOWING_URI = BASE_URI + "/{user1}/isfollowing/{user2}";
@@ -25,6 +25,7 @@ public interface UserApi {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     User create(@RequestBody User user);
+
 
     @RequestMapping(
             value = BASE_URI,
@@ -52,6 +53,12 @@ public interface UserApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     User get(@PathVariable String username);
+
+    @RequestMapping(
+            value = ID_URI,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    User getById(@PathVariable int id);
 
     @RequestMapping(
             value = FOLLOW_URI,

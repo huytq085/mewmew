@@ -45,6 +45,11 @@ public class UserApiImpl implements UserApi{
     }
 
     @Override
+    public User getById(@PathVariable int id) {
+        return userService.findById(id);
+    }
+
+    @Override
     public int follow(@PathVariable int userId, @RequestBody User user) {
         LOG.info(user.getUsername() + " want to follow " + userId);
         return this.userService.follow(userId, user.getId());

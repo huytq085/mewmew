@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -9,7 +10,8 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ArticlesService {
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private userService: UserService
   ) { }
 
   query(config: ArticleListConfig): Observable<Article[]> {
@@ -33,8 +35,8 @@ export class ArticlesService {
       .pipe(map(data => data));
   }
 
-  destroy(slug) {
-    return this.apiService.delete('/articles/' + slug);
+  destroy(id) {
+    return this.apiService.delete('/articles/' + id);
   }
 
   save(article): Observable<Article> {
@@ -52,12 +54,16 @@ export class ArticlesService {
     }
   }
 
-  favorite(slug): Observable<Article> {
-    return this.apiService.post('/articles/' + slug + '/favorite');
+  favorite(articleId: number): Observable<Article> {
+    return this.apiService.post('/articles/' + articleId + '/like', this.userService.getCurrentUser());
   }
 
-  unfavorite(slug): Observable<Article> {
-    return this.apiService.delete('/articles/' + slug + '/favorite');
+  unfavorite(articleId: number): Observable<Article> {
+    return this.apiService.post('/articles/' + articleId + '/unlike',this.userService.getCurrentUser());
+  }
+
+  isFavorite(articleId: number): Observable<boolean>{
+    return this.apiService.get('/articles/' + articleId + '/isfavorite/' + this.userService.getCurrentUser().id);
   }
 
 
