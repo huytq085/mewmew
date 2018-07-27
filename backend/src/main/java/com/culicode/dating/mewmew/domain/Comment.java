@@ -2,31 +2,33 @@ package com.culicode.dating.mewmew.domain;
 
 public class Comment {
     private int articleId;
-    private int userId;
+    private User author;
     private String content;
     private int numOfLike;
 
-    public Comment(int articleId, int userId, String content, int numOfLike) {
+  public Comment() {
+  }
+
+  public Comment(int articleId, String content, int numOfLike) {
         this.articleId = articleId;
-        this.userId = userId;
         this.content = content;
         this.numOfLike = numOfLike;
     }
 
-    public int getArticleId() {
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  public int getArticleId() {
         return articleId;
     }
 
     public void setArticleId(int articleId) {
         this.articleId = articleId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getContent() {

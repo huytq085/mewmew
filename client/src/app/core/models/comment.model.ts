@@ -2,7 +2,8 @@ import { Profile } from './profile.model';
 
 export interface Comment {
   id: number;
-  body: string;
-  createdAt: string;
+  articleId: number;
+  content: string;
+  dateAdded: string;
   author: Profile;
 }

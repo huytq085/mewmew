@@ -21,12 +21,13 @@ export class ArticleComponent implements OnInit {
   article: Article;
   currentUser: User;
   canModify: boolean;
-  comments: Comment[];
+  comments: Comment[] = new Array();
   commentControl = new FormControl();
   commentFormErrors = '';
   isSubmitting = false;
   isDeleting = false;
   hasArticle = false;
+  comment: Comment = {} as Comment;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,7 @@ export class ArticleComponent implements OnInit {
     //   }
     // );
     let articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    this.comment.articleId = parseInt(articleId);
     this.articlesService.get(articleId).subscribe(
       data => {
         this.article = data;
@@ -61,6 +63,7 @@ export class ArticleComponent implements OnInit {
         this.article.favoritesCount = 1;
         // Load the current user's data
         this.currentUser = this.userService.getCurrentUser();
+        this.comment.author = this.profileService.user2Profile(this.currentUser);
         console.log(this.currentUser)
         console.log(this.article)
         this.canModify = (this.currentUser.id === this.article.userId);
@@ -108,25 +111,30 @@ export class ArticleComponent implements OnInit {
   //     .subscribe(comments => this.comments = comments);
   // }
 
-  // addComment() {
-  //   this.isSubmitting = true;
-  //   this.commentFormErrors = {};
+  addComment() {
+    this.isSubmitting = true;
+    this.comment.content = this.commentControl.value;
+    this.commentsService
+      .add(this.comment)
+      .subscribe(
+        res => {
+          console.log(res);
 
-  //   const commentBody = this.commentControl.value;
-  //   this.commentsService
-  //     .add(this.article.slug, commentBody)
-  //     .subscribe(
-  //       comment => {
-  //         this.comments.unshift(comment);
-  //         this.commentControl.reset('');
-  //         this.isSubmitting = false;
-  //       },
-  //       errors => {
-  //         this.isSubmitting = false;
-  //         this.commentFormErrors = errors;
-  //       }
-  //     );
-  // }
+          if (res == 1){
+            console.log(this.comments)
+            
+            this.comments.unshift(this.comment);
+            this.commentControl.reset('');
+            this.isSubmitting = false;
+          }
+          
+        },
+        errors => {
+          this.isSubmitting = false;
+          this.commentFormErrors = errors;
+        }
+      );
+  }
 
   // onDeleteComment(comment) {
   //   this.commentsService.destroy(comment.id, this.article.slug)
@@ -137,6 +145,5 @@ export class ArticleComponent implements OnInit {
   //     );
   // }
 
-  // TODO: Reuse this method user2Profile
 
 }

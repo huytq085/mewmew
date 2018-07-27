@@ -9,6 +9,7 @@ import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +26,9 @@ public class ArticleApi {
     private final String BASE_URI = "/articles";
     private final String ARTICLE_ID_URI = BASE_URI + "/{articleId}";
     private final String USER_ID_URI = BASE_URI + "/user/{userId}";
-    private final String LIKE_URI = BASE_URI + "/{articleId}/like";
+    private final String LIKE_URI = BASE_URI + "/{articleeditorconfigId}/like";
     private final String UNLIKE_URI = BASE_URI + "/{articleId}/unlike";
-    private final String COMMENT_URI = BASE_URI + "/{articleId}/comment";
+    private final String COMMENT_URI = BASE_URI + "/comments";
     private final String REMOVE_COMMENT_URI = BASE_URI + "/{articleId}/removecomment";
     private final String IS_FAVORITE_URI = BASE_URI + "/{articleId}/isfavorite/{userId}";
 
@@ -57,7 +58,7 @@ public class ArticleApi {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    void delete(@PathVariable int articleId){
+    void delete(@PathVariable int articleId) {
         articleService.delete(articleId);
     }
 
@@ -86,7 +87,7 @@ public class ArticleApi {
             value = LIKE_URI,
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    int like(@PathVariable int articleId, @RequestBody User user){
+    int like(@PathVariable int articleId, @RequestBody User user) {
         LOG.info(user.getUsername() + " want to like article " + articleId);
         return articleService.like(user.getId(), articleId);
     }
@@ -95,7 +96,7 @@ public class ArticleApi {
             value = UNLIKE_URI,
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    int unLike(@PathVariable int articleId, @RequestBody User user){
+    int unLike(@PathVariable int articleId, @RequestBody User user) {
         LOG.info(user.getUsername() + " want to unlike article " + articleId);
         return articleService.unLike(user.getId(), articleId);
     }
@@ -104,7 +105,7 @@ public class ArticleApi {
             value = IS_FAVORITE_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    boolean isLike(@PathVariable int articleId, @PathVariable int userId){
+    boolean isLike(@PathVariable int articleId, @PathVariable int userId) {
         return this.articleService.isLike(userId, articleId);
     }
 
@@ -112,7 +113,8 @@ public class ArticleApi {
             value = COMMENT_URI,
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    int comment(@PathVariable int articleId, @RequestBody Comment comment){
+    int comment(@RequestBody Comment comment) {
+        LOG.info(JsonUtil.encode(comment));
         return articleService.comment(comment);
     }
 
@@ -120,7 +122,7 @@ public class ArticleApi {
             value = REMOVE_COMMENT_URI,
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    int removeComment(@PathVariable int articleId, @RequestBody Comment comment){
+    int removeComment(@RequestBody Comment comment) {
         return articleService.comment(comment);
     }
 

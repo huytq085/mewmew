@@ -19,7 +19,6 @@ export class ArticleResolver implements Resolve<Article> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    let articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     return this.articlesService.get(route.params['id'])
       .pipe(catchError((err) => this.router.navigateByUrl('/')));
   }

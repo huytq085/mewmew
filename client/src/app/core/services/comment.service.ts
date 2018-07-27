@@ -12,12 +12,12 @@ export class CommentsService {
     private apiService: ApiService
   ) {}
 
-  add(slug, payload): Observable<Comment> {
+  add(comment: Comment): Observable<number> {
     return this.apiService
     .post(
-      `/articles/${slug}/comments`,
-      { comment: { body: payload } }
-    ).pipe(map(data => data.comment));
+      `/articles/comments`,
+      comment
+    );
   }
 
   getAll(slug): Observable<Comment[]> {

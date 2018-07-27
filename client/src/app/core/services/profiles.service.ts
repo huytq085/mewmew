@@ -46,7 +46,7 @@ export class ProfilesService implements OnInit{
     let profile: Profile = {} as Profile;
     if (typeof user != 'undefined'){
       profile.username = user.username;
-      profile.bio = user.description;
+      profile.description = user.description;
       profile.avatar = user.avatar;
       profile.id = user.id;
     }

@@ -75,12 +75,12 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public int comment(Comment comment) {
-    return articleRepository.comment(comment.getUserId(), comment.getArticleId(), comment.getContent());
+    return articleRepository.comment(comment.getAuthor().getId(), comment.getArticleId(), comment.getContent());
   }
 
   @Override
   public int removeComment(Comment comment) {
-    return articleRepository.removeComment(comment.getUserId(), comment.getArticleId());
+    return articleRepository.removeComment(comment.getAuthor().getId(), comment.getArticleId());
   }
 
 
