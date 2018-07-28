@@ -9,7 +9,6 @@ import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +25,10 @@ public class ArticleApi {
     private final String BASE_URI = "/articles";
     private final String ARTICLE_ID_URI = BASE_URI + "/{articleId}";
     private final String USER_ID_URI = BASE_URI + "/user/{userId}";
-    private final String LIKE_URI = BASE_URI + "/{articleeditorconfigId}/like";
+    private final String LIKE_URI = BASE_URI + "/{articleId}/like";
     private final String UNLIKE_URI = BASE_URI + "/{articleId}/unlike";
     private final String COMMENT_URI = BASE_URI + "/comments";
+    private final String GET_COMMENTS_URI = BASE_URI + "/{articleId}/comments";
     private final String REMOVE_COMMENT_URI = BASE_URI + "/{articleId}/removecomment";
     private final String IS_FAVORITE_URI = BASE_URI + "/{articleId}/isfavorite/{userId}";
 
@@ -126,4 +126,12 @@ public class ArticleApi {
         return articleService.comment(comment);
     }
 
+    @RequestMapping(
+            value = GET_COMMENTS_URI,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Comment> getComments(@PathVariable int articleId) {
+//        Arrays.deepToString(articleService.getComments(articleId))
+        return articleService.getComments(articleId);
+    }
 }

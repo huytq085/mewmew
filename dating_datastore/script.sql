@@ -157,27 +157,27 @@ create index article_tag_tag__fk
 
 create table comment
 (
-  userId    int                                not null,
-  articleId int                                not null,
-  content   longtext                           not null,
-  `like`    int default '0'                    null,
-  dateAdded datetime default CURRENT_TIMESTAMP null,
-  constraint fk_comment_user1
-  foreign key (userId) references user (id)
+  article_id  int                                not null,
+  content     longtext                           not null,
+  num_of_like int default '0'                    null,
+  date_added  datetime default CURRENT_TIMESTAMP null,
+  id          int auto_increment
+    primary key,
+  user_id     int                                null,
+  constraint fk_comment_article1
+  foreign key (article_id) references article (id)
     on update cascade
     on delete cascade,
-  constraint fk_comment_article1
-  foreign key (articleId) references article (id)
-    on update cascade
-    on delete cascade
+  constraint FK8kcum44fvpupyw6f5baccx25c
+  foreign key (user_id) references user (id)
 )
   collate = utf8_unicode_ci;
 
-create index fk_comment_article1_idx
-  on comment (articleId);
+create index FK8kcum44fvpupyw6f5baccx25c
+  on comment (user_id);
 
-create index fk_comment_user1_idx
-  on comment (userId);
+create index fk_comment_article1_idx
+  on comment (article_id);
 
 create table friendship
 (
@@ -269,7 +269,52 @@ create table user_role
 create index user_role_FK2
   on user_role (role_id);
 
+create procedure comment(IN user int, IN article int, IN `_content` longtext, OUT isSuccess int(1))
+  begin
+    insert into comment (user_id, article_id, content) values (user, article, _content);
+    set isSuccess = ROW_COUNT();
+  end;
 
+create procedure doLike(IN user int, IN article int, OUT isSuccess int(1))
+  begin
+    insert into likes (user_id, article_id) values (user, article);
+    set isSuccess = ROW_COUNT();
+  end;
+
+create procedure follow(IN user1 int, IN user2 int, OUT isSuccess int(1))
+  begin
+    insert into friendship (follower_id, following_id) values (user1, user2);
+    set isSuccess = ROW_COUNT();
+  end;
+
+create procedure isFollowing(IN user1 int, IN user2 int, OUT isFollowing int(1))
+  begin
+    set isFollowing = 0;
+    IF EXISTS(select fs.date_added
+              from friendship fs
+              where fs.follower_id = user1 and fs.following_id = user2)
+    THEN
+      set isFollowing = 1;
+    END IF;
+  END;
+
+create procedure isLike(IN user int, IN article int, OUT isLike int(1))
+  begin
+    set isLike = 0;
+    IF EXISTS(select l.user_id
+              from likes l
+              where l.user_id = user and l.article_id = article)
+    THEN
+      set isLike = 1;
+    END IF;
+  end;
+
+create procedure removeComment(IN user int, IN article int, OUT isSuccess int(1))
+  begin
+    delete from comment
+    where userId = user and article_id = article;
+    set isSuccess = ROW_COUNT();
+  end;
 
 create function sequence_nextval()
   returns int
@@ -284,72 +329,19 @@ create function sequence_nextval()
     RETURN nextval;
   END;
 
-
-DELIMITER $$
-USE `dating_datastore`$$
-
-create procedure `comment`(IN user int, IN article int, IN `_content` longtext, OUT isSuccess int(1))
-BEGIN
-	insert into comment (userId, articleId, content) values (user, article, _content);
-    set isSuccess = ROW_COUNT();
-END$$
-
-create procedure `doLike`(IN user int, IN article int, OUT isSuccess int(1))
-BEGIN
-	insert into likes (user_id, article_id) values (user, article);
-    set isSuccess = ROW_COUNT();
-END$$
-create procedure `isLike`(IN user int, IN article int, OUT isLike int(1))
-  begin
-    set isLike = 0;
-    IF EXISTS(select l.user_id
-              from likes l
-              where l.user_id = user and l.article_id = article)
-    THEN
-      set isLike = 1;
-    END IF;
-  END$$
-  
-  
-
-create procedure `removeComment`(IN user int, IN article int, OUT isSuccess int(1))
-  begin
-    delete from comment
-    where userId = user and articleId = article;
-    set isSuccess = ROW_COUNT();
-  END$$
-  
-  create procedure `unFollow`(IN user1 int, IN user2 int, OUT isSuccess int(1))
+create procedure unFollow(IN user1 int, IN user2 int, OUT isSuccess int(1))
   begin
     delete from friendship
     where follower_id = user1 and following_id = user2
     limit 1;
     set isSuccess = ROW_COUNT();
-  END$$
+  end;
 
-create procedure `unLike`(IN user int, IN article int, OUT isSuccess int(1))
+create procedure unLike(IN user int, IN article int, OUT isSuccess int(1))
   begin
     delete from likes
     where user_id = user and article_id = article;
     set isSuccess = ROW_COUNT();
-  END$$
-
-create procedure `follow`(IN user1 int, IN user2 int, OUT isSuccess int(1))
- BEGIN
-    insert into friendship(follower_id, following_id) values(user1, user2);
-    set isSuccess = ROW_COUNT();
- END$$
-
-create procedure `isFollowing`(IN user1 int, IN user2 int, OUT isFollowing int(1))
-  BEGIN
-    set isFollowing = 0;
-    IF EXISTS(select fs.date_added
-              from friendship fs
-              where fs.follower_id = user1 and fs.following_id = user2)
-    THEN
-      set isFollowing = 1;
-    END IF;
-  END$$
-DELIMITER ;
+  end;
 
 

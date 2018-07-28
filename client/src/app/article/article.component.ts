@@ -74,6 +74,7 @@ export class ArticleComponent implements OnInit {
           }
         )
         console.log('can modify: ' + this.canModify)
+        this.populateComments();
       }
     )
 
@@ -106,20 +107,20 @@ export class ArticleComponent implements OnInit {
       );
   }
 
-  // populateComments() {
-  //   this.commentsService.getAll(this.article.slug)
-  //     .subscribe(comments => this.comments = comments);
-  // }
+  populateComments() {
+    this.commentsService.getAll(this.article.id)
+      .subscribe(comments => this.comments = comments);
+  }
 
   addComment() {
+    // Clone new object
+    this.comment = Object.assign({}, this.comment);
     this.isSubmitting = true;
     this.comment.content = this.commentControl.value;
     this.commentsService
       .add(this.comment)
       .subscribe(
         res => {
-          console.log(res);
-
           if (res == 1){
             console.log(this.comments)
             

@@ -30,4 +30,6 @@ public interface ArticleService {
   int comment(Comment comment);
 
   int removeComment(Comment comment);
+
+  List<Comment> getComments(int articleId);
 }

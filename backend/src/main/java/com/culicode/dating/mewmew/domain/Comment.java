@@ -1,11 +1,25 @@
 package com.culicode.dating.mewmew.domain;
 
-public class Comment {
-    private int articleId;
-    private User author;
-    private String content;
-    private int numOfLike;
+import javax.persistence.*;
+import java.util.Date;
 
+@Entity
+@Table(name = "comment")
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "articleId")
+    private int articleId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User author;
+    @Column(name = "content")
+    private String content;
+    @Column(name = "num_of_like", nullable = false)
+    private int numOfLike;
+    @Column(name = "date_added", nullable = false)
+    private Date dateAdded;
   public Comment() {
   }
 
@@ -45,5 +59,13 @@ public class Comment {
 
     public void setNumOfLike(int numOfLike) {
         this.numOfLike = numOfLike;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 }

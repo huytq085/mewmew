@@ -4,6 +4,7 @@ import com.culicode.dating.mewmew.domain.Article;
 import com.culicode.dating.mewmew.domain.Comment;
 import com.culicode.dating.mewmew.domain.User;
 import com.culicode.dating.mewmew.repository.ArticleRepository;
+import com.culicode.dating.mewmew.repository.CommentRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class ArticleServiceImpl implements ArticleService {
   private static final Logger LOG = LogManager.getLogger(Article.class);
   @Autowired
   ArticleRepository articleRepository;
+  @Autowired
+  CommentRepository commentRepository;
 
   @Autowired
   UserService userService;
@@ -81,6 +84,11 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   public int removeComment(Comment comment) {
     return articleRepository.removeComment(comment.getAuthor().getId(), comment.getArticleId());
+  }
+
+  @Override
+  public List<Comment> getComments(int articleId) {
+    return commentRepository.getAllByArticleIdOrderByDateAddedDesc(articleId);
   }
 
 

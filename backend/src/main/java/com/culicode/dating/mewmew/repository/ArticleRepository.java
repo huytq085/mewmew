@@ -1,6 +1,7 @@
 package com.culicode.dating.mewmew.repository;
 
 import com.culicode.dating.mewmew.domain.Article;
+import com.culicode.dating.mewmew.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -28,4 +29,5 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
     @Procedure
     int removeComment(int user, int article);
+
 }
