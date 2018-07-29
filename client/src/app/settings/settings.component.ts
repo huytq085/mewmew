@@ -15,7 +15,7 @@ export class SettingsComponent implements OnInit {
   settingsForm: FormGroup;
   errors: Object = {};
   isSubmitting = false;
-
+  form: FormGroup;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -27,7 +27,8 @@ export class SettingsComponent implements OnInit {
       username: '',
       description: '',
       email: '',
-      password: ''
+      password: '',
+      avatar: ''
     });
     // Optional: subscribe to changes on the form
     // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
@@ -44,6 +45,19 @@ export class SettingsComponent implements OnInit {
     console.log(1)
     this.userService.purgeAuth();
     this.router.navigateByUrl('/');
+  }
+
+  onFileChange(event) {
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.settingsForm.controls['avatar'].setValue(reader.result.split(',')[1]);
+        console.log(this.settingsForm.value)
+      }
+
+    }
   }
 
   submitForm() {
@@ -71,6 +85,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateUser(values: Object) {
+    console.log(values)
     Object.assign(this.user, values);
   }
 
