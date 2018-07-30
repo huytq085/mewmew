@@ -96,7 +96,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> globalFeed(int limit) {
         Pageable topLimit = PageRequest.of(0, limit);
-        return articleRepository.findAll(topLimit).getContent();
+      return articleRepository.findAllByOrderByDateAddedDesc(topLimit);
     }
 
     @Override

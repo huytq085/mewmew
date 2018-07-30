@@ -26,7 +26,6 @@ public class ArticleApi {
     private final String BASE_URI = "/articles";
     private final String ARTICLE_ID_URI = BASE_URI + "/{articleId}";
     private final String FEED_URI = BASE_URI + "/feed/{userId}";
-    private final String GLOBAL_FEED_URI = BASE_URI + "/global/feed";
     private final String LIKE_URI = BASE_URI + "/{articleId}/like";
     private final String UNLIKE_URI = BASE_URI + "/{articleId}/unlike";
     private final String COMMENT_URI = BASE_URI + "/comments";
@@ -70,10 +69,13 @@ public class ArticleApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Article> getByUsername(@RequestParam("author") String username) {
-        LOG.info("Get list by username");
-        System.out.println(username);
-        return articleService.getAllArticlesByUsername(username);
+    public List<Article> getArticles(@RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+        LOG.info(username);
+        LOG.info(limit);
+        if (username != null) {
+            return articleService.getAllArticlesByUsername(username);
+        }
+        return articleService.globalFeed(limit);
     }
 
     @RequestMapping(
@@ -138,16 +140,4 @@ public class ArticleApi {
         LOG.info(offset);
         return articleService.feed(userId, limit);
     }
-
-    @RequestMapping(
-            value = GLOBAL_FEED_URI,
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    List<Article> globalFeed(@Param("limit") int limit, @Param("offset") int offset) {
-        LOG.info(limit);
-        LOG.info(offset);
-        return articleService.globalFeed(limit);
-    }
-
-
 }

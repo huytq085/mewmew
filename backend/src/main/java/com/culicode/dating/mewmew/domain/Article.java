@@ -21,9 +21,11 @@ public class Article {
     private int categoryId;
     @Column(name = "view", nullable = false)
     private int view;
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", insertable=false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @Column(name = "date_added", nullable = false)
+    @Column(name = "date_added", insertable=false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateAdded;
 
     public Article() {

@@ -26,7 +26,7 @@ export class ArticlesService {
 
     return this.apiService
       .get(
-        '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : '/global/feed/' ),
+        '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : '' ),
         new HttpParams({ fromObject: params })
       );
   }
