@@ -15,6 +15,7 @@ export class ArticlesService {
   ) { }
 
   query(config: ArticleListConfig): Observable<Article[]> {
+    console.log('Da vao query')
     // Convert any filters over to Angular's URLSearchParams
     const params = {};
 
@@ -25,7 +26,7 @@ export class ArticlesService {
 
     return this.apiService
       .get(
-        '/articles' + ((config.type === 'feed') ? '/feed' : ''),
+        '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : '/global/feed/' ),
         new HttpParams({ fromObject: params })
       );
   }

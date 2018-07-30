@@ -9,6 +9,7 @@ import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,8 @@ public class ArticleApi {
 
     private final String BASE_URI = "/articles";
     private final String ARTICLE_ID_URI = BASE_URI + "/{articleId}";
-    private final String USER_ID_URI = BASE_URI + "/user/{userId}";
+    private final String FEED_URI = BASE_URI + "/feed/{userId}";
+    private final String GLOBAL_FEED_URI = BASE_URI + "/global/feed";
     private final String LIKE_URI = BASE_URI + "/{articleId}/like";
     private final String UNLIKE_URI = BASE_URI + "/{articleId}/unlike";
     private final String COMMENT_URI = BASE_URI + "/comments";
@@ -62,15 +64,6 @@ public class ArticleApi {
         articleService.delete(articleId);
     }
 
-
-//  @RequestMapping(
-//    value = USER_ID_URI,
-//    method = RequestMethod.GET,
-//    produces = MediaType.APPLICATION_JSON_VALUE)
-//  public List<Article> getAll(@PathVariable int userId) {
-//    System.out.println("User Id: " + userId);
-//    return articleService.getAllArticlesByUserId(userId);
-//  }
 
     @RequestMapping(
             value = BASE_URI,
@@ -134,4 +127,27 @@ public class ArticleApi {
 //        Arrays.deepToString(articleService.getComments(articleId))
         return articleService.getComments(articleId);
     }
+
+    @RequestMapping(
+            value = FEED_URI,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Article> feed(@PathVariable int userId, @Param("limit") int limit, @Param("offset") int offset) {
+        LOG.info(userId);
+        LOG.info(limit);
+        LOG.info(offset);
+        return articleService.feed(userId, limit);
+    }
+
+    @RequestMapping(
+            value = GLOBAL_FEED_URI,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Article> globalFeed(@Param("limit") int limit, @Param("offset") int offset) {
+        LOG.info(limit);
+        LOG.info(offset);
+        return articleService.globalFeed(limit);
+    }
+
+
 }

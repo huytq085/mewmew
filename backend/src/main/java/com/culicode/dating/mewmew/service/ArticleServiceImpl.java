@@ -8,6 +8,8 @@ import com.culicode.dating.mewmew.repository.CommentRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -89,6 +91,18 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   public List<Comment> getComments(int articleId) {
     return commentRepository.getAllByArticleIdOrderByDateAddedDesc(articleId);
+  }
+
+    @Override
+    public List<Article> globalFeed(int limit) {
+        Pageable topLimit = PageRequest.of(0, limit);
+        return articleRepository.findAll(topLimit).getContent();
+    }
+
+    @Override
+  public List<Article> feed(int userId, int limit) {
+    Pageable topLimit = PageRequest.of(0, limit);
+      return articleRepository.feed(userId, topLimit);
   }
 
 

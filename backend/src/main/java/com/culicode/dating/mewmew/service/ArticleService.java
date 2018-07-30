@@ -9,27 +9,31 @@ import java.util.List;
 
 @Service
 public interface ArticleService {
-  Article save(Article article);
+    Article save(Article article);
 
-  Article update(Article article);
+    Article update(Article article);
 
-  void delete(int id);
+    void delete(int id);
 
-  List<Article> getAllArticlesByUserId(int userId);
+    List<Article> getAllArticlesByUserId(int userId);
 
-  List<Article> getAllArticlesByUsername(String username);
+    List<Article> getAllArticlesByUsername(String username);
 
-  Article findById(int id);
+    Article findById(int id);
 
-  int like(int user, int article);
+    int like(int user, int article);
 
-  boolean isLike(int user, int article);
+    boolean isLike(int user, int article);
 
-  int unLike(int user, int article);
+    int unLike(int user, int article);
 
-  int comment(Comment comment);
+    int comment(Comment comment);
 
-  int removeComment(Comment comment);
+    int removeComment(Comment comment);
 
-  List<Comment> getComments(int articleId);
+    List<Comment> getComments(int articleId);
+
+    List<Article> globalFeed(int limit);
+
+    List<Article> feed(int userId, int limit);
 }
