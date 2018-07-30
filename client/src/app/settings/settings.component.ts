@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import swal from 'sweetalert';
@@ -28,7 +28,7 @@ export class SettingsComponent implements OnInit {
       description: '',
       email: '',
       password: '',
-      avatar: ''
+      avatar: [null, Validators.required]
     });
     // Optional: subscribe to changes on the form
     // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
@@ -53,8 +53,8 @@ export class SettingsComponent implements OnInit {
       let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.settingsForm.controls['avatar'].setValue(reader.result.split(',')[1]);
-        console.log(this.settingsForm.value)
+        this.user.avatar = reader.result;
+        this.settingsForm.controls['avatar'].setValue(reader.result);
       }
 
     }

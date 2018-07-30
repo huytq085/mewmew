@@ -71,6 +71,12 @@ export class ArticleComponent implements OnInit {
         this.userService.getUserById(this.article.userId).subscribe(
           data => {
             this.article.author = this.profileService.user2Profile(data);
+            this.profileService.isFollowing(this.article.author.id)
+          .subscribe(
+            res => {
+              this.article.author.following = res;
+            }
+          )
           }
         )
         console.log('can modify: ' + this.canModify)
