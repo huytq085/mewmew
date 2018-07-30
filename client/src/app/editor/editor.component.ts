@@ -77,8 +77,8 @@ export class EditorComponent implements OnInit {
     this.isSubmitting = true;
 
     // Set userId for article
-    this.article.userId = this.userService.getCurrentUser().id;
-    console.log("current user id: " + this.article.userId);
+    this.article.author.id = this.userService.getCurrentUser().id;
+    console.log("current user id: " + this.article.author.id);
 
     // Set default category = 1 for testing
     this.article.categoryId = 1;

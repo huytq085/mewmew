@@ -1,4 +1,4 @@
-<div class="article-meta" *ngIf="article.author">
+<div class="article-meta" *ngIf="isLoad">
   <a [routerLink]="['/profile', article.author.username]">
     <img [src]="article.author.avatar" />
   </a>

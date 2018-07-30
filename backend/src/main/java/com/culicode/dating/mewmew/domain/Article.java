@@ -1,6 +1,7 @@
 package com.culicode.dating.mewmew.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,8 +12,6 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "user_id", nullable = false)
-    private int userId;
     @Column(name = "subject", nullable = false)
     private String subject;
     @Column(name = "content", nullable = false)
@@ -28,24 +27,29 @@ public class Article {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAdded;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
     public Article() {
     }
 
-    public int getId() {
-        return id;
-    }
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
+  }
+
+  public int getId() {
+          return id;
+      }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getSubject() {
         return subject;

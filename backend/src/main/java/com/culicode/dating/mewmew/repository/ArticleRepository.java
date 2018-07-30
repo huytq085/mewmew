@@ -13,10 +13,10 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
-    @Query("from Article a where a.userId = :userId order by a.dateAdded desc")
+    @Query("from Article a where a.author.id = :userId order by a.dateAdded desc")
     List<Article> findAllByUserId(@Param("userId") int userId);
 
-    @Query("from Article a where a.userId in (select f.followerId from FriendShip f where f.followingId = :userId)")
+    @Query("from Article a where a.author.id in (select f.followerId from FriendShip f where f.followingId = :userId) order by a.dateAdded desc")
     List<Article> feed(@Param("userId") int userId, Pageable pageable);
 
     List<Article> findAllByOrderByDateAddedDesc(Pageable pageable);

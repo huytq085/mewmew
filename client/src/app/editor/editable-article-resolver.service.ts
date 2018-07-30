@@ -24,7 +24,7 @@ export class EditableArticleResolver implements Resolve<Article> {
       .pipe(
         map(
           article => {
-            this.userService.getUserById(article.userId).subscribe(
+            this.userService.getUserById(article.author.id).subscribe(
               data => {
                 article.author = this.profileService.user2Profile(data);
                 if (this.userService.getCurrentUser().username === article.author.username) {

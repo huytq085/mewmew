@@ -2,7 +2,6 @@ import { Profile } from './profile.model';
 
 export class Article {
   id: number;
-  userId: number;
   slug: string;
   subject: string;
   description: string;

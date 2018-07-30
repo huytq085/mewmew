@@ -12,6 +12,10 @@ export class ArticlePreviewComponent implements OnInit {
 
   ngOnInit(): void {
     // shorten content to 150 characters
+    console.log('article preview')
+    console.log(this.article);
+    // Set count for testing
+    this.article.favoritesCount = 1;
     this.article.content = this.article.content.substring(0,150);
   }
 

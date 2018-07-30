@@ -54,21 +54,15 @@ export class ArticleComponent implements OnInit {
       data => {
         this.article = data;
         // TODO: Create likeCount from spring server to load all info of article
-        this.articlesService.isFavorite(this.article.id).subscribe(
-          res => {
-            this.article.favorited = res;
-          }
-        )
+        
         // TODO: Get number of like from server
         this.article.favoritesCount = 1;
         // Load the current user's data
         this.currentUser = this.userService.getCurrentUser();
         this.comment.author = this.profileService.user2Profile(this.currentUser);
-        console.log(this.currentUser)
-        console.log(this.article)
-        this.canModify = (this.currentUser.id === this.article.userId);
+        this.canModify = (this.currentUser.id === this.article.author.id);
         // TODO: Get author from another service
-        this.userService.getUserById(this.article.userId).subscribe(
+        this.userService.getUserById(this.article.author.id).subscribe(
           data => {
             this.article.author = this.profileService.user2Profile(data);
             this.profileService.isFollowing(this.article.author.id)
