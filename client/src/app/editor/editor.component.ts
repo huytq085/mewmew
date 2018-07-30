@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Article, ArticlesService } from '../core';
+import { Article, ArticlesService, ProfilesService } from '../core';
 
 @Component({
   selector: 'app-editor-page',
@@ -21,7 +21,8 @@ export class EditorComponent implements OnInit {
     private articlesService: ArticlesService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService: ProfilesService
   ) {
     // use the FormBuilder to create a form group
     this.articleForm = this.fb.group({
@@ -77,7 +78,7 @@ export class EditorComponent implements OnInit {
     this.isSubmitting = true;
 
     // Set userId for article
-    this.article.author.id = this.userService.getCurrentUser().id;
+    this.article.author = this.profileService.user2Profile(this.userService.getCurrentUser());
     console.log("current user id: " + this.article.author.id);
 
     // Set default category = 1 for testing

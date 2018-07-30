@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
+    String favoritedQuery = "select * from article a where a.id in ( select l.article_id from likes l where l.user_id=(select u.id from user u where u.username = :username))";
     @Query("from Article a where a.author.id = :userId order by a.dateAdded desc")
     List<Article> findAllByUserId(@Param("userId") int userId);
 
@@ -20,6 +21,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     List<Article> feed(@Param("userId") int userId, Pageable pageable);
 
     List<Article> findAllByOrderByDateAddedDesc(Pageable pageable);
+
+    @Query(value = favoritedQuery, nativeQuery = true)
+    List<Article> getFavorited(@Param("username") String username, Pageable pageable);
 
     @Procedure
     int doLike(int user, int article);

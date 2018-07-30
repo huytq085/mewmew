@@ -69,11 +69,15 @@ public class ArticleApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Article> getArticles(@RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+    public List<Article> getArticles(@RequestParam(name = "favorited", required = false) String favorited, @RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
         LOG.info(username);
         LOG.info(limit);
+        LOG.info(favorited);
         if (username != null) {
             return articleService.getAllArticlesByUsername(username);
+        }
+        if (favorited != null) {
+            return articleService.getFavorited(favorited, limit);
         }
         return articleService.globalFeed(limit);
     }

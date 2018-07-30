@@ -36,4 +36,6 @@ public interface ArticleService {
     List<Article> globalFeed(int limit);
 
     List<Article> feed(int userId, int limit);
+
+  List<Article> getFavorited(String username, int limit);
 }
