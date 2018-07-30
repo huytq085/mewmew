@@ -47,17 +47,8 @@ export class SettingsComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  onFileChange(event) {
-    let reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      let file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.user.avatar = reader.result;
-        this.settingsForm.controls['avatar'].setValue(reader.result);
-      }
-
-    }
+  abc(e){
+    console.log(e)
   }
 
   submitForm() {

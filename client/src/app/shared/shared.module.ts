@@ -1,3 +1,4 @@
+import { AvatarUploadComponent } from './profile-helpers/avatar-upload.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { ArticleListComponent, ArticleMetaComponent, ArticlePreviewComponent } f
 import { FavoriteButtonComponent, FollowButtonComponent } from './buttons';
 import { ListErrorsComponent } from './list-errors.component';
 import { ShowAuthedDirective } from './show-authed.directive';
+import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,9 @@ import { ShowAuthedDirective } from './show-authed.directive';
     FavoriteButtonComponent,
     FollowButtonComponent,
     ListErrorsComponent,
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    ProfileHelpersComponent,
+    AvatarUploadComponent
   ],
   exports: [
     ArticleListComponent,
@@ -38,7 +42,8 @@ import { ShowAuthedDirective } from './show-authed.directive';
     HttpClientModule,
     ListErrorsComponent,
     RouterModule,
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    AvatarUploadComponent
   ]
 })
 export class SharedModule {}

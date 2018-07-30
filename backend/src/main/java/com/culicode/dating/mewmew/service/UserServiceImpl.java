@@ -4,6 +4,7 @@ import com.culicode.dating.mewmew.domain.*;
 import com.culicode.dating.mewmew.repository.AppRoleRepository;
 import com.culicode.dating.mewmew.repository.UserRepository;
 import com.culicode.dating.mewmew.repository.UserRoleRepository;
+import com.culicode.dating.mewmew.util.Constants;
 import com.culicode.dating.mewmew.util.EncrytedPasswordUtils;
 import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +46,9 @@ public class UserServiceImpl implements UserService {
         User newUser = null;
         if (!isExist(user)){
 //            user.setPassword(EncrytedPasswordUtils.encrytePassword(user.getPassword()));
+            if (user.getAvatar() == null || user.getAvatar() == ""){
+                user.setAvatar(Constants.DEFAULT_AVATAR);
+            }
             newUser = userRepository.save(user);
 //            userRoleRepository.setRole(newUser.getId(), ERole.USER.getId());
             System.out.println("User role: " + ERole.USER.getId());

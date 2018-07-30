@@ -10,17 +10,7 @@
         <form [formGroup]="settingsForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
-              <div class="avatar-upload">
-                <!-- FIXME: DOMException: Failed to set the 'value' property on 'HTMLInputElement': This input element accepts a filename, which may only be programmatically set to the empty string. -->
-                <div class="avatar-edit">
-                    <input type='file' id="avatar" (change)="onFileChange($event)"/>
-                    <label for="avatar"></label>
-                </div>
-                <div class="avatar-preview">
-                    <div id="imagePreview" [ngStyle]="{'background-image': 'url(' + user.avatar + ')'}">
-                    </div>
-                </div>
-             </div>
+              <app-avatar-upload [user]="user" (avatarEmit)="settingsForm.controls['avatar'].setValue($event)"></app-avatar-upload>
             </fieldset>
             
 
