@@ -16,11 +16,8 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpModule } from '@angular/http';
-import { ProfileArticlesComponent } from './profile/profile-articles.component';
-import { FavoriteButtonComponent } from './shared/buttons/favorite-button.component';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
-import { ArticleModule } from './article/article.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +39,8 @@ import { ArticleModule } from './article/article.module';
     HttpClientModule,
     ProfileModule,
     SettingsModule,
-    EditorModule
+    EditorModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

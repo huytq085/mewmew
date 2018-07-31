@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class ArticlesService {
   constructor(
     private apiService: ApiService,
-    private userService: UserService
+    private userService: UserService,
   ) { }
 
   query(config: ArticleListConfig): Observable<Article[]> {
@@ -30,7 +30,6 @@ export class ArticlesService {
         new HttpParams({ fromObject: params })
       );
   }
-
   get(id): Observable<Article> {
     return this.apiService.get('/articles/' + id)
       .pipe(map(data => data));
@@ -41,6 +40,7 @@ export class ArticlesService {
   }
 
   save(article): Observable<Article> {
+   
     // If we're updating an existing article
     if (article.slug) {
       return this.apiService.put('/articles/' + article.slug, { article: article })

@@ -1,6 +1,6 @@
 import { UserService } from './../core/services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Article, ArticlesService, ProfilesService } from '../core';
@@ -26,8 +26,8 @@ export class EditorComponent implements OnInit {
   ) {
     // use the FormBuilder to create a form group
     this.articleForm = this.fb.group({
-      subject: '',
-      content: ''
+      subject: ['', Validators.required],
+      content: ['', Validators.required]
     });
 
     // Initialized tagList as empty array
@@ -103,6 +103,7 @@ export class EditorComponent implements OnInit {
   }
 
   updateArticle(values: Object) {
+    console.log(values)
     Object.assign(this.article, values);
   }
 }

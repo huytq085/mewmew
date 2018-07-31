@@ -5336,3 +5336,7 @@ footer {
   font-size: 0.6rem;
   margin-right: 5px;
   cursor: pointer; }
+
+  input.ng-invalid.ng-touched {
+    border-color: #B85C5C;
+  }

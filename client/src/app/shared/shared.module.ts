@@ -10,6 +10,7 @@ import { FavoriteButtonComponent, FollowButtonComponent } from './buttons';
 import { ListErrorsComponent } from './list-errors.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.component';
+import { PostEditorComponent } from './post-editor/post-editor.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.compo
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
   ],
   declarations: [
     ArticleListComponent,
@@ -28,7 +29,8 @@ import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.compo
     ListErrorsComponent,
     ShowAuthedDirective,
     ProfileHelpersComponent,
-    AvatarUploadComponent
+    AvatarUploadComponent,
+    PostEditorComponent,
   ],
   exports: [
     ArticleListComponent,
@@ -43,7 +45,8 @@ import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.compo
     ListErrorsComponent,
     RouterModule,
     ShowAuthedDirective,
-    AvatarUploadComponent
+    AvatarUploadComponent,
+    PostEditorComponent,
   ]
 })
 export class SharedModule {}

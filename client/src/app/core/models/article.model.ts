@@ -14,4 +14,5 @@ export class Article {
   author: Profile;
   view: number;
   categoryId: number;
+  image: string;
 }

@@ -4,4 +4,5 @@ export * from './layout';
 export * from './list-errors.component';
 export * from './shared.module';
 export * from './show-authed.directive';
-export * from './profile-helpers'
+export * from './profile-helpers';
+export * from './post-editor';

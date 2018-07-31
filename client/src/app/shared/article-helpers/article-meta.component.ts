@@ -13,8 +13,6 @@ export class ArticleMetaComponent implements OnInit{
     private articlesService: ArticlesService
   ) {}
   ngOnInit(){
-    console.log('article meta')
-    console.log(this.article)
     if (typeof this.article != 'undefined'){
       this.isLoad = true;
     }

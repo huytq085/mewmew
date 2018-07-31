@@ -1,0 +1,37 @@
+<div class="row" *ngIf="isAuthenticated">
+
+  <div class="col-md-12">
+    <div class="widget-area no-padding blank">
+      <div class="status-upload">
+        <form [formGroup]="postForm" (ngSubmit)="submitForm()">
+          <textarea 
+          placeholder="What are you doing right now?"
+          formControlName="content"
+          >
+        </textarea>
+          <div class="image-preview-container" *ngIf="urlImage">
+              <img [src]="urlImage" height="200">
+          </div>
+          <ul>
+            <li>
+              <label for="file-input">
+                  <a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture">
+                      <i class="fa fa-picture-o"></i>
+                    </a>
+              </label>
+              <input id="file-input" (change)="onFileChange($event)" type="file" style="display: none"/>
+            </li>
+          </ul>
+          
+          <button type="submit" class="btn btn-success green">
+            <i class="fa fa-share"></i> Post</button>
+        </form>
+      </div>
+      <!-- Status Upload  -->
+    </div>
+    <!-- Widget Area -->
+    
+  </div>
+  
+
+</div>

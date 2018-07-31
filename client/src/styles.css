@@ -5398,4 +5398,6 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-    
+    .image-upload .img-ul-file-upload{
+      /* display: none!important; */
+  }

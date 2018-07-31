@@ -53,6 +53,7 @@ export class ArticleComponent implements OnInit {
     this.articlesService.get(articleId).subscribe(
       data => {
         this.article = data;
+        console.log(this.article)
         // TODO: Create likeCount from spring server to load all info of article
         
         // TODO: Get number of like from server
@@ -73,7 +74,6 @@ export class ArticleComponent implements OnInit {
           )
           }
         )
-        console.log('can modify: ' + this.canModify)
         this.populateComments();
       }
     )
@@ -122,8 +122,6 @@ export class ArticleComponent implements OnInit {
       .subscribe(
         res => {
           if (res == 1){
-            console.log(this.comments)
-            
             this.comments.unshift(this.comment);
             this.commentControl.reset('');
             this.isSubmitting = false;

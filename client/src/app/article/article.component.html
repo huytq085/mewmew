@@ -41,6 +41,10 @@
       <div class="col-md-12">
 
         <div [innerHTML]="article.content | markdown"></div>
+        <div class="image-preview-container" *ngIf="article.image">
+            <img [src]="article.image" height="200">
+        </div>
+
 
         <ul class="tag-list">
           <li *ngFor="let tag of article.tagList"

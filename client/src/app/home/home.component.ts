@@ -12,7 +12,10 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+    console.log('constructor')
+    this.testDiff();
+  }
 
   isAuthenticated: boolean;
   listConfig: ArticleListConfig = {
@@ -20,6 +23,7 @@ export class HomeComponent implements OnInit {
     filters: {}
   };
   ngOnInit() {
+    this.testDiff();
     this.userService.isAuthenticated.subscribe(
       (authenticated) => {
         this.isAuthenticated = authenticated;
@@ -42,5 +46,8 @@ export class HomeComponent implements OnInit {
 
     // Otherwise, set the list object
     this.listConfig = {type: type, filters: filters};
+  }
+  testDiff(){
+    console.log('test diff')
   }
 }

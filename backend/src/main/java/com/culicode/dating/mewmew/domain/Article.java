@@ -12,8 +12,10 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "subject", nullable = false)
+    @Column(name = "subject")
     private String subject;
+    @Column(name = "image")
+    private String image;
     @Column(name = "content", nullable = false)
     private String content;
     @Column(name = "category_id", nullable = false)
@@ -99,5 +101,11 @@ public class Article {
         this.dateAdded = dateAdded;
     }
 
+    public String getImage() {
+      return image;
+    }
 
+    public void setImage(String image) {
+      this.image = image;
+    }
 }
