@@ -1,5 +1,5 @@
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
@@ -13,7 +13,8 @@ import { JwtService } from './jwt.service';
 
 
 @Injectable()
-export class UserService {
+export class UserService implements OnInit {
+
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
@@ -28,6 +29,9 @@ export class UserService {
     private http: HttpClient,
     private jwtService: JwtService
   ) { }
+
+  ngOnInit(): void {
+  }
 
   setAuth(user: User, token: string) {
     this.jwtService.saveToken(token);
@@ -81,12 +85,20 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  getUser(username: string): Observable<User> {
-    return this.apiService.get(this.USER_URL + username);
+  getUser(username: string, isFollowedBy?: number): Observable<User> {
+    return this.apiService.get(this.USER_URL + username, new HttpParams({
+      fromObject: {
+        isFollowedBy: String(isFollowedBy)
+      }
+    }));
   }
 
-  getUserById(id: number): Observable<User> {
-    return this.apiService.get(this.ID_USER_URL + id);
+  getUserById(id: number, isFollowedBy?: number): Observable<User> {
+    return this.apiService.get(this.ID_USER_URL + id, new HttpParams({
+      fromObject: {
+        isFollowedBy: String(isFollowedBy)
+      }
+    }));
   }
 
   getUserByToken(token: String): Observable<User> {
@@ -107,7 +119,7 @@ export class UserService {
       )
   }
 
-  
+
 
 
 

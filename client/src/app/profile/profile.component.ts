@@ -31,21 +31,21 @@ export class ProfileComponent implements OnInit {
       }
     )
     this.currentUser = this.userService.getCurrentUser();
-    this.userService.getUser(this.username).subscribe(
+    this.userService.getUser(this.username, this.currentUser.id).subscribe(
       (data: User) => {
         console.log('getUser() in profile cpn')
         this.user = data;
         this.description = data.description;
         this.isUser = (this.currentUser.username === this.username);
         console.log('isUser: ' + this.isUser)
-        this.profile = this.user2Profile(this.user);
+        this.profile = this.profileService.user2Profile(this.user);
         // Check user is following
-        this.profileService.isFollowing(this.profile.id)
-          .subscribe(
-            res => {
-              this.profile.following = res;
-            }
-          )
+        // this.profileService.isFollowing(this.profile.id)
+        //   .subscribe(
+        //     res => {
+        //       this.profile.following = res;
+        //     }
+        //   )
         // Set following to false for testing
         console.log(this.profile);
       }
@@ -57,15 +57,5 @@ export class ProfileComponent implements OnInit {
     this.profile.following = following;
   }
 
-  user2Profile(user: User): Profile{
-    let profile: Profile = {} as Profile;
-    if (typeof user != 'undefined'){
-      profile.username = user.username;
-      profile.description = user.description;
-      profile.avatar = user.avatar;
-      profile.id = user.id;
-    }
-    return profile;
-  }
 
 }

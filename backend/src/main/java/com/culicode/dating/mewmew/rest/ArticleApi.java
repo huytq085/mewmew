@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -69,8 +70,9 @@ public class ArticleApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Article> getArticles(@RequestParam(name = "favorited", required = false) String favorited, @RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+    public List<Article> getArticles(HttpServletRequest request, @RequestParam(name = "favorited", required = false) String favorited, @RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
         LOG.info(username);
+        LOG.info(request.getRequestURL());
         LOG.info(limit);
         LOG.info(favorited);
         if (username != null) {

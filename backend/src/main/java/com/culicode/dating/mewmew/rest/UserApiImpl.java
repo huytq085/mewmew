@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -40,13 +41,27 @@ public class UserApiImpl implements UserApi{
     }
 
     @Override
-    public User get(@PathVariable String username) {
-        return userService.findByUsername(username);
+    public User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) Integer userId) {
+        User user = userService.findByUsername(username);
+        LOG.info("get user");
+        LOG.info(userId);
+        LOG.debug(userId);
+        if (userId != null){
+            user.setFollowing(this.userService.isFollowing(user.getId(), userId));
+        }
+        return user;
     }
 
     @Override
-    public User getById(@PathVariable int id) {
-        return userService.findById(id);
+    public User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) Integer userId) {
+        User user = userService.findById(id);
+        LOG.info("get user");
+        LOG.info(userId);
+        LOG.debug(userId);
+        if (userId != null){
+            user.setFollowing(this.userService.isFollowing(user.getId(), userId));
+        }
+        return user;
     }
 
     @Override

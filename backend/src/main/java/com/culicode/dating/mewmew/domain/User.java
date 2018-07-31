@@ -49,7 +49,19 @@ public class User{
     @Column(name = "matrimony")
     private String matrimony;
 
+
+    @Transient
+    private Boolean following;
+
     public User() {
+    }
+
+    public Boolean isFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Boolean following) {
+        this.following = following;
     }
 
     public int getId() {

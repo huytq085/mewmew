@@ -63,15 +63,10 @@ export class ArticleComponent implements OnInit {
         this.comment.author = this.profileService.user2Profile(this.currentUser);
         this.canModify = (this.currentUser.id === this.article.author.id);
         // TODO: Get author from another service
-        this.userService.getUserById(this.article.author.id).subscribe(
+        this.userService.getUserById(this.article.author.id, this.currentUser.id).subscribe(
           data => {
             this.article.author = this.profileService.user2Profile(data);
-            this.profileService.isFollowing(this.article.author.id)
-          .subscribe(
-            res => {
-              this.article.author.following = res;
-            }
-          )
+            console.log(this.article.author)
           }
         )
         this.populateComments();

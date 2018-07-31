@@ -5,6 +5,7 @@ import com.culicode.dating.mewmew.util.JsonUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -52,13 +53,13 @@ public interface UserApi {
             value = USERNAME_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    User get(@PathVariable String username);
+    User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) Integer userId);
 
     @RequestMapping(
             value = ID_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    User getById(@PathVariable int id);
+    User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) Integer userId);
 
     @RequestMapping(
             value = FOLLOW_URI,

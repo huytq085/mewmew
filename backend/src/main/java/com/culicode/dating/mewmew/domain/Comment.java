@@ -20,24 +20,25 @@ public class Comment {
     private int numOfLike;
     @Column(name = "date_added", nullable = false)
     private Date dateAdded;
-  public Comment() {
-  }
 
-  public Comment(int articleId, String content, int numOfLike) {
+    public Comment() {
+    }
+
+    public Comment(int articleId, String content, int numOfLike) {
         this.articleId = articleId;
         this.content = content;
         this.numOfLike = numOfLike;
     }
 
-  public User getAuthor() {
-    return author;
-  }
+    public User getAuthor() {
+        return author;
+    }
 
-  public void setAuthor(User author) {
-    this.author = author;
-  }
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
-  public int getArticleId() {
+    public int getArticleId() {
         return articleId;
     }
 
