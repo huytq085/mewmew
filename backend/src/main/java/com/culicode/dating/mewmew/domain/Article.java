@@ -29,6 +29,9 @@ public class Article {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAdded;
 
+    @Transient
+    private boolean favorited;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
@@ -107,5 +110,13 @@ public class Article {
 
     public void setImage(String image) {
       this.image = image;
+    }
+
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 }

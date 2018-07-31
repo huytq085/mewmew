@@ -53,13 +53,13 @@ public interface UserApi {
             value = USERNAME_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) Integer userId);
+    User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) String userId);
 
     @RequestMapping(
             value = ID_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) Integer userId);
+    User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) String userId);
 
     @RequestMapping(
             value = FOLLOW_URI,

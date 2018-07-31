@@ -14,7 +14,7 @@ export class ArticlesService {
     private userService: UserService,
   ) { }
 
-  query(config: ArticleListConfig): Observable<Article[]> {
+  query(config: ArticleListConfig, isFavoritedBy?: number): Observable<Article[]> {
     console.log('Da vao query')
     // Convert any filters over to Angular's URLSearchParams
     const params = {};
@@ -23,15 +23,25 @@ export class ArticlesService {
       .forEach((key) => {
         params[key] = config.filters[key];
       });
+    if (isFavoritedBy){
+      console.log('co is fa')
+      params['isFavoritedBy'] = isFavoritedBy;
+    }
+    console.log('param')
+    console.log(params)
 
     return this.apiService
       .get(
-        '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : '' ),
+        '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : ''),
         new HttpParams({ fromObject: params })
       );
   }
-  get(id): Observable<Article> {
-    return this.apiService.get('/articles/' + id)
+  get(id, isFavoritedBy?: number): Observable<Article> {
+    return this.apiService.get('/articles/' + id, new HttpParams({
+      fromObject: {
+        isFavoritedBy: String(isFavoritedBy)
+      }
+    }))
       .pipe(map(data => data));
   }
 
@@ -40,7 +50,7 @@ export class ArticlesService {
   }
 
   save(article): Observable<Article> {
-   
+
     // If we're updating an existing article
     if (article.slug) {
       return this.apiService.put('/articles/' + article.slug, { article: article })
@@ -60,10 +70,10 @@ export class ArticlesService {
   }
 
   unfavorite(articleId: number): Observable<Article> {
-    return this.apiService.post('/articles/' + articleId + '/unlike',this.userService.getCurrentUser());
+    return this.apiService.post('/articles/' + articleId + '/unlike', this.userService.getCurrentUser());
   }
 
-  isFavorite(articleId: number): Observable<boolean>{
+  isFavorite(articleId: number): Observable<boolean> {
     return this.apiService.get('/articles/' + articleId + '/isfavorite/' + this.userService.getCurrentUser().id);
   }
 

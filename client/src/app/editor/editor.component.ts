@@ -49,7 +49,7 @@ export class EditorComponent implements OnInit {
         // TODO: Do not need get article again, bescause it already exists from previous route
         let articleId = this.route.snapshot.params['id'];
         if (typeof articleId != 'undefined')
-        this.articlesService.get(articleId).subscribe(
+        this.articlesService.get(articleId, this.userService.getCurrentUser().id).subscribe(
           data => {
             this.article = data;
             this.articleForm.patchValue(data);

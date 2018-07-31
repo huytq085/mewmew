@@ -16,10 +16,10 @@ export class ArticleMetaComponent implements OnInit{
     if (typeof this.article != 'undefined'){
       this.isLoad = true;
     }
-    this.articlesService.isFavorite(this.article.id).subscribe(
-      res => {
-        this.article.favorited = res;
-      }
-    )
+    // this.articlesService.isFavorite(this.article.id).subscribe(
+    //   res => {
+    //     this.article.favorited = res;
+    //   }
+    // )
   }
 }

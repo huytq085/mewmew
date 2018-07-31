@@ -41,25 +41,25 @@ public class UserApiImpl implements UserApi{
     }
 
     @Override
-    public User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) Integer userId) {
+    public User get(@PathVariable String username, @RequestParam(value = "isFollowedBy", required = false) String userId) {
         User user = userService.findByUsername(username);
         LOG.info("get user");
         LOG.info(userId);
         LOG.debug(userId);
-        if (userId != null){
-            user.setFollowing(this.userService.isFollowing(user.getId(), userId));
+        if (userId != null && !userId.equals("undefined")){
+            user.setFollowing(this.userService.isFollowing(user.getId(), Integer.parseInt(userId)));
         }
         return user;
     }
 
     @Override
-    public User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) Integer userId) {
+    public User getById(@PathVariable int id, @RequestParam(value = "isFollowedBy", required = false) String userId) {
         User user = userService.findById(id);
         LOG.info("get user");
         LOG.info(userId);
         LOG.debug(userId);
-        if (userId != null){
-            user.setFollowing(this.userService.isFollowing(user.getId(), userId));
+        if (userId != null && !userId.equals("undefined")){
+            user.setFollowing(this.userService.isFollowing(user.getId(), Integer.parseInt(userId)));
         }
         return user;
     }

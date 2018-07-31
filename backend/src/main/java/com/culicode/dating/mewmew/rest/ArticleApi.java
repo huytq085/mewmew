@@ -49,10 +49,16 @@ public class ArticleApi {
             value = ARTICLE_ID_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Article get(@PathVariable int articleId) {
+    public Article get(@PathVariable int articleId, @RequestParam(name = "isFavoritedBy", required = false) String userId) {
         LOG.info("Get article");
         System.out.println("Article Id: " + articleId);
-        return articleService.findById(articleId);
+    LOG.info(userId);
+        Article article = articleService.findById(articleId);
+        if (userId != null && !userId.equals("undefined")) {
+            article.setFavorited(this.articleService.isLike(Integer.parseInt(userId), articleId));
+        }
+
+        return article;
     }
 
     @RequestMapping(
@@ -70,18 +76,22 @@ public class ArticleApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Article> getArticles(HttpServletRequest request, @RequestParam(name = "favorited", required = false) String favorited, @RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+    public List<Article> getArticles(@RequestParam(name = "favorited", required = false) String favorited, @RequestParam(name = "author", required = false) String username, @RequestParam("limit") int limit, @RequestParam("offset") int offset, @RequestParam(value = "isFavoritedBy", required = false) String userId) {
         LOG.info(username);
-        LOG.info(request.getRequestURL());
         LOG.info(limit);
         LOG.info(favorited);
+        List<Article> articles = articleService.globalFeed(limit);
         if (username != null) {
-            return articleService.getAllArticlesByUsername(username);
+            articles = articleService.getAllArticlesByUsername(username);
         }
         if (favorited != null) {
-            return articleService.getFavorited(favorited, limit);
+            articles = articleService.getFavorited(favorited, limit);
         }
-        return articleService.globalFeed(limit);
+
+        if (userId != null && !userId.equals("undefined")) {
+            articles.forEach(article -> article.setFavorited(this.articleService.isLike(Integer.parseInt(userId), article.getId())));
+        }
+        return articles;
     }
 
     @RequestMapping(
@@ -140,10 +150,15 @@ public class ArticleApi {
             value = FEED_URI,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    List<Article> feed(@PathVariable int userId, @Param("limit") int limit, @Param("offset") int offset) {
+    List<Article> feed(@PathVariable int userId, @Param("limit") int limit, @Param("offset") int offset, @RequestParam(value = "isFavoritedBy", required = false) String isFavoritedByUser) {
         LOG.info(userId);
         LOG.info(limit);
         LOG.info(offset);
-        return articleService.feed(userId, limit);
+        List<Article> articles = articleService.feed(userId, limit);
+        if (isFavoritedByUser != null && !isFavoritedByUser.equals("undefined")){
+            articles.forEach(article -> article.setFavorited(this.articleService.isLike(Integer.parseInt(isFavoritedByUser), article.getId())));
+        }
+        return articles;
     }
+
 }

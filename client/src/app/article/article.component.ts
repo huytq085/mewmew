@@ -39,42 +39,29 @@ export class ArticleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Retreive the prefetched article
-    // this.route.data.subscribe(
-    //   (data: Article) => {
-    //     this.article = data;
-
-    //     // Load the comments on this article
-    //     // this.populateComments();
-    //   }
-    // );
     let articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     this.comment.articleId = parseInt(articleId);
-    this.articlesService.get(articleId).subscribe(
-      data => {
-        this.article = data;
-        console.log(this.article)
-        // TODO: Create likeCount from spring server to load all info of article
-        
-        // TODO: Get number of like from server
-        this.article.favoritesCount = 1;
-        // Load the current user's data
-        this.currentUser = this.userService.getCurrentUser();
-        this.comment.author = this.profileService.user2Profile(this.currentUser);
-        this.canModify = (this.currentUser.id === this.article.author.id);
-        // TODO: Get author from another service
-        this.userService.getUserById(this.article.author.id, this.currentUser.id).subscribe(
-          data => {
-            this.article.author = this.profileService.user2Profile(data);
-            console.log(this.article.author)
-          }
-        )
-        this.populateComments();
-      }
-    )
+    this.userService.currentUser.subscribe(data => {
+      this.articlesService.get(articleId, data.id).subscribe(
+        data => {
 
-
-
+          this.article = data;
+          this.article.favoritesCount = 1;
+          // Load the current user's data
+          this.currentUser = this.userService.getCurrentUser();
+          this.comment.author = this.profileService.user2Profile(this.currentUser);
+          this.canModify = (this.currentUser.id === this.article.author.id);
+          // TODO: Get author from another service
+          this.userService.getUserById(this.article.author.id, this.currentUser.id).subscribe(
+            data => {
+              this.article.author = this.profileService.user2Profile(data);
+              console.log(this.article.author)
+            }
+          )
+          this.populateComments();
+        }
+      )
+    })
   }
 
   onToggleFavorite(favorited: boolean) {
@@ -116,12 +103,12 @@ export class ArticleComponent implements OnInit {
       .add(this.comment)
       .subscribe(
         res => {
-          if (res == 1){
+          if (res == 1) {
             this.comments.unshift(this.comment);
             this.commentControl.reset('');
             this.isSubmitting = false;
           }
-          
+
         },
         errors => {
           this.isSubmitting = false;
