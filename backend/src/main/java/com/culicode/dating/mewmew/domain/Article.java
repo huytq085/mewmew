@@ -31,6 +31,8 @@ public class Article {
 
     @Transient
     private boolean favorited;
+    @Transient
+    private int favoritesCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -118,5 +120,13 @@ public class Article {
 
     public void setFavorited(boolean favorited) {
         this.favorited = favorited;
+    }
+
+    public int getFavoritesCount() {
+        return favoritesCount;
+    }
+
+    public void setFavoritesCount(int favoritesCount) {
+        this.favoritesCount = favoritesCount;
     }
 }

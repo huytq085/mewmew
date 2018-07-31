@@ -46,7 +46,7 @@ export class ArticleComponent implements OnInit {
         data => {
 
           this.article = data;
-          this.article.favoritesCount = 1;
+          // this.article.favoritesCount = 1;
           // Load the current user's data
           this.currentUser = this.userService.getCurrentUser();
           this.comment.author = this.profileService.user2Profile(this.currentUser);

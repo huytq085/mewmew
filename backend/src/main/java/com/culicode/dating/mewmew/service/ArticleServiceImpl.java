@@ -110,5 +110,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.getFavorited(username, topLimit);
     }
 
+    @Override
+    public int getFavoritesCount(int articleId) {
+        return articleRepository.getLikesCount(articleId);
+    }
+
 
 }

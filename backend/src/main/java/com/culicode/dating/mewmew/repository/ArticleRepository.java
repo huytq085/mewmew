@@ -25,6 +25,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     @Query(value = favoritedQuery, nativeQuery = true)
     List<Article> getFavorited(@Param("username") String username, Pageable pageable);
 
+    @Query(value = "select count(*) from likes l where l.article_id = :articleId", nativeQuery = true)
+    int getLikesCount(@Param("articleId") int articleId);
+
     @Procedure
     int doLike(int user, int article);
 

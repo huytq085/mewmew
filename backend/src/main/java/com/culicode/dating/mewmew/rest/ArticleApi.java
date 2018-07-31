@@ -52,11 +52,13 @@ public class ArticleApi {
     public Article get(@PathVariable int articleId, @RequestParam(name = "isFavoritedBy", required = false) String userId) {
         LOG.info("Get article");
         System.out.println("Article Id: " + articleId);
-    LOG.info(userId);
+        LOG.info(userId);
         Article article = articleService.findById(articleId);
         if (userId != null && !userId.equals("undefined")) {
             article.setFavorited(this.articleService.isLike(Integer.parseInt(userId), articleId));
         }
+
+        setFavoritesCount(article);
 
         return article;
     }
@@ -91,6 +93,8 @@ public class ArticleApi {
         if (userId != null && !userId.equals("undefined")) {
             articles.forEach(article -> article.setFavorited(this.articleService.isLike(Integer.parseInt(userId), article.getId())));
         }
+
+        setFavoritesCountForList(articles);
         return articles;
     }
 
@@ -155,10 +159,19 @@ public class ArticleApi {
         LOG.info(limit);
         LOG.info(offset);
         List<Article> articles = articleService.feed(userId, limit);
-        if (isFavoritedByUser != null && !isFavoritedByUser.equals("undefined")){
+        if (isFavoritedByUser != null && !isFavoritedByUser.equals("undefined")) {
             articles.forEach(article -> article.setFavorited(this.articleService.isLike(Integer.parseInt(isFavoritedByUser), article.getId())));
         }
+        setFavoritesCountForList(articles);
         return articles;
+    }
+
+    private void setFavoritesCountForList(List<Article> articles) {
+        articles.forEach(article -> setFavoritesCount(article));
+    }
+
+    private void setFavoritesCount(Article article) {
+        article.setFavoritesCount(articleService.getFavoritesCount(article.getId()));
     }
 
 }
