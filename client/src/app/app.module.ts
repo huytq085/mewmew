@@ -19,12 +19,14 @@ import { HttpModule } from '@angular/http';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     ProfileRoutingComponent,
+
   ],
   imports: [
     BrowserModule,

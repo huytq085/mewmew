@@ -4,6 +4,7 @@ import { ProfileArticlesComponent } from './profile-articles.component';
 import { ProfileFavoritesComponent } from './profile-favorites.component';
 import { ProfileResolver } from './profile-resolver.service';
 import { ProfileComponent } from './profile.component';
+import { ProfileGalleryComponent } from './profile-gallery.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: '',
         component: ProfileArticlesComponent
+      },
+      {
+        path: 'gallery',
+        component: ProfileGalleryComponent
       },
       {
         path: 'favorites',
