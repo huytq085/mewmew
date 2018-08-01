@@ -28,7 +28,6 @@ export class EditableArticleResolver implements Resolve<Article> {
               data => {
                 article.author = this.profileService.user2Profile(data);
                 if (this.userService.getCurrentUser().username === article.author.username) {
-                  console.log('return ne')
                   return article;
                 } else {
                   this.router.navigateByUrl('/');

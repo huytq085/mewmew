@@ -45,7 +45,6 @@ export class ArticleListComponent {
     }
     this.userService.currentUser.subscribe(
       data => {
-        console.log(data)
         this.articlesService.query(this.query, data.id)
           .subscribe(data => {
             this.loading = false;

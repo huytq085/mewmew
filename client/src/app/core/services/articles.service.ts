@@ -15,7 +15,6 @@ export class ArticlesService {
   ) { }
 
   query(config: ArticleListConfig, isFavoritedBy?: number): Observable<Article[]> {
-    console.log('Da vao query')
     // Convert any filters over to Angular's URLSearchParams
     const params = {};
 
@@ -24,12 +23,8 @@ export class ArticlesService {
         params[key] = config.filters[key];
       });
     if (isFavoritedBy){
-      console.log('co is fa')
       params['isFavoritedBy'] = isFavoritedBy;
     }
-    console.log('param')
-    console.log(params)
-
     return this.apiService
       .get(
         '/articles' + ((config.type === 'feed') ? ('/feed/' + this.userService.getCurrentUser().id) : ''),
@@ -58,7 +53,6 @@ export class ArticlesService {
 
       // Otherwise, create a new article
     } else {
-      console.log('// Otherwise, create a new article')
       return this.apiService.post('/articles/', article)
         .pipe(
           map(article => article));

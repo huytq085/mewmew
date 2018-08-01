@@ -39,9 +39,7 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     // If there's an article prefetched, load it
-    console.log(this.route.snapshot.data)
     this.route.data.subscribe((data: { article: Article }) => {
-      console.log(data)
       if (data.article) {
         this.article = data.article;
         this.articleForm.patchValue(data.article);
@@ -79,7 +77,6 @@ export class EditorComponent implements OnInit {
 
     // Set userId for article
     this.article.author = this.profileService.user2Profile(this.userService.getCurrentUser());
-    console.log("current user id: " + this.article.author.id);
 
     // Set default category = 1 for testing
     this.article.categoryId = 1;
@@ -91,7 +88,6 @@ export class EditorComponent implements OnInit {
     // post the changes
     this.articlesService.save(this.article).subscribe(
       article => {
-        console.log(article);
         this.router.navigateByUrl('/article/' + article.id)
       }
       ,
@@ -103,7 +99,6 @@ export class EditorComponent implements OnInit {
   }
 
   updateArticle(values: Object) {
-    console.log(values)
     Object.assign(this.article, values);
   }
 }

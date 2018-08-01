@@ -55,7 +55,6 @@ export class ArticleComponent implements OnInit {
           this.userService.getUserById(this.article.author.id, this.currentUser.id).subscribe(
             data => {
               this.article.author = this.profileService.user2Profile(data);
-              console.log(this.article.author)
             }
           )
           this.populateComments();

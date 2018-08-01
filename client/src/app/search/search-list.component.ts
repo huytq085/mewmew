@@ -16,7 +16,6 @@ export class SearchListComponent implements OnInit {
   }
 
   onToggleFollowing(following: boolean) {
-    console.log('follow cpn emit to onToggle in search cpn')
     // this.profile.following = following;
   }
 

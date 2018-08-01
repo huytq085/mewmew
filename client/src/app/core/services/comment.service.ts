@@ -21,7 +21,6 @@ export class CommentsService {
   }
 
   getAll(id): Observable<Comment[]> {
-    console.log('getALL')
     return this.apiService.get(`/articles/${id}/comments`)
       // .pipe(map(data => data.comments));
       .pipe();

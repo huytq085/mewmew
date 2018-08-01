@@ -33,7 +33,6 @@ export class ProfileArticlesComponent implements OnInit {
       type: 'all',
       filters: {}
     }; // Only method I found to refresh article load on swap
-    console.log(this.route.params)
     this.articlesConfig.filters.author = this.route.snapshot.params['username']
   }
 

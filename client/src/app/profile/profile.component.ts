@@ -33,27 +33,15 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.userService.getCurrentUser();
     this.userService.getUser(this.username, this.currentUser.id).subscribe(
       (data: User) => {
-        console.log('getUser() in profile cpn')
         this.user = data;
         this.description = data.description;
         this.isUser = (this.currentUser.username === this.username);
-        console.log('isUser: ' + this.isUser)
         this.profile = this.profileService.user2Profile(this.user);
-        // Check user is following
-        // this.profileService.isFollowing(this.profile.id)
-        //   .subscribe(
-        //     res => {
-        //       this.profile.following = res;
-        //     }
-        //   )
-        // Set following to false for testing
-        console.log(this.profile);
       }
     )
   }
 
   onToggleFollowing(following: boolean) {
-    console.log('follow cpn emit to onToggle in profile cpn')
     this.profile.following = following;
   }
 

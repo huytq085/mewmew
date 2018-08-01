@@ -28,8 +28,6 @@ export class ProfilesService implements OnInit{
   }
 
   follow(userId: number): Observable<Profile> {
-    console.log('current user');
-    console.log(this.userService.currentUser);
     return this.apiService.post('/users/' + userId + '/follow', this.userService.getCurrentUser());
   }
 

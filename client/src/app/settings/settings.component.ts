@@ -42,13 +42,11 @@ export class SettingsComponent implements OnInit {
   }
 
   logout() {
-    console.log(1)
     this.userService.purgeAuth();
     this.router.navigateByUrl('/');
   }
 
   abc(e){
-    console.log(e)
   }
 
   submitForm() {
@@ -76,7 +74,6 @@ export class SettingsComponent implements OnInit {
   }
 
   updateUser(values: Object) {
-    console.log(values)
     Object.assign(this.user, values);
   }
 

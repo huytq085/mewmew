@@ -23,7 +23,6 @@ export class SearchComponent implements OnInit {
       this.query = params['q'];
       this.userService.search(this.query).subscribe(
         data => {
-          console.log(this.profiles)
           for (const key in data) {
             if (data.hasOwnProperty(key)) {
               const element = data[key];

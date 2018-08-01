@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private userService: UserService
   ) {
-    console.log('constructor')
     this.testDiff();
   }
 
@@ -48,6 +47,5 @@ export class HomeComponent implements OnInit {
     this.listConfig = {type: type, filters: filters};
   }
   testDiff(){
-    console.log('test diff')
   }
 }

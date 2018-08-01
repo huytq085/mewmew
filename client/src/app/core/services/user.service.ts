@@ -52,7 +52,6 @@ export class UserService implements OnInit {
 
   // Update the user on the server (email, pass, etc)
   update(user): Observable<User> {
-    console.log(JSON.stringify(user))
     return this.apiService
       .put('/users', user)
       .pipe(map(data => {
@@ -63,7 +62,6 @@ export class UserService implements OnInit {
   }
 
   attemptAuth(type, credentials): Observable<User> {
-    console.log('attempAuth----------------')
     let route = (type === 'login') ? '/login' : '/register';
     return this.apiService.post(route, credentials)
       .pipe(

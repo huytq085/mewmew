@@ -58,7 +58,6 @@ export class PostEditorComponent implements OnInit {
     this.article.author = this.profileService.user2Profile(this.userService.getCurrentUser());
     this.articlesService.save(this.article).subscribe(
       article => {
-        console.log(article);
         this.router.navigateByUrl('/article/' + article.id)
       }
       ,
