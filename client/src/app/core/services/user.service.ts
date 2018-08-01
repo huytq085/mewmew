@@ -119,8 +119,11 @@ export class UserService implements OnInit {
       )
   }
 
-
-
-
-
+  search(q: string): Observable<User[]> {
+    return this.apiService.get('/users', new HttpParams({
+      fromObject: {
+        q
+      }
+    }))
+  }
 }

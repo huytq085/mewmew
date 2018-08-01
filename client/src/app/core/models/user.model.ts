@@ -7,5 +7,5 @@ export interface User {
     avatar: string;
     description: string;
     following: boolean;
-
+    fullName: string;
 }

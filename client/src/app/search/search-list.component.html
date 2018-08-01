@@ -1,0 +1,23 @@
+<div class="media text-muted pt-3 border-bottom border-gray">
+  <div class="testimonials">
+    <div class="active item">
+      <div class="carousel-info">
+        <img alt="" src="{{ profile.avatar }}" class="pull-left">
+        <div class="pull-left">
+          <a [routerLink]="['/profile', profile.username]">
+            <span class="testimonials-name">{{ profile.username }}</span>
+          </a>
+          <!-- TODO: Get isFollow -->
+          <!-- <app-follow-button
+                  [profile]="profile"
+                  (toggle)="onToggleFollowing($event)">
+                </app-follow-button> -->
+          <span class="testimonials-post">{{ profile.fullName }}</span>
+        </div>
+      </div>
+      <blockquote>
+        <p>{{ profile.description }}</p>
+      </blockquote>
+    </div>
+  </div>
+</div>

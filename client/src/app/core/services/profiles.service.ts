@@ -50,6 +50,7 @@ export class ProfilesService implements OnInit{
       profile.avatar = user.avatar;
       profile.id = user.id;
       profile.following = user.following;
+      profile.fullName = user.fullName;
     }
     return profile;
   }

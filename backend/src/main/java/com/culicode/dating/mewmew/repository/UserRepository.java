@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,5 +27,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Procedure
     int isFollowing(int user1, int user2);
+
+    @Query("from User u where u.username like CONCAT('%',:query,'%') or u.fullName like CONCAT('%',:query,'%')")
+    List<User> search(@Param("query") String query);
 
 }

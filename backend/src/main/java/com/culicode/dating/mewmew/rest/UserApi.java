@@ -33,7 +33,7 @@ public interface UserApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    List<User> getAll();
+    List<User> getAll(@RequestParam(value = "q", required = false) String query);
 
     @RequestMapping(
             value = BASE_URI,
@@ -78,5 +78,7 @@ public interface UserApi {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     boolean isFollowing(@PathVariable int user1, @PathVariable int user2);
+
+
 
 }

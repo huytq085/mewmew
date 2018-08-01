@@ -1,3 +1,13 @@
-<p>
-  search works!
-</p>
+<main role="main" class="container">
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Search for "{{query}}"</h6>
+
+    <ng-container *ngFor="let profile of profiles">
+        <app-search-list [profile]="profile"></app-search-list>
+    </ng-container>
+    
+    <!-- <small class="d-block text-right mt-3">
+      <a href="#">All suggestions</a>
+    </small> -->
+  </div>
+</main>

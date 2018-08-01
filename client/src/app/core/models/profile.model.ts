@@ -4,4 +4,5 @@ export interface Profile {
   description: string;
   avatar: string;
   following: boolean;
+  fullName: string;
 }

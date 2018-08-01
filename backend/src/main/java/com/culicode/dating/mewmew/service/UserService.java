@@ -29,4 +29,6 @@ public interface UserService {
 
     boolean isFollowing(int user1, int user2);
 
+    List<User> search(String query);
+
 }

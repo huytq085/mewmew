@@ -18,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
 import { HttpModule } from '@angular/http';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
+import { SearchModule } from './search/search.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ProfileRoutingComponent } from './profile/profile-routing.component';
     ProfileModule,
     SettingsModule,
     EditorModule,
+    SearchModule
     
   ],
   providers: [],

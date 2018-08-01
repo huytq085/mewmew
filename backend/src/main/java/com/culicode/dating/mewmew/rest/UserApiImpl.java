@@ -25,7 +25,10 @@ public class UserApiImpl implements UserApi{
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll(@RequestParam(value = "q", required = false) String query) {
+        if (query != null) {
+            return userService.search(query);
+        }
         return userService.getAllUser();
     }
 

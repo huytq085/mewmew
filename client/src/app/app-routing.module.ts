@@ -29,11 +29,15 @@ const routes: Routes = [
   {
     path: 'article',
     loadChildren: './article/article.module#ArticleModule'
+  },
+  {
+    path: 'search',
+    loadChildren: './search/search.module#SearchModule'
   }
 
 ];
 @NgModule({
-  exports:[RouterModule],
+  exports: [RouterModule],
   imports: [RouterModule.forRoot(routes)]
 })
 export class AppRoutingModule { }

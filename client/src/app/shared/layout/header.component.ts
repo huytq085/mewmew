@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { User, UserService, JwtService } from '../../core';
 
@@ -11,15 +11,11 @@ export class HeaderComponent implements OnInit {
     private jwtService: JwtService,
     private userService: UserService
   ) { }
-
   currentUser: User;
 
   ngOnInit() {
-    
     this.userService.currentUser.subscribe(
       (userData) => {
-        console.log('header')
-        console.log(userData)
         this.currentUser = userData;
         if (typeof this.currentUser.username == 'undefined') {
           const token = this.jwtService.getToken();

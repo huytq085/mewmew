@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRoleRepository userRoleRepository;
 
-    private boolean isExist(User user){
+    private boolean isExist(User user) {
         if (userRepository.findByEmail(user.getEmail()).orElse(null) != null
-                || userRepository.findByUsername(user.getUsername()).orElse(null) != null){
+                || userRepository.findByUsername(user.getUsername()).orElse(null) != null) {
             System.out.println("Email or Username Exist============================");
             return true;
         }
@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         User newUser = null;
-        if (!isExist(user)){
+        if (!isExist(user)) {
 //            user.setPassword(EncrytedPasswordUtils.encrytePassword(user.getPassword()));
-            if (user.getAvatar() == null || user.getAvatar() == ""){
+            if (user.getAvatar() == null || user.getAvatar() == "") {
                 user.setAvatar(Constants.DEFAULT_AVATAR);
             }
             newUser = userRepository.save(user);
@@ -125,6 +125,11 @@ public class UserServiceImpl implements UserService {
     public boolean isFollowing(int user1, int user2) {
         LOG.info("Service is running...");
         return 1 == this.userRepository.isFollowing(user1, user2);
+    }
+
+    @Override
+    public List<User> search(String query) {
+        return userRepository.search(query);
     }
 
 
