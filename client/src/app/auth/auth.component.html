@@ -56,13 +56,15 @@
                   formControlName="fullName"
                   placeholder="Full Name"
                   class="form-control form-control-lg"
-                  type="text" />
+                  type="text" 
+                  *ngIf="authType == 'register'" />
               </fieldset>
               <fieldset class="form-group">
                 <textarea class="form-control form-control-lg"
                   rows="8"
                   placeholder="Short bio about you"
-                  formControlName="description">
+                  formControlName="description"
+                  *ngIf="authType == 'register'">
                 </textarea>
               </fieldset>
 
