@@ -51,6 +51,20 @@
                   </select>
                 </div>
             </fieldset>
+            <fieldset class="form-group">
+                <input
+                  formControlName="fullName"
+                  placeholder="Full Name"
+                  class="form-control form-control-lg"
+                  type="text" />
+              </fieldset>
+              <fieldset class="form-group">
+                <textarea class="form-control form-control-lg"
+                  rows="8"
+                  placeholder="Short bio about you"
+                  formControlName="description">
+                </textarea>
+              </fieldset>
 
             <list-errors *ngIf="authType == 'login'" [errors]="errors"></list-errors>
             <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
