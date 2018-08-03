@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import $ from 'jquery';
@@ -9,8 +9,7 @@ import { UserService } from '../core';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
-
+export class ChatComponent implements OnInit, OnDestroy {
   private serverUrl = 'http://localhost:8080/socket'
   private title = 'WebSockets chat';
   private stompClient;
@@ -18,9 +17,11 @@ export class ChatComponent implements OnInit {
   constructor(private userService: UserService) {
 
   }
-
   ngOnInit() {
     this.initializeWebSocketConnection();
+  }
+  ngOnDestroy(): void {
+    this.stompClient.disconnect();
   }
 
   initializeWebSocketConnection() {
@@ -31,7 +32,7 @@ export class ChatComponent implements OnInit {
       that.stompClient.subscribe("/chat", (res) => {
         if (res.body) {
           let body = JSON.parse(res.body);
-        console.log(body)
+          console.log(body)
           $(".chat").append(`
               <li class="left clearfix">
               <span class="chat-img pull-left">
