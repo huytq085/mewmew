@@ -25,6 +25,7 @@
     "@fortawesome/angular-fontawesome": "^0.1.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.1",
     "@fortawesome/free-solid-svg-icons": "^5.1.1",
+    "@stomp/ng2-stompjs": "^4.0.1",
     "add": "^2.0.6",
     "angular-marked": "^1.2.2",
     "bootstrap": "^4.1.1",
@@ -34,6 +35,7 @@
     "popper": "^1.0.1",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
+    "sockjs-client": "^1.1.5",
     "sweetalert": "^2.1.0",
     "yarn": "^1.7.0",
     "zone.js": "^0.8.26"

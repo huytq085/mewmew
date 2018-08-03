@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: './search/search.module#SearchModule'
+  },
+  {
+    path: 'chat',
+    loadChildren: './chat/chat.module#ChatModule'
   }
 
 ];

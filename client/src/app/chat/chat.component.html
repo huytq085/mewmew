@@ -1,3 +1,20 @@
-<p>
-  chat works!
-</p>
+<main role="main" class="container">
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+    <div class="panel-collapse">
+      <div class="panel-body" style="height: 300px">
+        <ul class="chat">
+          
+        </ul>
+      </div>
+      <div class="panel-footer">
+        <div class="input-group">
+          <input id="input" type="text" class="form-control input-sm" placeholder="Type your message here..." #input (keyup.enter)="sendMessage(input.value)"/>
+          <span class="input-group-btn">
+            <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage(input.value)">
+              Send</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
