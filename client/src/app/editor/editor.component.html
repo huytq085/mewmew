@@ -12,26 +12,25 @@
               <input class="form-control form-control-lg"
                 formControlName="subject"
                 type="text"
-                placeholder="Article Title" />
+                placeholder="Tiêu đề" />
             </fieldset>
 
             <fieldset class="form-group">
               <textarea class="form-control"
                 formControlName="content"
                 rows="8"
-                placeholder="Write your article (in markdown)">
+                placeholder="Nội dung">
               </textarea>
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control"
                 type="text"
-                placeholder="Enter tags"
+                placeholder="Thẻ"
                 [formControl]="tagField"
                 (keyup.enter)="addTag()" />
 
               <div class="tag-list">
-                  <!-- <fa-icon [icon]="faCoffee"></fa-icon> -->
                 <span *ngFor="let tag of article.tagList"
                   class="tag-default tag-pill">
                   <i class="fa fa-remove" (click)="removeTag(tag)"></i>
@@ -41,7 +40,7 @@
             </fieldset>
 
             <button class="btn btn-lg pull-xs-right btn-primary" type="button" (click)="submitForm()">
-              Publish Article
+              Đăng
             </button>
 
           </fieldset>

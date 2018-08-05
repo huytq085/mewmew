@@ -8,11 +8,9 @@
       </div>
       <div class="panel-footer">
         <div class="input-group">
-          <input id="input" type="text" class="form-control input-sm" placeholder="Type your message here..." #input (keyup.enter)="sendMessage(input.value)"/>
-          <span class="input-group-btn">
-            <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage(input.value)">
-              Send</button>
-          </span>
+          <input id="input" type="text" class="form-control input-sm" placeholder="Viết ở đây..." #input (keyup.enter)="sendMessage(input.value)"/>
+          <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage(input.value)">
+            Gửi</button>
         </div>
       </div>
     </div>

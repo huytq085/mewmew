@@ -8,13 +8,13 @@
            <span [hidden]="!canModify">
           <a class="btn btn-sm btn-outline-secondary"
              [routerLink]="['/editor', article.id]">
-            <i class="ion-edit"></i> Edit Article
+            <i class="ion-edit"></i> Sửa bài
           </a>
 
           <button class="btn btn-sm btn-outline-danger"
             [ngClass]="{disabled: isDeleting}"
             (click)="deleteArticle()">
-            <i class="ion-trash-a"></i> Delete Article
+            <i class="ion-trash-a"></i> Xóa bài
           </button>
         </span>
 
@@ -27,7 +27,7 @@
           <app-favorite-button
             [article]="article"
             (toggle)="onToggleFavorite($event)">
-            {{ article.favorited ? 'Liked' : 'Like' }} <span class="counter">({{ article.favoritesCount }})</span>
+            {{ article.favorited ? 'Thích' : 'Thích' }} <span class="counter">({{ article.favoritesCount }})</span>
           </app-favorite-button>
         </span> 
 
@@ -64,13 +64,13 @@
           <span [hidden]="!canModify">
           <a class="btn btn-sm btn-outline-secondary"
              [routerLink]="['/editor', article.id]">
-            <i class="ion-edit"></i> Edit Article
+            <i class="ion-edit"></i> Sửa bài
           </a>
 
           <button class="btn btn-sm btn-outline-danger"
             [ngClass]="{disabled: isDeleting}"
             (click)="deleteArticle()">
-            <i class="ion-trash-a"></i> Delete Article
+            <i class="ion-trash-a"></i> Xóa bài
           </button>
         </span>
 
@@ -83,7 +83,7 @@
           <app-favorite-button
             [article]="article"
             (toggle)="onToggleFavorite($event)">
-            {{ article.favorited ? 'Liked' : 'Like' }} <span class="counter">({{ article.favoritesCount }})</span>
+            {{ article.favorited ? 'Thích' : 'Thích' }} <span class="counter">({{ article.favoritesCount }})</span>
           </app-favorite-button>
         </span>
 
@@ -100,7 +100,7 @@
             <fieldset [disabled]="isSubmitting">
               <div class="card-block">
                 <textarea class="form-control"
-                  placeholder="Write a comment..."
+                  placeholder="Viết bình luận..."
                   rows="3"
                   [formControl]="commentControl"
                 ></textarea>
@@ -108,7 +108,7 @@
               <div class="card-footer">
                 <img [src]="currentUser.avatar" class="comment-author-img" />
                 <button class="btn btn-sm btn-primary" type="submit">
-                 Post Comment
+                 Đăng
                 </button>
               </div>
             </fieldset>
@@ -116,7 +116,7 @@
         </div>
 
         <div *appShowAuthed="false">
-          <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on this article.
+          <a [routerLink]="['/login']">Đăng nhập</a> hoặc <a [routerLink]="['/register']">đăng ký</a> để bình luận bài viết.
         </div>
 
         <app-article-comment

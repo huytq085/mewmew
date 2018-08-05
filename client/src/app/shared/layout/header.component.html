@@ -7,8 +7,8 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" [(ngModel)]="searchInput" name="searchInput">
-        <button class="btn btn-outline-success my-2 my-sm-0" routerLink="/search" [queryParams]="{q:searchInput}">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm" [(ngModel)]="searchInput" name="searchInput">
+        <button class="btn btn-outline-success my-2 my-sm-0" routerLink="/search" [queryParams]="{q:searchInput}">Tìm kiếm</button>
       </form>
     </ul>
     <!-- Show this for logged out users -->
@@ -19,7 +19,7 @@
         <a class="nav-link"
           routerLink="/login"
           routerLinkActive="active">
-          Sign in
+          Đăng nhập
         </a>
       </li>
 
@@ -27,7 +27,7 @@
         <a class="nav-link"
           routerLink="/register"
           routerLinkActive="active">
-          Sign up
+          Đăng ký
         </a>
       </li>
 
@@ -40,7 +40,7 @@
           <a class="nav-link"
             routerLink="/chat"
             routerLinkActive="active">
-            <i class="fa fa-wechat"></i>&nbsp;Chat Room
+            <i class="fa fa-wechat"></i>&nbsp;Phòng Chat
           </a>
         </li>
 
@@ -48,7 +48,7 @@
         <a class="nav-link"
           routerLink="/editor"
           routerLinkActive="active">
-          <i class="fa fa-edit"></i>&nbsp;New Article
+          <i class="fa fa-edit"></i>&nbsp;Bài mới
         </a>
       </li>
 
@@ -56,7 +56,7 @@
         <a class="nav-link"
           routerLink="/settings"
           routerLinkActive="active">
-          <i class="fa fa-gear"></i>&nbsp;Settings
+          <i class="fa fa-gear"></i>&nbsp;Cài đặt
         </a>
       </li>
 

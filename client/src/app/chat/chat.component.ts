@@ -42,7 +42,7 @@ export class ChatComponent implements OnInit, OnDestroy {
                 <div class="header">
                   <strong class="primary-font">${body.user.username}</strong>
                   <small class="pull-right text-muted">
-                    <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                    <span class="glyphicon glyphicon-time"></span>12 phút trước</small>
                 </div>
                 <p>
                   ${body.message}

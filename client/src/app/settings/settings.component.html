@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6 offset-md-3 col-xs-12">
 
-        <h1 class="text-xs-center">Your Settings</h1>
+        <h1 class="text-xs-center">Thông tin tài khoản</h1>
 
         <!-- <app-list-errors [errors]="errors"></app-list-errors> -->
 
@@ -17,14 +17,14 @@
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
                 type="text"
-                placeholder="Username"
+                placeholder="Tài khoản"
                 formControlName="username" />
             </fieldset>
 
             <fieldset class="form-group">
               <textarea class="form-control form-control-lg"
                 rows="8"
-                placeholder="Short bio about you"
+                placeholder="Mô tả ngắn gọn bản thân"
                 formControlName="description">
               </textarea>
             </fieldset>
@@ -39,13 +39,13 @@
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
                 type="password"
-                placeholder="New Password"
+                placeholder="Mật khẩu mới"
                 formControlName="password" />
             </fieldset>
 
             <button class="btn btn-lg btn-primary pull-xs-right"
               type="submit">
-              Update Settings
+              Cập nhật thông tin
             </button>
 
           </fieldset>
@@ -56,7 +56,7 @@
 
         <button class="btn btn-outline-danger"
           (click)="logout()">
-          Or click here to logout.
+          Đăng xuất
         </button>
 
       </div>

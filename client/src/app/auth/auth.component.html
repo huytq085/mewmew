@@ -17,7 +17,7 @@
             <fieldset class="form-group">
               <input
                 formControlName="username"
-                placeholder="Username"
+                placeholder="Tài khoản"
                 class="form-control form-control-lg"
                 type="text"
                 *ngIf="authType == 'register'" />
@@ -34,7 +34,7 @@
             <fieldset class="form-group">
               <input
                 formControlName="password"
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 class="form-control form-control-lg"
                 type="password" />
             </fieldset>
@@ -42,19 +42,19 @@
                 <div class="form-group">
                   <select class="form-control" 
                   formControlName="gender"
-                  placeholder="Gender"
+                  placeholder="Giới tính"
                   class="form-control form-control"
                   *ngIf="authType == 'register'">
-                    <option value="">Gender</option>
-                    <option value="Male" selected>Male</option>
-                    <option value="Female">Female</option>
+                    <option value="">Giới tính</option>
+                    <option value="Male" selected>Nam</option>
+                    <option value="Female">Nữ</option>
                   </select>
                 </div>
             </fieldset>
             <fieldset class="form-group">
                 <input
                   formControlName="fullName"
-                  placeholder="Full Name"
+                  placeholder="Tên đầy đủ"
                   class="form-control form-control-lg"
                   type="text" 
                   *ngIf="authType == 'register'" />
@@ -62,7 +62,7 @@
               <fieldset class="form-group">
                 <textarea class="form-control form-control-lg"
                   rows="8"
-                  placeholder="Short bio about you"
+                  placeholder="Mô tả ngắn gọn về bạn"
                   formControlName="description"
                   *ngIf="authType == 'register'">
                 </textarea>

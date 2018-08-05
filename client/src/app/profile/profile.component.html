@@ -16,7 +16,7 @@
            <a [routerLink]="['/settings']"
               [hidden]="!isUser"
               class="btn btn-sm btn-outline-secondary action-btn">
-              <i class="fa fa-gear"></i> Edit Profile Settings
+              <i class="fa fa-gear"></i> Chỉnh sửa thông tin
             </a>
         </div>
 
@@ -34,7 +34,7 @@
                  routerLinkActive="active"
                  [routerLinkActiveOptions]="{ exact: true }"
                  [routerLink]="['/profile', username]">
-                 Posts
+                 Bài viết
               </a>
             </li>
             <li class="nav-item">
@@ -42,7 +42,7 @@
                  routerLinkActive="active"
                  [routerLinkActiveOptions]="{ exact: true }"
                  [routerLink]="['/profile', username, 'gallery']">
-                 Gallery
+                 Thư viện hình
               </a>
             </li>
             <li class="nav-item">
@@ -50,7 +50,7 @@
                  routerLinkActive="active"
                  [routerLinkActiveOptions]="{ exact: true }"
                  [routerLink]="['/profile', username, 'favorites']">
-                 Favorited Posts
+                 Bài viết yêu thích
               </a>
             </li>
           </ul>
