@@ -7,7 +7,7 @@ export class Article {
   description: string;
   content: string;
   tagList: string[];
-  createdAt: string;
+  dateAdded: string;
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;

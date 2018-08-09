@@ -22,7 +22,7 @@ export class ArticlesService {
       .forEach((key) => {
         params[key] = config.filters[key];
       });
-    if (isFavoritedBy){
+    if (isFavoritedBy) {
       params['isFavoritedBy'] = isFavoritedBy;
     }
     return this.apiService
@@ -45,18 +45,9 @@ export class ArticlesService {
   }
 
   save(article): Observable<Article> {
-
-    // If we're updating an existing article
-    if (article.slug) {
-      return this.apiService.put('/articles/' + article.slug, { article: article })
-        .pipe(map(data => data.article));
-
-      // Otherwise, create a new article
-    } else {
-      return this.apiService.post('/articles/', article)
-        .pipe(
-          map(article => article));
-    }
+    return this.apiService.post('/articles/', article)
+      .pipe(
+        map(article => article));
   }
 
   favorite(articleId: number): Observable<Article> {
