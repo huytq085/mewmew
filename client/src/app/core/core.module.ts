@@ -4,7 +4,7 @@ import { ArticlesService } from './services/articles.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserService, ApiService, AuthGuard } from './services';
+import { UserService, ApiService, AuthGuard, NotificationService } from './services';
 import { HttpTokenInterceptor } from '.';
 
 @NgModule({
@@ -19,8 +19,8 @@ import { HttpTokenInterceptor } from '.';
     ArticlesService,
     CommentsService,
     ProfilesService,
-    AuthGuard
-
+    AuthGuard,
+    NotificationService
   ]
 })
 export class CoreModule { }

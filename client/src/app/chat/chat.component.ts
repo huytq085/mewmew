@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe("/chat", (res) => {
+      that.stompClient.subscribe("/topic/chat", (res) => {
         if (res.body) {
           let body = JSON.parse(res.body);
           console.log(body)
@@ -63,7 +63,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       message,
       user
     }
-    this.stompClient.send("/chat", {}, JSON.stringify(body));
+    // this.stompClient.send("/chat", {}, JSON.stringify(body));
+    this.stompClient.send("/api/chat", {}, JSON.stringify(body));
     $('#input').val('');
   }
 

@@ -1,3 +1,4 @@
+import { ProfilesService } from './profiles.service';
 import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
@@ -10,6 +11,7 @@ import { ApiService } from './api.service';
 import { User } from '../models';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { JwtService } from './jwt.service';
+import { NotificationService } from './notification.service';
 
 
 @Injectable()
@@ -26,8 +28,8 @@ export class UserService implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private notify: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +41,8 @@ export class UserService implements OnInit {
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
+    this.notify.subscribeNotify(user.username);
+    
   }
 
   purgeAuth() {

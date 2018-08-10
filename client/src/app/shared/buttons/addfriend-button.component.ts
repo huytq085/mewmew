@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Profile, ProfilesService, UserService } from '../../core';
+import { Profile, ProfilesService, NotificationService, UserService } from '../../core';
 import { concatMap ,  tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -19,7 +19,8 @@ export class AddfriendButtonComponent implements OnInit {
   constructor(
     private profilesService: ProfilesService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private notify: NotificationService
   ) { }
 
   @Input() profile: Profile;
@@ -43,7 +44,8 @@ export class AddfriendButtonComponent implements OnInit {
             .pipe(tap(
               data => {
                 this.isSubmitting = false;
-                this.toggle.emit(1);
+                this.toggle.emit(0);
+                this.notify.notifyFriendRequest();
               },
               err => this.isSubmitting = false
             ));

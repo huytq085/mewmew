@@ -19,6 +19,8 @@ export class ProfilesService implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    console.log("oninit profile");
+    
     this.currentUser = this.userService.getCurrentUser();
   }
 
