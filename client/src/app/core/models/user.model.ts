@@ -8,4 +8,5 @@ export interface User {
     description: string;
     following: boolean;
     fullName: string;
+    friendStatus: number;
 }

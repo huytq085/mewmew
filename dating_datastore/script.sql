@@ -86,7 +86,7 @@ create table user
     primary key,
   username    varchar(30) charset utf8  not null,
   password    varchar(100)              not null,
-  gender      varchar(10) charset utf8  not null,
+  full_name   varchar(255)              null,
   description longtext charset utf8     null,
   purpose     varchar(100) charset utf8 null,
   email       varchar(30) charset utf8  not null,
@@ -94,14 +94,14 @@ create table user
   status      varchar(10) default 'ACT' null,
   address     varchar(100) charset utf8 null,
   city        varchar(10) charset utf8  null,
-  avatar      varchar(100) charset utf8 null,
+  avatar      longtext                  null,
   rate        int(5)                    null,
-  height      int(3)                    null,
+  height      int(3) default '0'        null,
   weight      int(3)                    null,
   job         varchar(45) charset utf8  null,
   matrimony   varchar(10)               null,
   date_added  datetime                  null,
-  full_name   varchar(255)              null,
+  gender      varchar(10)               not null,
   last_access datetime                  null,
   constraint username_UNIQUE
   unique (username),
@@ -116,12 +116,13 @@ create table article
   id          int auto_increment
     primary key,
   user_id     int                                not null,
-  subject     longtext                           not null,
+  subject     longtext                           null,
   view        int default '0'                    not null,
   category_id int default '1'                    null,
   date_added  datetime default CURRENT_TIMESTAMP null,
   updated_at  datetime default CURRENT_TIMESTAMP null,
   content     longtext                           null,
+  image       longtext                           null,
   constraint article_user__fk
   foreign key (user_id) references user (id),
   constraint article_category__fk
@@ -179,11 +180,34 @@ create index FK8kcum44fvpupyw6f5baccx25c
 create index fk_comment_article1_idx
   on comment (article_id);
 
+create table friendlist
+(
+  sender_id    int                                 not null,
+  recipient_id int                                 not null,
+  status       tinyint default '0'                 not null,
+  date_added   timestamp default CURRENT_TIMESTAMP null,
+  primary key (sender_id, recipient_id),
+  constraint friendlist_user_id_fk
+  foreign key (sender_id) references user (id)
+    on update cascade
+    on delete cascade,
+  constraint friendlist_user_id_fk_2
+  foreign key (recipient_id) references user (id)
+    on update cascade
+    on delete cascade
+);
+
+create index friendlist_user_id_fk_2
+  on friendlist (recipient_id);
+
 create table friendship
 (
   follower_id  int                                 null,
   following_id int                                 null,
   date_added   timestamp default CURRENT_TIMESTAMP not null,
+  id           int auto_increment,
+  constraint friendship_id_pk
+  unique (id),
   constraint friendship_user_id_fk
   foreign key (follower_id) references user (id),
   constraint friendship_user_id_fks_2
@@ -207,6 +231,8 @@ create table likes
   foreign key (user_id) references user (id),
   constraint fk_like_article1
   foreign key (article_id) references article (id)
+    on update cascade
+    on delete cascade
 );
 
 create index fk_like_article1_idx
@@ -269,6 +295,21 @@ create table user_role
 create index user_role_FK2
   on user_role (role_id);
 
+create procedure acceptFriend(IN user1 int, IN user2 int, OUT isSuccess int(1))
+  begin
+    set isSuccess = 0;
+    update friendlist
+    set status = 1
+    where sender_id = user1 and recipient_id = user2;
+    set isSuccess = ROW_COUNT();
+  END;
+
+create procedure addfriend(IN user1 int, IN user2 int, OUT isSuccess int(1))
+  begin
+    insert into friendlist (sender_id, recipient_id) values (user1, user2);
+    set isSuccess = ROW_COUNT();
+  end;
+
 create procedure comment(IN user int, IN article int, IN `_content` longtext, OUT isSuccess int(1))
   begin
     insert into comment (user_id, article_id, content) values (user, article, _content);
@@ -286,6 +327,13 @@ create procedure follow(IN user1 int, IN user2 int, OUT isSuccess int(1))
     insert into friendship (follower_id, following_id) values (user1, user2);
     set isSuccess = ROW_COUNT();
   end;
+
+create procedure friendStatus(IN user1 int, IN user2 int, OUT isFriend int(1))
+  begin
+    set isFriend = (select fl.status
+                    from friendlist fl
+                    where fl.sender_id = user1 and fl.recipient_id = user2);
+  END;
 
 create procedure isFollowing(IN user1 int, IN user2 int, OUT isFollowing int(1))
   begin
@@ -341,6 +389,13 @@ create procedure unLike(IN user int, IN article int, OUT isSuccess int(1))
   begin
     delete from likes
     where user_id = user and article_id = article;
+    set isSuccess = ROW_COUNT();
+  end;
+
+create procedure unfriend(IN user1 int, IN user2 int, OUT isSuccess int(1))
+  begin
+    delete from friendlist
+    where sender_id = user1 and recipient_id = user2;
     set isSuccess = ROW_COUNT();
   end;
 

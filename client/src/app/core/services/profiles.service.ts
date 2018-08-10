@@ -35,10 +35,13 @@ export class ProfilesService implements OnInit{
     return this.apiService.post('/users/' + userId + '/unfollow', this.userService.getCurrentUser());
   }
 
-  // isFollowing(userId: number): Observable<boolean>{
-  //   let result;
-  //   return this.apiService.get('/users/' + userId + '/isfollowing/' + this.userService.getCurrentUser().id);
-  // }
+  addFriend(userId: number): Observable<Profile> {
+    return this.apiService.post('/users/' + userId + '/addfriend', this.userService.getCurrentUser());
+  }
+
+  unFriend(userId: number): Observable<Profile> {
+    return this.apiService.post('/users/' + userId + '/unfriend', this.userService.getCurrentUser());
+  }
 
   user2Profile(user: User): Profile{
     let profile: Profile = {} as Profile;
@@ -49,8 +52,10 @@ export class ProfilesService implements OnInit{
       profile.id = user.id;
       profile.following = user.following;
       profile.fullName = user.fullName;
+      profile.friendStatus = user.friendStatus;
     }
     return profile;
   }
+
 
 }

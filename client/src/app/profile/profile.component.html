@@ -13,6 +13,11 @@
             [profile]="profile"
             (toggle)="onToggleFollowing($event)">
           </app-follow-button>
+          <app-addfriend-button
+            [hidden]="isUser"
+            [profile]="profile"
+            (toggle)="onToggleAdding($event)">
+            </app-addfriend-button>
            <a [routerLink]="['/settings']"
               [hidden]="!isUser"
               class="btn btn-sm btn-outline-secondary action-btn">

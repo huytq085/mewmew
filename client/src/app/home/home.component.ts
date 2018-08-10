@@ -26,12 +26,13 @@ export class HomeComponent implements OnInit {
     this.userService.isAuthenticated.subscribe(
       (authenticated) => {
         this.isAuthenticated = authenticated;
-        // set the article list accordingly
-        if (authenticated) {
-          this.setListTo('feed');
-        } else {
-          this.setListTo('all');
-        }
+        // if (authenticated) {
+        //   this.setListTo('feed');
+        // } else {
+        //   this.setListTo('all');
+        // }
+
+        this.setListTo('all');
       }
     );
   }

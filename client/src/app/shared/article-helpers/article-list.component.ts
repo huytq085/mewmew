@@ -1,5 +1,5 @@
 import { UserService } from './../../core/services/user.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Article, ArticleListConfig, ArticlesService } from '../../core';
 @Component({
@@ -22,6 +22,7 @@ export class ArticleListComponent {
       this.runQuery();
     }
   }
+  @Output() type: EventEmitter<any> = new EventEmitter();
 
   query: ArticleListConfig;
   results: Article[];
@@ -43,6 +44,7 @@ export class ArticleListComponent {
       this.query.filters.limit = this.limit;
       this.query.filters.offset = (this.limit * (this.currentPage - 1));
     }
+    // FIXME: Khi co token dang nhap, global tai bat dong bo override len feed hien tai
     this.userService.currentUser.subscribe(
       data => {
         this.articlesService.query(this.query, data.id)

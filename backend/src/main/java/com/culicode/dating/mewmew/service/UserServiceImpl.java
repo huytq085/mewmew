@@ -132,5 +132,25 @@ public class UserServiceImpl implements UserService {
         return userRepository.search(query);
     }
 
+    @Override
+    public int addFriend(int user1, int user2) {
+        return userRepository.addFriend(user1, user2);
+    }
+
+    @Override
+    public int unFriend(int user1, int user2) {
+        return userRepository.unFriend(user1, user2);
+    }
+
+    @Override
+    public int acceptFriend(int user1, int user2) {
+        return userRepository.acceptFriend(user1, user2);
+    }
+
+    @Override
+    public Integer getFriendStatus(int user1, int user2) {
+        return userRepository.friendStatus(user1, user2);
+    }
+
 
 }

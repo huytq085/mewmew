@@ -53,7 +53,18 @@ public class User{
     @Transient
     private Boolean following;
 
+    @Transient
+    private Integer friendStatus;
+
     public User() {
+    }
+
+    public Integer getFriendStatus() {
+        return friendStatus;
+    }
+
+    public void setFriendStatus(Integer friendStatus) {
+        this.friendStatus = friendStatus;
     }
 
     public Boolean isFollowing() {

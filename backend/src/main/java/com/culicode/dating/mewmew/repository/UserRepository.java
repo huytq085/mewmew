@@ -28,6 +28,24 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Procedure
     int isFollowing(int user1, int user2);
 
+    @Procedure
+    int addFriend(int user1, int user2);
+
+    @Procedure
+    int unFriend(int user1, int user2);
+
+    @Procedure
+    int acceptFriend(int user1, int user2);
+
+    @Procedure
+    Integer friendStatus(int user1, int user2);
+
+
+
+
+
+
+
     @Query("from User u where u.username like CONCAT('%',:query,'%') or u.fullName like CONCAT('%',:query,'%')")
     List<User> search(@Param("query") String query);
 

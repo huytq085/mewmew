@@ -31,4 +31,12 @@ public interface UserService {
 
     List<User> search(String query);
 
+    int addFriend(int user1, int user2);
+
+    int unFriend(int user1, int user2);
+
+    int acceptFriend(int user1, int user2);
+
+    Integer getFriendStatus(int user1, int user2);
+
 }

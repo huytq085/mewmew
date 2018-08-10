@@ -45,5 +45,8 @@ export class ProfileComponent implements OnInit {
     this.profile.following = following;
   }
 
+  onToggleAdding(friendStatus: number) {
+    this.profile.friendStatus = friendStatus;
+  }
 
 }

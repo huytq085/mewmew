@@ -27,7 +27,6 @@ import { SearchModule } from './search/search.module';
     HeaderComponent,
     FooterComponent,
     ProfileRoutingComponent,
-
   ],
   imports: [
     BrowserModule,

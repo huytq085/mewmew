@@ -5,4 +5,5 @@ export interface Profile {
   avatar: string;
   following: boolean;
   fullName: string;
+  friendStatus: number;
 }

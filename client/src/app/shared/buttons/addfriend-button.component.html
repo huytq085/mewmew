@@ -1,0 +1,14 @@
+<button *ngIf="profile"
+  class="btn btn-sm action-btn"
+  [ngClass]="{ 'disabled': isSubmitting,
+               'btn-outline-secondary': !profile.following,
+               'btn-secondary': profile.following }"
+  (click)="toggleAdding()">
+  <i class="ion-plus-round"></i>
+  &nbsp;
+  <ng-container *ngIf="profile.friendStatus != null; else AddFriend">
+    {{ profile.friendStatus == 0 ? 'Đã gửi lời mời kết bạn' : 'Hủy kết bạn' }}
+  </ng-container>
+  <ng-template #AddFriend>Kết bạn</ng-template>
+</button>
+
