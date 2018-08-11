@@ -1,3 +1,3 @@
 export * from './footer.component';
 export * from './header.component';
-export * from './test.component'
+export * from './notification-box.component'
