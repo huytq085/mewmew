@@ -82,7 +82,7 @@ public class UserApi {
         LOG.debug(userId);
         if (userId != null && !userId.equals("undefined")) {
             user.setFollowing(this.userService.isFollowing(user.getId(), Integer.parseInt(userId)));
-            user.setFriendStatus(this.userService.getFriendStatus(user.getId(), Integer.parseInt(userId)));
+            user.setFriendStatus(this.userService.getFriendStatus(Integer.parseInt(userId), user.getId()));
         }
         return user;
     }
@@ -135,7 +135,7 @@ public class UserApi {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public int addFriend(@PathVariable int userId, @RequestBody User user) {
         LOG.info(user.getUsername() + " want to add friend " + userId);
-        return this.userService.addFriend(userId, user.getId());
+        return this.userService.addFriend(user.getId(), userId);
     }
 
     @RequestMapping(
@@ -144,7 +144,7 @@ public class UserApi {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public int unFriend(@PathVariable int userId, @RequestBody User user) {
         LOG.info(user.getUsername() + " want to unfriend " + userId);
-        return this.userService.unFriend(userId, user.getId());
+        return this.userService.unFriend(user.getId(), userId);
     }
 
     @RequestMapping(

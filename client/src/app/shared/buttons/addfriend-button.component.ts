@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Profile, ProfilesService, NotificationService, UserService } from '../../core';
-import { concatMap ,  tap } from 'rxjs/operators';
+import { concatMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
@@ -13,7 +13,7 @@ import { of } from 'rxjs';
 export class AddfriendButtonComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.profile);
-    
+
   }
 
   constructor(
@@ -45,12 +45,23 @@ export class AddfriendButtonComponent implements OnInit {
               data => {
                 this.isSubmitting = false;
                 this.toggle.emit(0);
-                this.notify.notifyFriendRequest();
+                this.notify.notifyFriendRequest(this.profile.username);
               },
               err => this.isSubmitting = false
             ));
 
           // Otherwise, unfollow this profile
+        } else if (this.profile.friendStatus == 3) {
+          console.log(3)
+          return this.profilesService.acceptFriend(this.profile.id)
+            .pipe(tap(
+              data => {
+                this.isSubmitting = false;
+                this.toggle.emit(1);
+                // this.notify.notifyFriendRequest(this.profile.username);
+              },
+              err => this.isSubmitting = false
+            ));
         } else {
           return this.profilesService.unFriend(this.profile.id)
             .pipe(tap(

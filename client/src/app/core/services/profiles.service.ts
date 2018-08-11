@@ -45,6 +45,10 @@ export class ProfilesService implements OnInit{
     return this.apiService.post('/users/' + userId + '/unfriend', this.userService.getCurrentUser());
   }
 
+  acceptFriend(userId: number): Observable<Profile> {
+    return this.apiService.post('/users/' + userId + '/acceptfriend', this.userService.getCurrentUser());
+  }
+
   user2Profile(user: User): Profile{
     let profile: Profile = {} as Profile;
     if (typeof user != 'undefined'){

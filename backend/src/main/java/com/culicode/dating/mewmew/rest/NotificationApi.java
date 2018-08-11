@@ -1,5 +1,7 @@
 package com.culicode.dating.mewmew.rest;
 
+import com.culicode.dating.mewmew.domain.Notification;
+import com.culicode.dating.mewmew.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,13 +22,13 @@ public class NotificationApi {
 
     @MessageMapping("/friend_request")
 //    @SendTo("/topic/notification")
-    public void notify(String body){
+    public void notify(Notification notification){
         System.out.println("notiy ne");
-        System.out.println(body);
+        System.out.println(JsonUtil.encode(notification));
         messagingTemplate.convertAndSendToUser(
-                body,
+                notification.getUsername(),
                 "/queue/notify",
-                body
+                notification
         );
 
     }

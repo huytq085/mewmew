@@ -17,17 +17,20 @@ export class SharedService {
     this.notificationSubject.next([
       {
         id: 1,
-        userId: 1,
+        username: "huyhuy",
         content: "Tran Tan muon ket ban kia",
         dateAdded: null,
-        type: "FR_REQ"
+        type: "FR_REQ",
+        sender: null
       },
       {
         id: 2,
-        userId: 2,
+        username: "toantoan",
         content: "Toan muon ket ban kia",
         dateAdded: null,
-        type: "FR_REQ"
+        type: "FR_REQ",
+        sender: null
+
       },
     ])
   }

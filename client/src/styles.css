@@ -5398,10 +5398,6 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-    .image-upload .img-ul-file-upload{
-      /* display: none!important; */
-  }
-
   .chat-avatar{
     width: 100%;
     max-width: 50px;

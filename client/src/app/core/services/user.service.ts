@@ -41,7 +41,7 @@ export class UserService implements OnInit {
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
-    this.notify.subscribeNotify(user.username);
+    this.notify.subscribeNotify(user);
     
   }
 

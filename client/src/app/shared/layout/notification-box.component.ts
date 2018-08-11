@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Notification, SharedService } from '../../core';
+import { Notification, SharedService, ProfilesService } from '../../core';
 
 @Component({
   selector: 'notification-box',
@@ -8,10 +8,13 @@ import { Notification, SharedService } from '../../core';
 })
 export class NotificationBoxComponent implements OnInit {
 
+  isAccept = false;
+
   notifications: Notification[] = new Array();
 
   constructor(
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private profilesService: ProfilesService
   ) { }
 
   ngOnInit() {
@@ -23,15 +26,15 @@ export class NotificationBoxComponent implements OnInit {
     )
   }
 
-  accept(){
-    let notis = {
-      id: 1,
-      userId: 1,
-      content: "Nhi muon ket ban kia",
-      dateAdded: null,
-      type: "FR_REQ"
-    }
-    this.sharedService.pushNotification(notis);
+  accept(userId: number){
+    console.log(userId)
+    this.profilesService.acceptFriend(userId).subscribe(
+      data => {
+        // console.log(data == 1);
+        // this.isAccept = (data == 1);
+        this.isAccept = true;
+      }
+    )
   }
 
 }
