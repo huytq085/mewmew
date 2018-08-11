@@ -1,11 +1,12 @@
 import { User } from ".";
 
 export interface Notification {
-    id: number;
-    username: string;
+    id?: number;
+    recipientId: number;
     content: string;
-    dateAdded: string;
+    dateAdded?: string;
     type: string;
     sender: User;
+    read?: boolean;
 }
   

@@ -45,7 +45,7 @@ export class AddfriendButtonComponent implements OnInit {
               data => {
                 this.isSubmitting = false;
                 this.toggle.emit(0);
-                this.notify.notifyFriendRequest(this.profile.username);
+                this.notify.notifyFriendRequest(this.profile.id);
               },
               err => this.isSubmitting = false
             ));

@@ -1,3 +1,4 @@
+import { NotificationService } from './../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { Notification, SharedService, ProfilesService } from '../../core';
 
@@ -9,19 +10,25 @@ import { Notification, SharedService, ProfilesService } from '../../core';
 export class NotificationBoxComponent implements OnInit {
 
   isAccept = false;
+  unreadNotifications: Notification[] = new Array();
 
   notifications: Notification[] = new Array();
 
   constructor(
     private sharedService: SharedService,
-    private profilesService: ProfilesService
+    private profilesService: ProfilesService,
+    private notify: NotificationService
   ) { }
 
   ngOnInit() {
+    // this.notifications.unshift({} as Notification);
     this.sharedService.getNotifications().subscribe(
       data => {
-        console.log(data);
-        this.notifications = data;
+        if (Array.isArray(data)){
+          this.notifications = data;
+          this.unreadNotifications = this.notifications.filter(noti => !noti.read);
+          console.log(this.unreadNotifications)
+        }
       }
     )
   }
@@ -35,6 +42,15 @@ export class NotificationBoxComponent implements OnInit {
         this.isAccept = true;
       }
     )
+  }
+  read(noti: Notification){
+    let index = this.unreadNotifications.indexOf(noti);
+    if (index != -1){
+      noti.read = true;
+      this.unreadNotifications.splice(index, 1);
+    }
+    
+    this.notify.markRead(noti);
   }
 
 }

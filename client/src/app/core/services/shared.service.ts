@@ -12,27 +12,7 @@ export class SharedService {
   public notifications = this.notificationSubject.asObservable();
 
   constructor(
-    private apiService: ApiService
   ) {
-    this.notificationSubject.next([
-      {
-        id: 1,
-        username: "huyhuy",
-        content: "Tran Tan muon ket ban kia",
-        dateAdded: null,
-        type: "FR_REQ",
-        sender: null
-      },
-      {
-        id: 2,
-        username: "toantoan",
-        content: "Toan muon ket ban kia",
-        dateAdded: null,
-        type: "FR_REQ",
-        sender: null
-
-      },
-    ])
   }
 
   pushNotifications(_notifications: Notification[]) {

@@ -1,3 +1,4 @@
+import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
@@ -5,6 +6,7 @@ import $ from 'jquery';
 import { UserService } from '.';
 import { SharedService } from './shared.service';
 import { Profile, User } from '../models';
+import { Notification } from '../models/notification.model'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class NotificationService {
   private currentUser: User;
 
   constructor(
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private apiService: ApiService
   ) {
     this.initializeWebSocketConnection();
   }
@@ -36,11 +39,11 @@ export class NotificationService {
     });
   }
 
-  notifyFriendRequest(username: string) {
+  notifyFriendRequest(_recipient_id: number) {
     // TODO: Remove this live
     this.currentUser.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
-    let notification = {
-      username: username,
+    let notification: Notification = {
+      recipientId: _recipient_id,
       content: '',
       type: "FR_REQ",
       sender: this.currentUser
@@ -55,15 +58,26 @@ export class NotificationService {
     console.log(1);
     let that = this;
     this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe(`/user/${user.username}/queue/notify`, (res) => {
+      that.apiService.get('/notification/' + user.id).toPromise().then(
+        data => {
+          that.sharedService.pushNotifications(data);
+        }
+      )
+      that.stompClient.subscribe(`/user/${user.id}/queue/notify`, (res) => {
         if (res.body) {
-          console.log(res.body)
           let notification = JSON.parse(res.body);
           that.sharedService.pushNotification(notification);
-
         }
       });
     });
+  }
+
+  markRead(noti: Notification){
+    return this.apiService.put('/notification/markread/', noti).toPromise().then(
+      data => {
+        console.log(data)
+      }
+    );
   }
 
 }

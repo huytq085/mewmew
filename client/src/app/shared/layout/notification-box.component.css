@@ -54,9 +54,12 @@
 .notification-item {
  padding:10px;
  margin:5px;
- background:#f8f9fa;
+ background:#ffffff;
  border-radius:4px;
  }
+ .notification-item.unread {
+  background: #dce6ec;
+  }
 
 
 

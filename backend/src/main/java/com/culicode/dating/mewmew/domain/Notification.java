@@ -1,16 +1,38 @@
 package com.culicode.dating.mewmew.domain;
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "notification")
 public class Notification {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String username;
-    private Date dadeAdded;
+    @Column(name = "recipient_id", nullable = false)
+    private int recipientId;
+    @Column(name = "date_added")
+    private Date dateAdded;
     private String type;
     private String content;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
     private User sender;
+    @Column(name = "is_read")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean isRead;
 
     public Notification() {
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
     public int getId() {
@@ -21,20 +43,20 @@ public class Notification {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public int getRecipientId() {
+        return recipientId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRecipientId(int recipientId) {
+        this.recipientId = recipientId;
     }
 
-    public Date getDadeAdded() {
-        return dadeAdded;
+    public Date getDateAdded() {
+        return dateAdded;
     }
 
-    public void setDadeAdded(Date dadeAdded) {
-        this.dadeAdded = dadeAdded;
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public String getType() {

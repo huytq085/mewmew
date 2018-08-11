@@ -4,7 +4,7 @@
 <div class="dropdown">
   <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" style="color: rgba(0, 0, 0, 0.3);">
     <i class="fa fa-bell"></i> Thông báo
-    <span class="badge badge-danger">4</span>
+    <span class="badge badge-danger" *ngIf="unreadNotifications.length">{{unreadNotifications.length}}</span>
   </a>
 
   <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
@@ -14,16 +14,21 @@
       <h4 class="menu-title pull-right">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></h4>
     </div> -->
     <li class="divider"></li>
-    <div class="notifications-wrapper" *ngFor="let noti of notifications">
-      <div class="notification-item" *ngIf="noti.type == 'FR_REQ' && noti.sender">
+    <div class="notifications-wrapper border-bottom" *ngFor="let noti of notifications">
+      <div 
+      (click)="read(noti)" 
+      class="notification-item" 
+      *ngIf="noti.type == 'FR_REQ' && noti.sender"
+      [ngClass]="{ 'notification-item': true,
+        'unread': !noti.read}">
         <div class="row">
           <div class="col-sm-2">
             <img class="notify-img" src="{{noti.sender.avatar}}" alt="">
           </div>
           <div class="col-sm-10">
             <p class="item-title">{{ noti.sender.fullName }} gửi yêu cầu kết bạn.</p>
-            <a (click)="accept(noti.sender.id)" class="btn btn-primary btn-sm mr-1" *ngIf="!isAccept">Chấp nhận</a>
-            <a [routerLink]="['/profile', noti.sender.username]" class="btn btn-primary btn-sm">Xem trang cá nhân</a>
+            <!-- <a (click)="accept(noti.sender.id)" class="btn btn-primary btn-sm mr-1" *ngIf="!isAccept">Chấp nhận</a> -->
+            <a  [routerLink]="['/profile', noti.sender.username]" class="btn btn-primary btn-sm">Xem trang cá nhân</a>
           </div>
         </div>
       </div>
