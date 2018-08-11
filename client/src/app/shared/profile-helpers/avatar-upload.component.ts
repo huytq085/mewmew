@@ -31,9 +31,10 @@ export class AvatarUploadComponent implements OnInit {
       let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
+        console.log(reader.result)
         this.user.avatar = reader.result;
         this.myStyle["background-image"] = 'url(' + reader.result + ')'
-        this.avatarEmit.emit(reader.result);
+        this.avatarEmit.emit(reader.result.split(',')[1]);
       }
 
     }

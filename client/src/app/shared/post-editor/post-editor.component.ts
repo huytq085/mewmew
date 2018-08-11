@@ -42,7 +42,7 @@ export class PostEditorComponent implements OnInit {
       let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.postForm.controls['image'].setValue(reader.result);
+        this.postForm.controls['image'].setValue(reader.result.split(',')[1]);
         this.urlImage = reader.result;
       }
 

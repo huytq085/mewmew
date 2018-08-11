@@ -6,6 +6,7 @@ import com.culicode.dating.mewmew.repository.UserRepository;
 import com.culicode.dating.mewmew.repository.UserRoleRepository;
 import com.culicode.dating.mewmew.util.Constants;
 import com.culicode.dating.mewmew.util.EncrytedPasswordUtils;
+import com.culicode.dating.mewmew.util.ImageUtils;
 import com.culicode.dating.mewmew.util.JsonUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +50,19 @@ public class UserServiceImpl implements UserService {
 //            user.setPassword(EncrytedPasswordUtils.encrytePassword(user.getPassword()));
             if (user.getAvatar() == null || user.getAvatar() == "") {
                 user.setAvatar(Constants.DEFAULT_AVATAR);
+            } else {
+//                Save avatar
+                System.out.println("Set avatar");
+                String avatarPath = "/" + user.getUsername() + "/avatar.png";
+                String path = Constants.ASSETS_IMG_PATH + avatarPath;
+                try {
+                    if (ImageUtils.writeImage(path, user.getAvatar())){
+                        System.out.println("create file success");
+                        user.setAvatar(Constants.REAL_ASSETS_IMG_PATH + avatarPath);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             newUser = userRepository.save(user);
 //            userRoleRepository.setRole(newUser.getId(), ERole.USER.getId());
@@ -72,6 +87,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
+        if (user.getAvatar() == null || user.getAvatar() == "") {
+            user.setAvatar(Constants.DEFAULT_AVATAR);
+        } else {
+//                Save avatar
+            System.out.println("Set avatar");
+            String avatarPath = "/" + user.getUsername() + "/avatar.png";
+            String path = Constants.ASSETS_IMG_PATH + avatarPath;
+            try {
+                if (ImageUtils.writeImage(path, user.getAvatar())){
+                    System.out.println("create file success");
+                    user.setAvatar(Constants.REAL_ASSETS_IMG_PATH + avatarPath);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return userRepository.save(user);
     }
 
