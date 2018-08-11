@@ -11,6 +11,7 @@ import { ListErrorsComponent } from './list-errors.component';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ProfileHelpersComponent } from './profile-helpers/profile-helpers.component';
 import { PostEditorComponent } from './post-editor/post-editor.component';
+import { TestComponent } from './layout/test.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { PostEditorComponent } from './post-editor/post-editor.component';
     ProfileHelpersComponent,
     AvatarUploadComponent,
     PostEditorComponent,
-    AddfriendButtonComponent
+    AddfriendButtonComponent,
+    TestComponent
   ],
   exports: [
     ArticleListComponent,
@@ -48,7 +50,8 @@ import { PostEditorComponent } from './post-editor/post-editor.component';
     ShowAuthedDirective,
     AvatarUploadComponent,
     PostEditorComponent,
-    AddfriendButtonComponent
+    AddfriendButtonComponent,
+    TestComponent
   ]
 })
 export class SharedModule {}

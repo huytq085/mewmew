@@ -1,0 +1,66 @@
+/* CSS used here will be applied after bootstrap.css */
+
+.dropdown {
+    display:inline-block;
+    padding: 6px;
+    margin-right: 5px;
+  }
+
+
+.glyphicon-bell {
+   
+    font-size:1.5rem;
+  }
+
+.notifications {
+   min-width:420px; 
+  }
+  
+  .notifications-wrapper {
+     overflow:auto;
+      max-height:250px;
+    }
+    
+ .menu-title {
+    color: #ff7788;
+    font-size: 1em;
+    float: right;
+      }
+ 
+.glyphicon-circle-arrow-right {
+      margin-left:10px;     
+   }
+  
+   
+ .notification-heading, .notification-footer  {
+ 	padding:2px 10px;
+       }
+      
+        
+.dropdown-menu.divider {
+  margin:5px 0;          
+  }
+
+.item-title {
+ color:#000;
+}
+
+.notifications a.content {
+ text-decoration:none;
+ background:#ccc;
+
+ }
+    
+.notification-item {
+ padding:10px;
+ margin:5px;
+ background:#f8f9fa;
+ border-radius:4px;
+ }
+
+
+
+ .notify-img {
+    max-width: 100%;
+    max-height: 100%;
+}
