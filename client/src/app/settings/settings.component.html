@@ -10,7 +10,7 @@
         <form [formGroup]="settingsForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
-              <app-avatar-upload [user]="user" (avatarEmit)="settingsForm.controls['avatar'].setValue($event)"></app-avatar-upload>
+              <app-avatar-upload [user]="user" (avatarEmit)="changeAvatar($event)"></app-avatar-upload>
             </fieldset>
             
 

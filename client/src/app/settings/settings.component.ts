@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   errors: Object = {};
   isSubmitting = false;
   form: FormGroup;
+  avatarTemp: string;
   constructor(
     private router: Router,
     private userService: UserService,
@@ -59,6 +60,7 @@ export class SettingsComponent implements OnInit {
       .update(this.user)
       .subscribe(
         updatedUser => {
+          updatedUser.avatar = this.avatarTemp;
           swal({
             title: "Updated Successfully!",
             icon: "success",
@@ -75,6 +77,11 @@ export class SettingsComponent implements OnInit {
 
   updateUser(values: Object) {
     Object.assign(this.user, values);
+  }
+
+  changeAvatar(e){
+    this.avatarTemp = e.base64;
+    this.settingsForm.controls['avatar'].setValue(e.raw);
   }
 
 }

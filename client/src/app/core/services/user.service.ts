@@ -60,8 +60,9 @@ export class UserService implements OnInit {
       .put('/users', user)
       .pipe(map(data => {
         // Update the currentUser observable
+        console.log(data)
         this.currentUserSubject.next(data);
-        return data.user;
+        return data;
       }));
   }
 

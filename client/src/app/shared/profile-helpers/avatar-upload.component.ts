@@ -9,7 +9,7 @@ import { User } from '../../core';
 export class AvatarUploadComponent implements OnInit {
 
   @Input() user: User;
-  @Output() avatarEmit = new EventEmitter<string>();
+  @Output() avatarEmit = new EventEmitter<any>();
 
   myStyle = {
     'background-image': 'url(http://localhost:8080/assets/img/default_avatar.png)'
@@ -33,8 +33,12 @@ export class AvatarUploadComponent implements OnInit {
       reader.onload = () => {
         console.log(reader.result)
         this.user.avatar = reader.result;
-        this.myStyle["background-image"] = 'url(' + reader.result + ')'
-        this.avatarEmit.emit(reader.result.split(',')[1]);
+        this.myStyle["background-image"] = 'url(' + reader.result + ')';
+        let eventEmit = {
+          raw: reader.result.split(',')[1],
+          base64: reader.result
+        }
+        this.avatarEmit.emit(eventEmit);
       }
 
     }
