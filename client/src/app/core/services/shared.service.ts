@@ -19,7 +19,11 @@ export class SharedService {
   }
 
   pushNotifications(_notifications: Notification[]) {
-    this.unreadNotificationsSubject.next(_notifications.filter(noti => !noti.read))
+    if (Array.isArray(_notifications)){
+      this.unreadNotificationsSubject.next(_notifications.filter(noti => !noti.read))
+    } else {
+      this.unreadNotificationsSubject.next(_notifications)
+    }
     this.notificationSubject.next(_notifications);
   }
 

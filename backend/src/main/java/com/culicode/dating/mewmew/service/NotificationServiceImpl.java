@@ -13,7 +13,7 @@ public class NotificationServiceImpl implements NotificationService {
     NotificationRepository notificationRepository;
     @Override
     public List<Notification> findAllByRecipientId(int recipientId) {
-        return notificationRepository.findAllByRecipientId(recipientId);
+        return notificationRepository.findAllByRecipientIdOrderByDateAddedDesc(recipientId);
     }
 
     @Override

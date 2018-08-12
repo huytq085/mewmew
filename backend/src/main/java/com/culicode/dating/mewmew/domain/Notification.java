@@ -13,7 +13,8 @@ public class Notification {
     private int id;
     @Column(name = "recipient_id", nullable = false)
     private int recipientId;
-    @Column(name = "date_added")
+    @Column(name = "date_added", insertable=false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateAdded;
     private String type;
     private String content;
