@@ -56,10 +56,22 @@ public class NotificationApi {
 
     @MessageMapping("/friend_request")
 //    @SendTo("/topic/notification")
-    public void notify(Notification notification){
-        System.out.println("notiy ne");
+    public void notifyFriendRequest(Notification notification){
+        System.out.println("notiy ne request");
         System.out.println(JsonUtil.encode(notification));
         notificationService.save(notification);
+        messagingTemplate.convertAndSendToUser(
+                String.valueOf(notification.getRecipientId()),
+                "/queue/notify",
+                notification
+        );
+
+    }
+    @MessageMapping("/friend_accept")
+//    @SendTo("/topic/notification")
+    public void notifyFriendAccept(Notification notification){
+        System.out.println("notiy ne accept");
+        System.out.println(JsonUtil.encode(notification));
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(notification.getRecipientId()),
                 "/queue/notify",

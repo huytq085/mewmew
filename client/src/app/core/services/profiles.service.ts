@@ -1,3 +1,4 @@
+import { NotificationService } from './notification.service';
 import { UserService } from './user.service';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,7 +16,8 @@ export class ProfilesService implements OnInit{
 
   constructor (
     private apiService: ApiService,
-    private userService: UserService
+    private userService: UserService,
+    private notify: NotificationService
   ) {}
 
   ngOnInit(): void {

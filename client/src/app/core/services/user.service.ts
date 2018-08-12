@@ -52,6 +52,7 @@ export class UserService implements OnInit {
     this.currentUserSubject.next({} as User);
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
+    this.notify.unSubscribeNotify();
   }
 
   // Update the user on the server (email, pass, etc)

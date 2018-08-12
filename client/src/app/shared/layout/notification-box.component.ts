@@ -1,6 +1,8 @@
 import { NotificationService } from './../../core/services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { Notification, SharedService, ProfilesService } from '../../core';
+import { filter, map, concatMap, toArray } from 'rxjs/operators';
+import { pipe, Observable } from 'rxjs';
 
 @Component({
   selector: 'notification-box',
@@ -21,19 +23,27 @@ export class NotificationBoxComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+
     // this.notifications.unshift({} as Notification);
-    this.sharedService.getNotifications().subscribe(
-      data => {
-        if (Array.isArray(data)){
+    this.sharedService.notifications.subscribe(
+      (data: Notification[]) => {
+        if (Array.isArray(data)) {
           this.notifications = data;
-          this.unreadNotifications = this.notifications.filter(noti => !noti.read);
-          console.log(this.unreadNotifications)
+        }
+      }
+    )
+
+    this.sharedService.unreadNotifications.subscribe(
+      (data: Notification[]) => {
+        if (Array.isArray(data)) {
+          this.unreadNotifications = data;
         }
       }
     )
   }
 
-  accept(userId: number){
+  accept(userId: number) {
     console.log(userId)
     this.profilesService.acceptFriend(userId).subscribe(
       data => {
@@ -43,13 +53,13 @@ export class NotificationBoxComponent implements OnInit {
       }
     )
   }
-  read(noti: Notification){
+  read(noti: Notification) {
     let index = this.unreadNotifications.indexOf(noti);
-    if (index != -1){
+    if (index != -1) {
       noti.read = true;
       this.unreadNotifications.splice(index, 1);
     }
-    
+
     this.notify.markRead(noti);
   }
 

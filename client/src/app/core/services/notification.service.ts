@@ -39,9 +39,29 @@ export class NotificationService {
     });
   }
 
+  subscribeNotify(user: User) {
+    this.currentUser = user;
+    console.log(1);
+    let that = this;
+    that.apiService.get('/notification/' + user.id).subscribe(
+      data => {
+        that.sharedService.pushNotifications(data);
+      }
+    )
+    this.stompClient.connect({}, function (frame) {
+      that.stompClient.subscribe(`/user/${user.id}/queue/notify`, (res) => {
+        if (res.body) {
+          console.log(res.body);
+          let notification = JSON.parse(res.body);
+          that.sharedService.pushNotification(notification);
+        }
+      });
+    });
+  }
+
   notifyFriendRequest(_recipient_id: number) {
     // TODO: Remove this live
-    this.currentUser.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
+    // this.currentUser.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
     let notification: Notification = {
       recipientId: _recipient_id,
       content: '',
@@ -50,26 +70,29 @@ export class NotificationService {
     }
     // this.stompClient.send("/chat", {}, JSON.stringify(body));
     this.stompClient.send("/api/friend_request", {}, JSON.stringify(notification));
-
-
   }
-  subscribeNotify(user: User) {
-    this.currentUser = user;
-    console.log(1);
-    let that = this;
-    this.stompClient.connect({}, function (frame) {
-      that.apiService.get('/notification/' + user.id).toPromise().then(
-        data => {
-          that.sharedService.pushNotifications(data);
-        }
-      )
-      that.stompClient.subscribe(`/user/${user.id}/queue/notify`, (res) => {
-        if (res.body) {
-          let notification = JSON.parse(res.body);
-          that.sharedService.pushNotification(notification);
-        }
-      });
-    });
+
+  
+
+  notifyFriendAccept(_recipient_id: number) {
+    // TODO: Remove this live
+    // this.currentUser.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
+    let notification: Notification = {
+      recipientId: _recipient_id,
+      content: '',
+      type: "FR_ACT",
+      sender: this.currentUser
+    }
+    // this.stompClient.send("/chat", {}, JSON.stringify(body));
+    this.stompClient.send("/api/friend_accept", {}, JSON.stringify(notification));
+  }
+  
+
+  unSubscribeNotify(){
+    this.stompClient.disconnect();
+    console.log('unsub');
+    
+    this.sharedService.pushNotifications({} as Notification[]);
   }
 
   markRead(noti: Notification){
