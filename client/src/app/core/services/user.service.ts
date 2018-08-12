@@ -44,7 +44,7 @@ export class UserService implements OnInit {
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
     this.notify.subscribeNotify(user);
-    this.messenger.subscribeMessenger(user);
+    // this.messenger.subscribeMessenger(user);
     
   }
 
@@ -56,7 +56,7 @@ export class UserService implements OnInit {
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
     this.notify.unSubscribeNotify();
-    this.messenger.unSubscribeMessenger();
+    // this.messenger.unSubscribeMessenger();
   }
 
   // Update the user on the server (email, pass, etc)

@@ -17,21 +17,31 @@
         </div>
       </div>
       <div class="inbox_chat">
-        <div class="chat_list active_chat">
-          <div class="chat_people">
-            <div class="chat_img">
-              <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-            <div class="chat_ib">
-              <h5>Sunil Rajput
-                <span class="chat_date">Dec 25</span>
-              </h5>
-              <p>Test, which is a new approach to have all solutions astrology under one roof.</p>
-            </div>
+        <ng-container *ngFor="let profile of profiles">
+          <div class="chat_list" routerLinkActive="active_chat">
+            <a (click)="setActivatedProfile(profile)" [routerLink]="['/messenger', profile.id]">
+              <div class="chat_people">
+                <div class="chat_img">
+                  <img src="{{ profile.avatar }}" alt="{{ profile.fullName }}"> </div>
+                <div class="chat_ib">
+                  <h5>{{ profile.fullName }}
+                    <!-- <span class="chat_date">Dec 25</span> -->
+                  </h5>
+                  <!-- <p>Test, which is a new approach to have all solutions astrology under one roof.</p> -->
+                </div>
+              </div>
+            </a>
+            <!--  -->
           </div>
-        </div>
+        </ng-container>
+
       </div>
     </div>
     <div class="mesgs">
+      <button *ngIf="activatedProfile" class="btn btn-primary" [routerLink]="['/profile', activatedProfile.username]">
+        <i class="ion-plus-round"></i>
+        &nbsp; Xem trang cá nhân
+      </button>
       <div class="msg_history">
         <ng-container *ngFor="let message of messages">
           <div [ngClass]="{ 
@@ -39,7 +49,9 @@
                       'outgoing_msg': message.sender.id === currentUser.id
                     }">
             <div class="incoming_msg_img" *ngIf="message.sender.id !== currentUser.id">
-              <img src="{{ message.sender.avatar }}" alt="sunil">
+              <a [routerLink]="['/profile', message.sender.username]">
+                <img src="{{ message.sender.avatar }}" alt="sunil">
+              </a>
             </div>
             <div [ngClass]="{ 
               'received_msg': message.sender.id !== currentUser.id,

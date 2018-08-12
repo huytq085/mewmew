@@ -3,14 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { MessengerComponent } from './messenger.component';
 
 const routes: Routes = [
-  {
-    path: ':id',
-    component: MessengerComponent,
-  }
+    {
+        path: '',
+        component: MessengerComponent,
+    },
+    {
+        path: ':id',
+        component: MessengerComponent,
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class MessengerRoutingModule {}
+export class MessengerRoutingModule { }

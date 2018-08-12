@@ -8,6 +8,7 @@ import { SharedService } from './shared.service';
 import { Profile, User } from '../models';
 import { Message } from '../models/message.model'
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,20 +37,31 @@ export class MessengerService {
     // });
   }
 
+  getMessages(currentUserId, profileId){
+    this.apiService.get(`/messengers/conversation/${currentUserId}/${profileId}`).subscribe(
+      data => {
+        this.sharedService.pushMessages(data);
+      }
+    )
+  }
+
   subscribeMessenger(_currentUser: User, profileId: number) {
     this.currentUser = _currentUser;
     this.currentProfileId = profileId;
     let that = this;
+    if (_currentUser.id && profileId) {
+      this.getMessages(_currentUser.id, profileId);
+    }
     this.stompClient.connect({}, function (frame) {
       that.stompClient.subscribe(`/user/${_currentUser.id}/queue/messenger`, (res) => {
         if (res.body) {
           console.log('----------------------------------');
           console.log(res.body);
           console.log('----------------------------------');
-          let message:Message = JSON.parse(res.body);
+          let message: Message = JSON.parse(res.body);
           // Đang đứng ở messenger profile của người sender mới thấy được tin nhắn
           let currentProfileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-          if (parseInt(currentProfileId) == message.sender.id){
+          if (parseInt(currentProfileId) == message.sender.id) {
             that.sharedService.pushMessage(message);
           }
         }
@@ -69,16 +81,22 @@ export class MessengerService {
   }
 
 
-  unSubscribeMessenger(){
+  unSubscribeMessenger() {
     this.stompClient.disconnect();
     // this.sharedService.pushNotifications({} as Notification[]);
   }
 
-  markRead(noti: Notification){
+  markRead(noti: Notification) {
     // return this.apiService.put('/notification/markread/', noti).toPromise().then(
     //   data => {
     //     console.log(data)
     //   }
     // );
+  }
+
+  getListConversation(_currentUser: User): Observable<User[]>{
+    if (_currentUser.id){
+      return this.apiService.get('/messengers/' + _currentUser.id);  
+    }
   }
 }
