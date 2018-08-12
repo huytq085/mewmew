@@ -14,7 +14,8 @@ import { HttpHeaderResponse } from '@angular/common/http';
 export class AuthComponent implements OnInit {
 
   errorMap: {} = {
-    401: 'Email or password is invalid.'
+    401: 'Sai email hoặc mật khẩu',
+    409: 'Email hoặc tên tài khoản bị trùng'
   }
 
   avatarTemp: string;
@@ -31,25 +32,36 @@ export class AuthComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.authForm = this.fb.group({
-      'email': ['', Validators.required],
+      'email': new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+      ])),
       'password': ['', Validators.required],
-      'avatar': [null, Validators.required]
+      'avatar': [null]
     })
   }
 
   ngOnInit() {
     this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
-      
+      console.log(1)
       this.authType = data[data.length - 1].path;
       // Set a title for the page accordingly
       this.title = (this.authType === 'login') ? 'Sign In' : 'Sign Up';
       // add form control for username if this is the register page
       if (this.authType === 'register') {
-        this.authForm.addControl('username', new FormControl('', Validators.required));
-        this.authForm.addControl('fullName', new FormControl('', Validators.required));
+        this.authForm.addControl('username', new FormControl('', Validators.compose([
+          Validators.maxLength(25),
+          Validators.minLength(5),
+          Validators.required
+        ])));
+        this.authForm.addControl('fullName', new FormControl('', Validators.compose([
+          Validators.maxLength(25),
+          Validators.minLength(5),
+          Validators.required
+        ])));
         this.authForm.addControl('gender', new FormControl('', Validators.required));
-        this.authForm.addControl('description', new FormControl('', Validators.required));
+        this.authForm.addControl('description', new FormControl(''));
       }
     });
   }
@@ -61,18 +73,19 @@ export class AuthComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          if (this.avatarTemp){
+          if (this.avatarTemp) {
             data.avatar = this.avatarTemp;
           }
           this.router.navigateByUrl('/')
         },
         (err: HttpHeaderResponse) => {
+          console.log()
           this.errors = this.errorMap[err.status];
           this.isSubmitting = false;
         }
       );
   }
-  changeAvatar(e){
+  changeAvatar(e) {
     this.avatarTemp = e.base64;
     this.authForm.controls['avatar'].setValue(e.raw);
   }

@@ -14,21 +14,24 @@
             <fieldset class="form-group">
               <app-avatar-upload *ngIf="authType == 'register'" [user]="user" (avatarEmit)="changeAvatar($event)"></app-avatar-upload>
             </fieldset>
-            <fieldset class="form-group">
+            <fieldset class="form-group" *ngIf="authType == 'register'">
               <input
                 formControlName="username"
                 placeholder="Tài khoản"
                 class="form-control form-control-lg"
                 type="text"
-                *ngIf="authType == 'register'" />
+                 />
+                <small class="alert text-danger" *ngIf="!authForm.controls['username'].valid && authForm.controls['username'].touched">Độ dài: 5 <= Tên tài khoản <= 25</small>
             </fieldset>
+            
             
             <fieldset class="form-group">
               <input
                 formControlName="email"
                 placeholder="Email"
                 class="form-control form-control-lg"
-                type="text" />
+                type="email" required/>
+              <small class="alert text-danger" *ngIf="!authForm.controls['email'].valid && authForm.controls['email'].touched">Email không đúng định dạng</small>
             </fieldset>
             
             <fieldset class="form-group">
@@ -37,8 +40,9 @@
                 placeholder="Mật khẩu"
                 class="form-control form-control-lg"
                 type="password" />
+                <small class="alert text-danger" *ngIf="!authForm.controls['password'].valid && authForm.controls['password'].touched">Độ dài lớn hơn hoặc bằng 6</small>
             </fieldset>
-            <fieldset class="form-group">
+            <fieldset class="form-group" *ngIf="authType == 'register'">
                 <div class="form-group">
                   <select class="form-control" 
                   formControlName="gender"
@@ -50,16 +54,18 @@
                     <option value="Female">Nữ</option>
                   </select>
                 </div>
+                <small class="alert text-danger" *ngIf="!authForm.controls['gender'].valid && authForm.controls['gender'].touched">Không được bỏ trống.</small>
             </fieldset>
-            <fieldset class="form-group">
+            <fieldset class="form-group" *ngIf="authType == 'register'">
                 <input
                   formControlName="fullName"
                   placeholder="Tên đầy đủ"
                   class="form-control form-control-lg"
                   type="text" 
                   *ngIf="authType == 'register'" />
+                  <small class="alert text-danger" *ngIf="!authForm.controls['fullName'].valid && authForm.controls['fullName'].touched">Độ dài: 5 <= Tên của bạn <= 25</small>
               </fieldset>
-              <fieldset class="form-group">
+              <fieldset class="form-group" *ngIf="authType == 'register'">
                 <textarea class="form-control form-control-lg"
                   rows="8"
                   placeholder="Mô tả ngắn gọn về bạn"
@@ -68,8 +74,8 @@
                 </textarea>
               </fieldset>
 
-            <list-errors *ngIf="authType == 'login'" [errors]="errors"></list-errors>
-            <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+            <list-errors [errors]="errors"></list-errors>
+            <button [disabled]="!authForm.valid" class="btn btn-lg btn-primary pull-xs-right" type="submit">
               {{ title }}
             </button>
           </fieldset>
