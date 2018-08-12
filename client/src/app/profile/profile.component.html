@@ -51,6 +51,14 @@
               </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link"
+                   routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: true }"
+                   [routerLink]="['/profile', username, 'friends']">
+                   Bạn bè
+                </a>
+              </li>
+            <li class="nav-item">
               <a class="nav-link"
                  routerLinkActive="active"
                  [routerLinkActiveOptions]="{ exact: true }"

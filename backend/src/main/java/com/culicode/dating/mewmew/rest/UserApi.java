@@ -20,6 +20,7 @@ public class UserApi {
     private final String BASE_URI = "/users";
     private final String USERNAME_URI = BASE_URI + "/{username}";
     private final String ID_URI = BASE_URI + "/id/{id}";
+    private final String FRIENDS_URI = BASE_URI + "/{username}/friends";
     private final String FOLLOW_URI = BASE_URI + "/{userId}/follow";
     private final String UNFOLLOW_URI = BASE_URI + "/{userId}/unfollow";
     private final String IS_FOLLOWING_URI = BASE_URI + "/{user1}/isfollowing/{user2}";
@@ -50,6 +51,15 @@ public class UserApi {
             return userService.search(query);
         }
         return userService.getAllUser();
+    }
+
+    @RequestMapping(
+            value = FRIENDS_URI,
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public List<User> getFriends(@PathVariable String username) {
+        return userService.getFriends(username);
     }
 
     @RequestMapping(

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +80,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getFriends(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user == null){
+            return Collections.emptyList();
+        }
+        System.out.println(user.getId());
+        return userRepository.findFriends(user.getId());
     }
 
     @Override

@@ -13,6 +13,8 @@ public interface UserService {
 
     List<User> getAllUser();
 
+    List<User> getFriends(String username);
+
     User findById(int id);
 
     User findByUsername(String username);

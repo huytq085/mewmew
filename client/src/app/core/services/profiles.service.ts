@@ -31,6 +31,10 @@ export class ProfilesService implements OnInit{
       .pipe(map((data: {profile: Profile}) => data.profile));
   }
 
+  getFriends(username: string): Observable<Profile[]>{
+    return this.apiService.get(`/users/${username}/friends/`);
+  }
+
   follow(userId: number): Observable<Profile> {
     return this.apiService.post('/users/' + userId + '/follow', this.userService.getCurrentUser());
   }

@@ -14,6 +14,9 @@ import { SharedModule } from '../shared';
   declarations: [
     SearchComponent,
     SearchListComponent
+  ],
+  exports: [
+    SearchListComponent
   ]
 })
 export class SearchModule { }

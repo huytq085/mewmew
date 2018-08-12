@@ -5,6 +5,7 @@ import { ProfileFavoritesComponent } from './profile-favorites.component';
 import { ProfileResolver } from './profile-resolver.service';
 import { ProfileComponent } from './profile.component';
 import { ProfileGalleryComponent } from './profile-gallery.component';
+import { ProfileFriendsComponent } from './profile-friends.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'gallery',
         component: ProfileGalleryComponent
+      },
+      {
+        path: 'friends',
+        component: ProfileFriendsComponent
       },
       {
         path: 'favorites',

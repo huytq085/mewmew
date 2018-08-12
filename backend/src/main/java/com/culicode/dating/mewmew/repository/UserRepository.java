@@ -13,7 +13,14 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    String findFriendsQuery = "select * from user u\n" +
+            "join (select * from friendlist f where (f.sender_id = :userId or f.recipient_id = :userId) and f.status = 1) ft\n" +
+            "on u.id = ft.sender_id or u.id = ft.recipient_id\n" +
+            "where u.id != :userId";
     Optional<User> findByEmail(String email);
+
+    @Query(value = findFriendsQuery, nativeQuery = true)
+    List<User> findFriends(@Param("userId") int userId);
 
     Optional<User> findByUsername(String username);
 
