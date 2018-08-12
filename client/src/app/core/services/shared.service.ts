@@ -2,6 +2,7 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Notification } from '../models/notification.model'
+import { Message } from '../models/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class SharedService {
 
   private unreadNotificationsSubject = new BehaviorSubject<Notification[]>({} as Notification[]);
   public unreadNotifications = this.unreadNotificationsSubject.asObservable();
+
+  private messagesSubject = new BehaviorSubject<Message[]>(new Array());
+  public messages = this.messagesSubject.asObservable();
 
   constructor(
   ) {
@@ -35,4 +39,18 @@ export class SharedService {
   getNotifications(): Observable<Notification[]> {
     return this.notifications;
   }
+
+  pushMessages(_messages: Message[]) {
+    this.messagesSubject.next(_messages);
+  }
+
+  pushMessage(_message: Message){
+    this.messagesSubject.value.push(_message);
+  }
+
+  getMessages(): Observable<Message[]> {
+    return this.messages;
+  }
+
+
 }

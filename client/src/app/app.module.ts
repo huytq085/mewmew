@@ -19,6 +19,7 @@ import { HttpModule } from '@angular/http';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileRoutingComponent } from './profile/profile-routing.component';
 import { SearchModule } from './search/search.module';
+import { MessengerModule } from './messenger/messenger.module';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SearchModule } from './search/search.module';
     ProfileModule,
     SettingsModule,
     EditorModule,
-    SearchModule
+    SearchModule,
+    MessengerModule
     
   ],
   providers: [],

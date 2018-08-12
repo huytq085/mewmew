@@ -8,6 +8,13 @@
           <img [src]="profile.avatar" class="user-img" />
           <h4>{{ profile.fullName }}</h4>
           <p>{{ profile.description }}</p>
+          <button *ngIf="profile"
+              class="btn btn-sm action-btn btn-outline-secondary"
+              [routerLink]="['/messenger', profile.id]">
+              <i class="ion-plus-round"></i>
+              &nbsp;
+              Nhắn tin
+            </button>
            <app-follow-button
             [hidden]="isUser"
             [profile]="profile"

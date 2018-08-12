@@ -12,6 +12,7 @@ import { User } from '../models';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { JwtService } from './jwt.service';
 import { NotificationService } from './notification.service';
+import { MessengerService } from './messenger.service';
 
 
 @Injectable()
@@ -29,7 +30,8 @@ export class UserService implements OnInit {
   constructor(
     private apiService: ApiService,
     private jwtService: JwtService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private messenger: MessengerService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class UserService implements OnInit {
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
     this.notify.subscribeNotify(user);
+    this.messenger.subscribeMessenger(user);
     
   }
 
@@ -53,6 +56,7 @@ export class UserService implements OnInit {
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
     this.notify.unSubscribeNotify();
+    this.messenger.unSubscribeMessenger();
   }
 
   // Update the user on the server (email, pass, etc)

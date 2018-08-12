@@ -1,9 +1,11 @@
+import { ChatComponent } from './chat/chat.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MessengerComponent } from './messenger/messenger.component';
 const routes: Routes = [
   {
     path: '',
@@ -37,6 +39,10 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: './chat/chat.module#ChatModule'
+  },
+  {
+    path: 'messenger',
+    loadChildren: './messenger/messenger.module#MessengerModule'
   }
 
 ];

@@ -1,5 +1,7 @@
 package com.culicode.dating.mewmew.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
@@ -7,18 +9,19 @@ import java.util.Date;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @Column(name = "content", nullable = false)
-    private String content;
-    @Column(name = "date_added", nullable = false)
-    private Date dateAdded;
-    @Column(name = "sender_id", nullable = false)
-    private int senderId;
     @Column(name = "recipient_id", nullable = false)
     private int recipientId;
+    @Column(name = "date_added", insertable=false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateAdded;
+    private String content;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private User sender;
+    @Column(name = "is_read")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean isRead;
 
     public Message() {
     }
@@ -31,20 +34,12 @@ public class Message {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getRecipientId() {
+        return recipientId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setRecipientId(int recipientId) {
+        this.recipientId = recipientId;
     }
 
     public Date getDateAdded() {
@@ -55,19 +50,27 @@ public class Message {
         this.dateAdded = dateAdded;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public String getContent() {
+        return content;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public int getRecipientId() {
-        return recipientId;
+    public User getSender() {
+        return sender;
     }
 
-    public void setRecipientId(int recipientId) {
-        this.recipientId = recipientId;
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }
