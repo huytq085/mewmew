@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer } from '@angular/core';
+import { Article } from './../../core/models/article.model';
+import { Component, OnInit, ElementRef, ViewChild, Renderer, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Article, ArticlesService, UserService, ProfilesService } from '../../core';
+import { ArticlesService, UserService, ProfilesService } from '../../core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,10 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./post-editor.component.css']
 })
 export class PostEditorComponent implements OnInit {
+
+  @Input() article: Article;
+  @Output() isSuccess = new EventEmitter<boolean>();
+
   isSubmitting: boolean = false;
   urlImage: string;
   postForm: FormGroup;
-  article: Article =  {} as Article;
+  // article: Article =  {} as Article;
   errors: string;
   isAuthenticated: boolean;
 
@@ -34,6 +39,11 @@ export class PostEditorComponent implements OnInit {
         this.isAuthenticated = authenticated;
       }
     );
+    if (!this.article){
+      this.article = {} as Article;
+    } else {
+      this.postForm.patchValue(this.article);
+    }
   }
 
   onFileChange(event){
@@ -42,8 +52,7 @@ export class PostEditorComponent implements OnInit {
       let file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.postForm.controls['image'].setValue(reader.result.split(',')[1]);
-        this.urlImage = reader.result;
+        this.postForm.controls['image'].setValue(reader.result);
       }
 
     }
@@ -58,12 +67,14 @@ export class PostEditorComponent implements OnInit {
     this.article.author = this.profileService.user2Profile(this.userService.getCurrentUser());
     this.articlesService.save(this.article).subscribe(
       article => {
-        this.router.navigateByUrl('/article/' + article.id)
+        this.isSuccess.emit(true);
+        this.router.navigateByUrl('/article/' + article.id);
       }
       ,
       err => {
         this.errors = err;
         this.isSubmitting = false;
+        this.isSuccess.emit(false);
       }
     );
     

@@ -7,7 +7,7 @@
       <app-article-meta [article]="article">
            <span [hidden]="!canModify">
           <a class="btn btn-sm btn-outline-secondary"
-             [routerLink]="['/editor', article.id]">
+             (click)="isEditing = true">
             <i class="ion-edit"></i> Sửa bài
           </a>
 
@@ -32,11 +32,15 @@
         </span> 
 
       </app-article-meta>
+      <app-post-editor (isSuccess)="isEditing = !$event" [article]="article" *ngIf="isEditing"></app-post-editor>
     </div>
+    
   </div>
 
-  <div class="container page" *ngIf="article">
+  
 
+  <div class="container page" *ngIf="article">
+    
     <div class="row article-content">
       <div class="col-md-12">
 
@@ -63,7 +67,7 @@
 
           <span [hidden]="!canModify">
           <a class="btn btn-sm btn-outline-secondary"
-             [routerLink]="['/editor', article.id]">
+             (click)="isEditing = true">
             <i class="ion-edit"></i> Sửa bài
           </a>
 
@@ -89,6 +93,7 @@
 
       </app-article-meta>
     </div>
+    
 
 
     <div class="row">

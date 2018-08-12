@@ -78,7 +78,7 @@ export class UserService implements OnInit {
               // localStorage.setItem('currentUser', JSON.stringify({ user, token: res.token }));
               this.setAuth(res.user, res.token);
             }
-            return res;
+            return res.user;
           }
         )
       );

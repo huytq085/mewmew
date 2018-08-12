@@ -60,7 +60,10 @@ export class SettingsComponent implements OnInit {
       .update(this.user)
       .subscribe(
         updatedUser => {
-          updatedUser.avatar = this.avatarTemp;
+          if (this.avatarTemp){
+            updatedUser.avatar = this.avatarTemp;
+          }
+          
           swal({
             title: "Updated Successfully!",
             icon: "success",

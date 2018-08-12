@@ -12,7 +12,7 @@
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
             <fieldset class="form-group">
-              <app-avatar-upload *ngIf="authType == 'register'" [user]="user" (avatarEmit)="authForm.controls['avatar'].setValue($event)"></app-avatar-upload>
+              <app-avatar-upload *ngIf="authType == 'register'" [user]="user" (avatarEmit)="changeAvatar($event)"></app-avatar-upload>
             </fieldset>
             <fieldset class="form-group">
               <input

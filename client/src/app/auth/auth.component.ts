@@ -17,6 +17,8 @@ export class AuthComponent implements OnInit {
     401: 'Email or password is invalid.'
   }
 
+  avatarTemp: string;
+
   isSubmitting: boolean = false;
   title: string = '';
   authType: string = '';
@@ -58,6 +60,10 @@ export class AuthComponent implements OnInit {
     this.userService.attemptAuth(this.authType, credentials)
       .subscribe(
         data => {
+          console.log(data);
+          if (this.avatarTemp){
+            data.avatar = this.avatarTemp;
+          }
           this.router.navigateByUrl('/')
         },
         (err: HttpHeaderResponse) => {
@@ -65,6 +71,10 @@ export class AuthComponent implements OnInit {
           this.isSubmitting = false;
         }
       );
+  }
+  changeAvatar(e){
+    this.avatarTemp = e.base64;
+    this.authForm.controls['avatar'].setValue(e.raw);
   }
 
 

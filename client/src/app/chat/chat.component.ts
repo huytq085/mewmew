@@ -58,7 +58,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   sendMessage(message) {
     let user = this.userService.getCurrentUser()
     // Set avatar for testing
-    user.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
+    // user.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
     let body = {
       message,
       user

@@ -18,6 +18,7 @@ import {
   templateUrl: './article.component.html'
 })
 export class ArticleComponent implements OnInit {
+  isEditing: boolean = false;
   article: Article;
   currentUser: User;
   canModify: boolean;
@@ -124,6 +125,11 @@ export class ArticleComponent implements OnInit {
   //       }
   //     );
   // }
+
+  editArticle(){
+    this.isEditing = true;
+
+  }
 
 
 }

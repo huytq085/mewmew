@@ -48,22 +48,7 @@ public class UserServiceImpl implements UserService {
         User newUser = null;
         if (!isExist(user)) {
 //            user.setPassword(EncrytedPasswordUtils.encrytePassword(user.getPassword()));
-            if (user.getAvatar() == null || user.getAvatar() == "") {
-                user.setAvatar(Constants.DEFAULT_AVATAR);
-            } else {
-//                Save avatar
-                System.out.println("Set avatar");
-                String avatarPath = "/" + user.getUsername() + "/avatar.png";
-                String path = Constants.ASSETS_IMG_PATH + avatarPath;
-                try {
-                    if (ImageUtils.writeImage(path, user.getAvatar())){
-                        System.out.println("create file success");
-                        user.setAvatar(Constants.REAL_ASSETS_IMG_PATH + avatarPath);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            setAvatar(user);
             newUser = userRepository.save(user);
 //            userRoleRepository.setRole(newUser.getId(), ERole.USER.getId());
             System.out.println("User role: " + ERole.USER.getId());
@@ -87,22 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if (user.getAvatar() == null || user.getAvatar() == "") {
-            user.setAvatar(Constants.DEFAULT_AVATAR);
-        } else {
-//                Save avatar
-            System.out.println("Set avatar");
-            String avatarPath = "/" + user.getUsername() + "/avatar.png";
-            String path = Constants.ASSETS_IMG_PATH + avatarPath;
-            try {
-                if (ImageUtils.writeImage(path, user.getAvatar())){
-                    System.out.println("create file success");
-                    user.setAvatar(Constants.REAL_ASSETS_IMG_PATH + avatarPath);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        setAvatar(user);
         return userRepository.save(user);
     }
 
@@ -183,5 +153,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.friendStatus(user1, user2);
     }
 
-
+    private void setAvatar(User user) {
+        if (user.getAvatar() == null || user.getAvatar() == "") {
+            user.setAvatar(Constants.DEFAULT_AVATAR);
+        } else if (!user.getAvatar().matches("^(https?)://.*$")){
+//                Save avatar
+            System.out.println("Set avatar");
+            String avatarPath = "/" + user.getUsername() + "/avatar.png";
+            String path = Constants.ASSETS_IMG_PATH + avatarPath;
+            try {
+                if (ImageUtils.writeImage(path, user.getAvatar())){
+                    System.out.println("create file success");
+                    user.setAvatar(Constants.REAL_ASSETS_IMG_PATH + avatarPath);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

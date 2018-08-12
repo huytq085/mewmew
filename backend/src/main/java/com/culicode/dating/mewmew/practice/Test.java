@@ -23,6 +23,8 @@ public class Test {
         UserApi userApi = new UserApi();
         Test test = new Test();
 
+        String str = "https://localhost:8080/assets/img/hello6/avatar.png";
+        System.out.println(str.matches("^(https?)://.*$"));
 
 
 

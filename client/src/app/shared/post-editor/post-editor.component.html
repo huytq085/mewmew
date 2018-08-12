@@ -9,8 +9,8 @@
           formControlName="content"
           >
         </textarea>
-          <div class="image-preview-container" *ngIf="urlImage">
-              <img [src]="urlImage" height="200">
+          <div class="image-preview-container" *ngIf="this.postForm.controls['image'].value">
+              <img [src]="this.postForm.controls['image'].value" height="200">
           </div>
           <ul>
             <li>
