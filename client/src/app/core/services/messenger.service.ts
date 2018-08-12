@@ -7,6 +7,7 @@ import { UserService } from '.';
 import { SharedService } from './shared.service';
 import { Profile, User } from '../models';
 import { Message } from '../models/message.model'
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,12 @@ export class MessengerService {
   private title = 'WebSockets chat';
   private stompClient;
   private currentUser: User;
+  private currentProfileId: number;
 
   constructor(
     private sharedService: SharedService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private route: ActivatedRoute,
   ) {
     this.initializeWebSocketConnection();
   }
@@ -33,17 +36,22 @@ export class MessengerService {
     // });
   }
 
-  subscribeMessenger(user: User) {
-    this.currentUser = user;
+  subscribeMessenger(_currentUser: User, profileId: number) {
+    this.currentUser = _currentUser;
+    this.currentProfileId = profileId;
     let that = this;
     this.stompClient.connect({}, function (frame) {
-      that.stompClient.subscribe(`/user/${user.id}/queue/messenger`, (res) => {
+      that.stompClient.subscribe(`/user/${_currentUser.id}/queue/messenger`, (res) => {
         if (res.body) {
           console.log('----------------------------------');
           console.log(res.body);
           console.log('----------------------------------');
-          let message = JSON.parse(res.body);
-          that.sharedService.pushMessage(message);
+          let message:Message = JSON.parse(res.body);
+          // Đang đứng ở messenger profile của người sender mới thấy được tin nhắn
+          let currentProfileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+          if (parseInt(currentProfileId) == message.sender.id){
+            that.sharedService.pushMessage(message);
+          }
         }
       });
     });
