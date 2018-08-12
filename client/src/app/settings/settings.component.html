@@ -13,37 +13,84 @@
               <app-avatar-upload [user]="user" (avatarEmit)="changeAvatar($event)"></app-avatar-upload>
             </fieldset>
             
+            <div class="form-group row">
+                <label for="username" class="col-sm-3 col-form-label">Tên tài khoản</label>
+                <div class="col-sm-9">
+                    <input class="form-control"
+                      type="text"
+                      placeholder="Tài khoản"
+                      name="username"
+                      formControlName="username" 
+                      [attr.disabled]="true"
+                      />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="gender" class="col-sm-3 col-form-label">Giới tính</label>
+                <div class="col-sm-9">
+                    <select class="form-control" 
+                  formControlName="gender"
+                  name="gender"
+                  placeholder="Giới tính"
+                  class="form-control form-control">
+                    <option value="">Giới tính</option>
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                  <small class="alert text-danger" *ngIf="!settingsForm.controls['gender'].valid && settingsForm.controls['gender'].touched">Không được bỏ trống.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fullName" class="col-sm-3 col-form-label">Họ tên</label>
+                <div class="col-sm-9">
+                    <input
+                      formControlName="fullName"
+                      placeholder="Tên đầy đủ"
+                      class="form-control form-control-lg"
+                      name="fullName"
+                      type="text"/>
+                    <small class="alert text-danger" *ngIf="!settingsForm.controls['fullName'].valid && settingsForm.controls['fullName'].touched">Độ dài: 5 <= Tên của bạn <= 25</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">Mô tả</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control form-control-lg"
+                      rows="8"
+                      name="description"
+                      placeholder="Mô tả ngắn gọn bản thân"
+                      formControlName="description">
+                    </textarea>
+                    <small class="alert text-danger" *ngIf="!settingsForm.controls['fullName'].valid && settingsForm.controls['fullName'].touched">Độ dài: 5 <= Tên của bạn <= 25</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    <input class="form-control form-control-lg"
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      formControlName="email" />
+                  <small class="alert text-danger" *ngIf="!settingsForm.controls['email'].valid && settingsForm.controls['email'].touched">Email không đúng định dạng</small>
+                </div>
+            </div>
 
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg"
-                type="text"
-                placeholder="Tài khoản"
-                formControlName="username" />
-            </fieldset>
+            <div class="form-group row">
+                <label for="password" class="col-sm-3 col-form-label">Mật khẩu</label>
+                <div class="col-sm-9">
+                  <input class="form-control form-control-lg"
+                    type="password"
+                    name="password"
+                    placeholder="Mật khẩu mới"
+                    formControlName="password" />
+                  <small class="alert text-danger" *ngIf="!settingsForm.controls['password'].valid && settingsForm.controls['password'].touched">Độ dài lớn hơn hoặc bằng 6</small>
+                </div>
+            </div>
 
-            <fieldset class="form-group">
-              <textarea class="form-control form-control-lg"
-                rows="8"
-                placeholder="Mô tả ngắn gọn bản thân"
-                formControlName="description">
-              </textarea>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg"
-                type="email"
-                placeholder="Email"
-                formControlName="email" />
-            </fieldset>
-
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg"
-                type="password"
-                placeholder="Mật khẩu mới"
-                formControlName="password" />
-            </fieldset>
-
-            <button class="btn btn-lg btn-primary pull-xs-right"
+            <button 
+              [disabled]="!settingsForm.valid"
+              class="btn btn-lg btn-primary pull-xs-right"
               type="submit">
               Cập nhật thông tin
             </button>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import swal from 'sweetalert';
@@ -27,9 +27,18 @@ export class SettingsComponent implements OnInit {
       image: '',
       username: '',
       description: '',
-      email: '',
-      password: '',
-      avatar: [null, Validators.required]
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+      ])),
+      password: ['', Validators.required],
+      fullName: new FormControl('', Validators.compose([
+        Validators.maxLength(25),
+        Validators.minLength(5),
+        Validators.required
+      ])),
+      gender: new FormControl('', Validators.required),
+      avatar: [null]
     });
     // Optional: subscribe to changes on the form
     // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
@@ -39,6 +48,7 @@ export class SettingsComponent implements OnInit {
     // Make a fresh copy of the current user's object to place in editable form fields
     Object.assign(this.user, this.userService.getCurrentUser());
     // Fill the form
+    console.log(this.user)
     this.settingsForm.patchValue(this.user);
   }
 
