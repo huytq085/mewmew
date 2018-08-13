@@ -3,22 +3,22 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 import { Observable } from 'rxjs';
 
 import { Profile, ProfilesService } from '../core';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProfileResolver implements Resolve<Profile> {
   constructor(
     private profilesService: ProfilesService,
     private router: Router
-  ) {}
+  ) { }
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-
+    console.log(route.params['username'])
     return this.profilesService.get(route.params['username'])
-      .pipe(catchError((err) => this.router.navigateByUrl('/')));
+      .pipe(catchError((err) => this.router.navigateByUrl('/')))
 
   }
 }

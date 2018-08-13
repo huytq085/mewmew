@@ -59,14 +59,14 @@ export class UserService implements OnInit {
     // this.messenger.unSubscribeMessenger();
   }
 
-  // Update the user on the server (email, pass, etc)
-  update(user): Observable<User> {
+  // Update the user on the server
+  update(user): Observable<any> {
     return this.apiService
       .put('/users', user)
       .pipe(map(data => {
         // Update the currentUser observable
         console.log(data)
-        this.currentUserSubject.next(data);
+        this.currentUserSubject.next(data.user);
         return data;
       }));
   }
@@ -117,8 +117,6 @@ export class UserService implements OnInit {
           res => {
             if (res && res.token) {
               let user: User = res.user;
-              // store username and jwt token in local storage to keep user logged in between page refreshes
-              // localStorage.setItem('currentUser', JSON.stringify({ user, token: res.token }));
               this.setAuth(res.user, res.token);
             }
             return res;

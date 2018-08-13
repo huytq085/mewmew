@@ -29,11 +29,9 @@ export class AddfriendButtonComponent implements OnInit {
 
   toggleAdding() {
     this.isSubmitting = true;
-    // TODO: remove nested subscribes, use mergeMap
 
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
-        // Not authenticated? Push to login screen
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
@@ -50,7 +48,6 @@ export class AddfriendButtonComponent implements OnInit {
               err => this.isSubmitting = false
             ));
 
-          // Otherwise, unfollow this profile
         } else if (this.profile.friendStatus == 3) {
           console.log(3)
           return this.profilesService.acceptFriend(this.profile.id)

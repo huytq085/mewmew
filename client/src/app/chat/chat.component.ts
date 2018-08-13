@@ -42,7 +42,10 @@ export class ChatComponent implements OnInit, OnDestroy {
                 <div class="header">
                   <strong class="primary-font">${body.user.username}</strong>
                   <small class="pull-right text-muted">
-                    <span class="glyphicon glyphicon-time"></span>12 phút trước</small>
+                    <span class="glyphicon glyphicon-time"></span>
+                    <!-- 12 phút trước -->
+                    
+                  </small>
                 </div>
                 <p>
                   ${body.message}
@@ -58,7 +61,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   sendMessage(message) {
     let user = this.userService.getCurrentUser()
     // Set avatar for testing
-    // user.avatar = 'http://localhost:8080/assets/img/default_avatar.png';
     let body = {
       message,
       user

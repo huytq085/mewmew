@@ -5,8 +5,8 @@
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">{{ title }}</h1>
         <p class="text-xs-center">
-          <a [routerLink]="['/login']" routerLinkActive="router-link-active" *ngIf="authType == 'register'">Have an account?</a>
-          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
+          <a [routerLink]="['/login']" routerLinkActive="router-link-active" *ngIf="authType == 'register'">Đã có tài khoản?</a>
+          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Chưa có tài khoản?</a>
         </p>
         
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
@@ -50,8 +50,8 @@
                   class="form-control form-control"
                   *ngIf="authType == 'register'">
                     <option value="">Giới tính</option>
-                    <option value="Male" selected>Nam</option>
-                    <option value="Female">Nữ</option>
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
                   </select>
                 </div>
                 <small class="alert text-danger" *ngIf="!authForm.controls['gender'].valid && authForm.controls['gender'].touched">Không được bỏ trống.</small>

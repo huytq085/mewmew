@@ -27,8 +27,7 @@ export class ProfilesService implements OnInit{
   }
 
   get(username: string): Observable<Profile> {
-    return this.apiService.get('/users/' + username)
-      .pipe(map((data: {profile: Profile}) => data.profile));
+    return this.apiService.get('/users/' + username);
   }
 
   getFriends(username: string): Observable<Profile[]>{

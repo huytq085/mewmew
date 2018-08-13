@@ -25,13 +25,11 @@ export class FavoriteButtonComponent {
 
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
-        // Not authenticated? Push to login screen
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
         }
 
-        // Favorite the article if it isn't favorited yet
         if (!this.article.favorited) {
           return this.articlesService.favorite(this.article.id)
           .pipe(tap(
@@ -42,7 +40,6 @@ export class FavoriteButtonComponent {
             err => this.isSubmitting = false
           ));
 
-        // Otherwise, unfavorite the article
         } else {
           return this.articlesService.unfavorite(this.article.id)
           .pipe(tap(

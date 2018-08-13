@@ -38,13 +38,12 @@ export class HomeComponent implements OnInit {
   }
 
   setListTo(type: string = '', filters: Object = {}) {
-    // If feed is requested but user is not authenticated, redirect to login
+    // Nếu chưa đăng nhập thì chuyển về trang đăng nhập
     if (type === 'feed' && !this.isAuthenticated) {
       this.router.navigateByUrl('/login');
       return;
     }
 
-    // Otherwise, set the list object
     this.listConfig = {type: type, filters: filters};
   }
   testDiff(){

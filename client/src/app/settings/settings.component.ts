@@ -40,15 +40,11 @@ export class SettingsComponent implements OnInit {
       gender: new FormControl('', Validators.required),
       avatar: [null]
     });
-    // Optional: subscribe to changes on the form
-    // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
   }
 
   ngOnInit() {
-    // Make a fresh copy of the current user's object to place in editable form fields
     Object.assign(this.user, this.userService.getCurrentUser());
     // Fill the form
-    console.log(this.user)
     this.settingsForm.patchValue(this.user);
   }
 
@@ -57,7 +53,7 @@ export class SettingsComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  abc(e){
+  abc(e) {
   }
 
   submitForm() {
@@ -69,16 +65,24 @@ export class SettingsComponent implements OnInit {
     this.userService
       .update(this.user)
       .subscribe(
-        updatedUser => {
-          if (this.avatarTemp){
-            updatedUser.avatar = this.avatarTemp;
+        data => {
+          if (data.status) {
+            if (this.avatarTemp) {
+              data.avatar = this.avatarTemp;
+            }
+
+            swal({
+              title: "Cập nhật thành công!",
+              icon: "success",
+            });
+            this.isSubmitting = false
+          } else {
+            this.isSubmitting = false;
+            swal({
+              title: "Có lỗi. Email trùng",
+              icon: "error",
+            });
           }
-          
-          swal({
-            title: "Updated Successfully!",
-            icon: "success",
-          });
-          this.isSubmitting = false
           // this.router.navigateByUrl('/profile/' + updatedUser.username)
         },
         err => {
@@ -92,7 +96,7 @@ export class SettingsComponent implements OnInit {
     Object.assign(this.user, values);
   }
 
-  changeAvatar(e){
+  changeAvatar(e) {
     this.avatarTemp = e.base64;
     this.settingsForm.controls['avatar'].setValue(e.raw);
   }

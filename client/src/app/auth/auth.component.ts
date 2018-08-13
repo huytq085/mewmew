@@ -36,7 +36,11 @@ export class AuthComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
       ])),
-      'password': ['', Validators.required],
+      'password': ['', Validators.compose([
+        Validators.maxLength(25),
+        Validators.minLength(6),
+        Validators.required
+      ])],
       'avatar': [null]
     })
   }
@@ -44,11 +48,10 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
     this.route.url.subscribe(data => {
       // Get the last piece of the URL (it's either 'login' or 'register')
-      console.log(1)
       this.authType = data[data.length - 1].path;
-      // Set a title for the page accordingly
-      this.title = (this.authType === 'login') ? 'Sign In' : 'Sign Up';
-      // add form control for username if this is the register page
+      // Set cho biến title
+      this.title = (this.authType === 'login') ? 'ĐĂNG NHẬP' : 'ĐĂNG KÝ';
+      // Thêm các form control
       if (this.authType === 'register') {
         this.authForm.addControl('username', new FormControl('', Validators.compose([
           Validators.maxLength(25),

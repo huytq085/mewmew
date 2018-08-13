@@ -5,18 +5,18 @@
       <h1>{{ article.subject }}</h1>
 
       <app-article-meta [article]="article">
-           <span [hidden]="!canModify">
-          <a class="btn btn-sm btn-outline-secondary"
-             (click)="isEditing = true">
-            <i class="ion-edit"></i> Sửa bài
-          </a>
+          <span [hidden]="!canModify">
+              <a class="btn btn-sm btn-outline-secondary"
+                (click)="isEditing = true">
+                <i class="ion-edit"></i> Sửa bài
+              </a>
 
-          <button class="btn btn-sm btn-outline-danger"
-            [ngClass]="{disabled: isDeleting}"
-            (click)="deleteArticle()">
-            <i class="ion-trash-a"></i> Xóa bài
-          </button>
-        </span>
+              <button class="btn btn-sm btn-outline-danger"
+                [ngClass]="{disabled: isDeleting}"
+                (click)="deleteArticle()">
+                <i class="ion-trash-a"></i> Xóa bài
+              </button>
+           </span>
 
        <span [hidden]="canModify">
           <app-follow-button
@@ -50,12 +50,12 @@
         </div>
 
 
-        <ul class="tag-list">
+        <!-- <ul class="tag-list">
           <li *ngFor="let tag of article.tagList"
             class="tag-default tag-pill tag-outline">
             {{ tag }}
           </li>
-        </ul>
+        </ul> -->
 
       </div>
     </div>

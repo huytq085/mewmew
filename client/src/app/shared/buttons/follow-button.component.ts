@@ -26,13 +26,11 @@ export class FollowButtonComponent {
 
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
-        // Not authenticated? Push to login screen
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
         }
 
-        // Follow this profile if we aren't already
         if (!this.profile.following) {
           return this.profilesService.follow(this.profile.id)
           .pipe(tap(
@@ -43,7 +41,6 @@ export class FollowButtonComponent {
             err => this.isSubmitting = false
           ));
 
-        // Otherwise, unfollow this profile
         } else {
           return this.profilesService.unfollow(this.profile.id)
           .pipe(tap(

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, User, Profile, ProfilesService } from '../core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -15,8 +15,13 @@ export class SearchComponent implements OnInit {
   constructor(
     private userService: UserService,
     private profileService: ProfilesService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

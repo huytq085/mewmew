@@ -25,6 +25,11 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
+    // this.route.data.subscribe(
+    //   data => {
+    //     console.log(data)
+    //   }
+    // )
     this.route.url.subscribe(
       data => {
         this.username = data[data.length - 1].path;

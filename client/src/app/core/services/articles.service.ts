@@ -15,7 +15,6 @@ export class ArticlesService {
   ) { }
 
   query(config: ArticleListConfig, isFavoritedBy?: number): Observable<Article[]> {
-    // Convert any filters over to Angular's URLSearchParams
     const params = {};
 
     Object.keys(config.filters)

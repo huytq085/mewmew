@@ -53,29 +53,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Sét đặt dịch vụ để tìm kiếm User trong Database.
-        // Và sét đặt PasswordEncoder.
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
-    }
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        // Sét đặt dịch vụ để tìm kiếm User trong Database.
+//        // Và sét đặt PasswordEncoder.
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//
+//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("configure");
 
         http.csrf().ignoringAntMatchers("/api/**");
 
-        http.authorizeRequests().antMatchers("/","/api/login**").permitAll();
-
-        http.authorizeRequests().antMatchers("/userInfo", "/api/users/{id}").authenticated();
+//        http.
+//            authorizeRequests()
+//            .antMatchers("/","/api/login**").permitAll()
+//            .antMatchers("/api/users/{id}").permitAll()
+//            .antMatchers("/api/users").authenticated();
 
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(apiServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
@@ -83,17 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-
-        // Cấu hình cho Login Form.
-        http.authorizeRequests()
-                // Cấu hình cho Logout Page.
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-
-        // Cấu hình Remember Me.
-        http.authorizeRequests().and() //
-                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
-
     }
 
     @Bean

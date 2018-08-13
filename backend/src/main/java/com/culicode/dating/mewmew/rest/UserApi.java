@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping({"/api"})
@@ -67,9 +70,18 @@ public class UserApi {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public User update(@RequestBody User user) {
+    public Map<String, Object> update(@RequestBody User user) {
         System.out.println(JsonUtil.encode(user));
-        return userService.update(user);
+        Map<String, Object> map = new HashMap<>();
+        try {
+            user = userService.update(user);
+            map.put("status", true);
+        } catch (Exception e) {
+            map.put("status", false);
+            e.printStackTrace();
+        }
+        map.put("user", user);
+        return map;
     }
 
     @RequestMapping(

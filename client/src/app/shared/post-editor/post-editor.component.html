@@ -23,7 +23,7 @@
             </li>
           </ul>
           
-          <button type="submit" class="btn btn-success green">
+          <button [disabled]="!postForm.valid" type="submit" class="btn btn-success green">
             <i class="fa fa-share"></i> Đăng</button>
         </form>
       </div>

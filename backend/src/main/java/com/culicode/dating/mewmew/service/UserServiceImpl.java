@@ -74,6 +74,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
         setAvatar(user);
+        if (!isExist(user)){
+            return null;
+        }
         return userRepository.save(user);
     }
 
